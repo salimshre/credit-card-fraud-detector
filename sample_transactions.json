@@ -1,0 +1,26 @@
+{
+  "normal": {
+    "customer_id": "CUST-001",
+    "card_last4": "4242",
+    "merchant": "SuperMart",
+    "merchant_category": "grocery",
+    "country": "US",
+    "device_id": "web-laptop-01",
+    "channel": "pos",
+    "transaction_date": "2024-01-15",
+    "transaction_time": "09:23:44",
+    "amount": 45.20
+  },
+  "fraud": {
+    "customer_id": "CUST-009",
+    "card_last4": "9901",
+    "merchant": "Unknown ATM",
+    "merchant_category": "cash",
+    "country": "RU",
+    "device_id": "unknown-device-77",
+    "channel": "atm",
+    "transaction_date": "2024-01-15",
+    "transaction_time": "02:14:09",
+    "amount": 500.00
+  }
+}

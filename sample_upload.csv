@@ -1,0 +1,7 @@
+transaction_date,transaction_time,card_last4,merchant,merchant_category,amount,country,channel,customer_id
+2024-01-15,09:23:44,4242,SuperMart,grocery,45.20,US,pos,CUST-001
+2024-01-15,14:31:22,4242,Amazon,online,89.99,US,web,CUST-001
+2024-01-15,19:05:10,4242,Shell Gas,gas_station,55.00,US,pos,CUST-001
+2024-01-15,02:14:09,9901,Unknown ATM,cash,500.00,RU,atm,CUST-009
+2024-01-15,02:16:33,9901,ForeignShop,online,350.00,CN,web,CUST-009
+2024-01-15,02:19:51,9901,Casino Online,entertainment,800.00,RU,web,CUST-009

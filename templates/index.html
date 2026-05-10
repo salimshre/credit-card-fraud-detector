@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Fraud Shield Dashboard</title>
+    <style>
+        :root {
+            color-scheme: light;
+            --bg: #f5f7fa;
+            --panel: #ffffff;
+            --panel-soft: #f9fafb;
+            --border: #d8dee8;
+            --text: #172033;
+            --muted: #617083;
+            --accent: #0b6bcb;
+            --accent-dark: #084f96;
+            --danger: #b42318;
+            --danger-bg: #fff2f1;
+            --warning: #b54708;
+            --warning-bg: #fff8e6;
+            --success: #067647;
+            --success-bg: #effdf4;
+            --shadow: 0 18px 36px rgba(20, 31, 51, 0.08);
+        }
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+            font-family: Arial, Helvetica, sans-serif;
+            line-height: 1.5;
+        }
+        button, input, select, textarea { font: inherit; }
+        button {
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: #fff;
+            color: var(--text);
+            cursor: pointer;
+            font-weight: 700;
+            padding: 9px 12px;
+        }
+        button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+        button.primary:hover { background: var(--accent-dark); }
+        button.danger { border-color: #fecdca; color: var(--danger); }
+        input, select, textarea {
+            width: 100%;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text);
+            padding: 9px 10px;
+        }
+        textarea { min-height: 118px; resize: vertical; }
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        .login-shell { min-height: 100vh; display: grid; place-items: center; padding: 20px; }
+        .login-panel {
+            width: min(430px, 100%);
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            padding: 24px;
+        }
+        .login-panel h1, .app-header h1 { margin: 0; font-size: 28px; }
+        .login-panel p, .app-header p, .muted { color: var(--muted); margin: 6px 0 0; }
+        .app-shell { width: min(1360px, calc(100% - 28px)); margin: 22px auto 34px; }
+        .app-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 18px; }
+        .header-actions { display: flex; align-items: center; gap: 10px; }
+        .module-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 16px; align-items: start; }
+        .panel { background: var(--panel); border: 1px solid var(--border); border-radius: 8px; box-shadow: var(--shadow); padding: 16px; }
+        .panel h2 { margin: 0 0 12px; font-size: 18px; }
+        .compact-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+        .field { margin-bottom: 12px; }
+        .form-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+        .wide { grid-column: 1 / -1; }
+        .actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+        .metric-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-bottom: 14px; }
+        .metric { background: var(--panel-soft); border: 1px solid var(--border); border-radius: 8px; padding: 12px; }
+        .metric span { color: var(--muted); display: block; font-size: 12px; font-weight: 700; text-transform: uppercase; }
+        .metric strong { display: block; font-size: 24px; margin-top: 4px; }
+        .result-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+        .result-box { border: 1px solid var(--border); border-radius: 8px; padding: 12px; background: var(--panel-soft); min-height: 82px; }
+        .result-box span { display: block; color: var(--muted); font-size: 12px; font-weight: 700; text-transform: uppercase; }
+        .result-box strong { display: block; font-size: 22px; margin-top: 4px; }
+        .risk-low { background: var(--success-bg); border-color: #abefc6; color: var(--success); }
+        .risk-medium { background: var(--warning-bg); border-color: #fedf89; color: var(--warning); }
+        .risk-high, .risk-critical { background: var(--danger-bg); border-color: #fecdca; color: var(--danger); }
+        .list { display: grid; gap: 8px; max-height: 330px; overflow: auto; }
+        .list-item { border: 1px solid var(--border); border-radius: 8px; background: #fff; padding: 10px; }
+        .list-item strong { display: block; }
+        .split { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+        .top-gap { margin-top: 16px; }
+        .table-wrap { overflow: auto; border: 1px solid var(--border); border-radius: 8px; }
+        table { width: 100%; border-collapse: collapse; min-width: 760px; background: #fff; }
+        th, td { border-bottom: 1px solid var(--border); padding: 10px; text-align: left; vertical-align: top; }
+        th { background: var(--panel-soft); color: var(--muted); font-size: 12px; text-transform: uppercase; }
+        tr:last-child td { border-bottom: 0; }
+        .pill { display: inline-block; border-radius: 999px; font-size: 12px; font-weight: 700; padding: 3px 8px; white-space: nowrap; }
+        .pill.low { background: var(--success-bg); color: var(--success); }
+        .pill.medium { background: var(--warning-bg); color: var(--warning); }
+        .pill.high, .pill.critical { background: var(--danger-bg); color: var(--danger); }
+        .error { color: var(--danger); font-weight: 700; margin-top: 10px; }
+        .small { color: var(--muted); font-size: 13px; }
+        @media (max-width: 1000px) {
+            .module-grid, .split { grid-template-columns: 1fr; }
+            .form-grid, .compact-grid, .metric-grid, .result-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        }
+        @media (max-width: 640px) {
+            .app-header { display: block; }
+            .header-actions { margin-top: 12px; }
+            .form-grid, .compact-grid, .metric-grid, .result-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+{% if not authenticated %}
+    <main class="login-shell">
+        <section class="login-panel">
+            <h1>Fraud Shield</h1>
+            <p>Secure monitoring console</p>
+            <form method="post" action="/login">
+                <div class="field">
+                    <label for="username">Username</label>
+                    <!-- No hardcoded password values; default_username shown as placeholder only -->
+                    <input id="username" name="username" placeholder="{{ default_username }}"
+                           autocomplete="username" required>
+                </div>
+                <div class="field">
+                    <label for="password">Password</label>
+                    <input id="password" name="password" type="password"
+                           autocomplete="current-password" required>
+                </div>
+                <button class="primary" type="submit">Sign In</button>
+                {% if login_error %}
+                    <div class="error">{{ login_error }}</div>
+                {% endif %}
+            </form>
+        </section>
+    </main>
+{% else %}
+    <main class="app-shell">
+        <header class="app-header">
+            <div>
+                <h1>Fraud Shield Dashboard</h1>
+                <p>Operator: {{ username }} | Decision threshold: {{ threshold }}</p>
+            </div>
+            <div class="header-actions">
+                <a href="/api/report.csv"><button type="button">Download Report</button></a>
+                <form method="post" action="/logout">
+                    <button class="danger" type="submit">Sign Out</button>
+                </form>
+            </div>
+        </header>
+
+        <section class="module-grid">
+            <div class="panel">
+                <h2>Transaction Monitoring</h2>
+                <form id="prediction-form">
+                    <div class="compact-grid">
+                        <div class="field">
+                            <label for="customer_id">Customer ID</label>
+                            <input id="customer_id" value="CUST-001">
+                        </div>
+                        <div class="field">
+                            <label for="card_last4">Card Last 4</label>
+                            <input id="card_last4" value="4242" maxlength="4">
+                        </div>
+                        <div class="field">
+                            <label for="device_id">Device ID</label>
+                            <input id="device_id" value="web-laptop-01">
+                        </div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="field">
+                            <label for="transaction_date">Transaction Date</label>
+                            <input type="date" id="transaction_date" value="2024-01-15" required>
+                        </div>
+                        <div class="field">
+                            <label for="transaction_time">Time</label>
+                            <input type="time" step="1" id="transaction_time" value="09:23:44" required>
+                        </div>
+                        <div class="field">
+                            <label for="amount">Amount</label>
+                            <input type="number" step="0.01" id="amount" value="45.20" required>
+                        </div>
+                        <div class="field">
+                            <label for="merchant">Merchant</label>
+                            <input id="merchant" value="SuperMart">
+                        </div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="field">
+                            <label for="merchant_category">Category</label>
+                            <select id="merchant_category">
+                                <option value="retail">Retail</option>
+                                <option value="grocery" selected>Grocery</option>
+                                <option value="restaurant">Restaurant</option>
+                                <option value="gas_station">Gas Station</option>
+                                <option value="travel">Travel</option>
+                                <option value="entertainment">Entertainment</option>
+                                <option value="healthcare">Healthcare</option>
+                                <option value="online">Online</option>
+                                <option value="cash">Cash</option>
+                                <option value="utilities">Utilities</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label for="country">Country</label>
+                            <input id="country" value="US" maxlength="2" placeholder="e.g. US, RU">
+                        </div>
+                        <div class="field">
+                            <label for="channel">Channel</label>
+                            <!-- "other" added to match feature_engineering.CHANNELS -->
+                            <select id="channel">
+                                <option value="web">Web</option>
+                                <option value="pos">POS</option>
+                                <option value="atm">ATM</option>
+                                <option value="mobile">Mobile</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="field"></div>
+                    </div>
+
+                    <div class="actions">
+                        <button class="primary" type="submit">Run Monitoring Check</button>
+                        <button type="button" data-sample="normal">Load Normal</button>
+                        <button type="button" data-sample="fraud">Load Fraud</button>
+                        <button type="button" id="clear">Clear</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="panel">
+                <h2>Machine Learning Prediction &amp; Risk Scoring</h2>
+                <div id="result-grid" class="result-grid">
+                    <div class="result-box"><span>Prediction</span><strong>Waiting</strong></div>
+                    <div class="result-box"><span>Fraud Probability</span><strong>0.00%</strong></div>
+                    <div class="result-box"><span>Risk Score</span><strong>0</strong></div>
+                    <div class="result-box"><span>Verification</span><strong>Pending</strong></div>
+                </div>
+                <div id="prediction-error" class="error" hidden></div>
+            </div>
+        </section>
+
+        <section class="panel top-gap">
+            <h2>Manual CSV Fraud Detection</h2>
+            <p class="small">
+                Upload a CSV with the required transaction columns
+                (<code>transaction_date, transaction_time, amount, merchant_category, country, channel</code>).
+                Each row will be preprocessed, scored, risk-ranked, monitored, and added to alerts/reports.
+            </p>
+            <form id="csv-upload-form">
+                <div class="form-grid">
+                    <div class="field wide">
+                        <label for="csv_file">CSV File</label>
+                        <input id="csv_file" name="file" type="file" accept=".csv,text/csv" required>
+                    </div>
+                </div>
+                <div class="actions">
+                    <button class="primary" type="submit">Scan CSV</button>
+                    <a href="/api/sample-csv"><button type="button">Download Sample CSV</button></a>
+                </div>
+            </form>
+            <div id="csv-result" class="list top-gap">
+                <div class="list-item small">No CSV batch scanned yet.</div>
+            </div>
+        </section>
+
+        <section class="split">
+            <div class="panel">
+                <h2>Behavior Analysis</h2>
+                <div id="behavior-list" class="list">
+                    <div class="list-item small">No monitored transaction yet.</div>
+                </div>
+            </div>
+            <div class="panel">
+                <h2>Data Preprocessing</h2>
+                <div id="preprocessing-list" class="list">
+                    <div class="list-item small">No preprocessing result yet.</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="split">
+            <div class="panel">
+                <h2>Real-Time Alerts</h2>
+                <div id="alerts-list" class="list">
+                    <div class="list-item small">No alerts.</div>
+                </div>
+            </div>
+            <div class="panel">
+                <h2>Dashboard &amp; Reports</h2>
+                <div id="metric-grid" class="metric-grid"></div>
+            </div>
+        </section>
+
+        <section class="panel" style="margin-top: 16px;">
+            <h2>User Verification Queue</h2>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Transaction</th>
+                            <th>Customer</th>
+                            <th>Amount</th>
+                            <th>ML</th>
+                            <th>Risk</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="transactions-body">
+                        <tr><td colspan="7">No transactions yet.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const samples = {
+            normal: {
+                customer_id: "CUST-001",
+                card_last4: "4242",
+                merchant: "SuperMart",
+                merchant_category: "grocery",
+                country: "US",
+                device_id: "web-laptop-01",
+                channel: "pos",
+                transaction_date: "2024-01-15",
+                transaction_time: "09:23:44",
+                amount: 45.20
+            },
+            fraud: {
+                customer_id: "CUST-009",
+                card_last4: "9901",
+                merchant: "Unknown ATM",
+                merchant_category: "cash",
+                country: "RU",
+                device_id: "unknown-device-77",
+                channel: "atm",
+                transaction_date: "2024-01-15",
+                transaction_time: "02:14:09",
+                amount: 500.00
+            }
+        };
+
+        function escapeHtml(value) {
+            return String(value)
+                .replaceAll("&", "&amp;").replaceAll("<", "&lt;")
+                .replaceAll(">", "&gt;").replaceAll('"', "&quot;")
+                .replaceAll("'", "&#039;");
+        }
+        function setValue(id, value) { document.getElementById(id).value = value; }
+
+        function fillSample(name) {
+            const s = samples[name];
+            ["customer_id","card_last4","merchant","merchant_category",
+             "country","device_id","channel"].forEach(f => setValue(f, s[f]));
+            setValue("transaction_date", s.transaction_date);
+            setValue("transaction_time", s.transaction_time);
+            setValue("amount", s.amount);
+            document.getElementById("prediction-error").hidden = true;
+        }
+
+        function buildPayload() {
+            return {
+                customer_id:       document.getElementById("customer_id").value,
+                card_last4:        document.getElementById("card_last4").value,
+                merchant:          document.getElementById("merchant").value,
+                merchant_category: document.getElementById("merchant_category").value,
+                country:           document.getElementById("country").value,
+                device_id:         document.getElementById("device_id").value,
+                channel:           document.getElementById("channel").value,
+                transaction_date:  document.getElementById("transaction_date").value,
+                transaction_time:  document.getElementById("transaction_time").value,
+                amount:            Number(document.getElementById("amount").value)
+            };
+        }
+
+        function riskClass(level) { return `risk-${String(level || "low").toLowerCase()}`; }
+
+        function renderResult(data) {
+            const percent = (data.fraud_probability * 100).toFixed(2);
+            const level   = data.risk_level;
+            document.getElementById("result-grid").innerHTML = `
+                <div class="result-box ${data.prediction ? "risk-critical" : "risk-low"}">
+                    <span>Prediction</span><strong>${escapeHtml(data.label)}</strong>
+                </div>
+                <div class="result-box">
+                    <span>Fraud Probability</span><strong>${percent}%</strong>
+                </div>
+                <div class="result-box ${riskClass(level)}">
+                    <span>Risk Score</span><strong>${data.risk_score}</strong>
+                </div>
+                <div class="result-box">
+                    <span>Verification</span><strong>${escapeHtml(data.verification_status)}</strong>
+                </div>
+            `;
+
+            const behaviorHtml = data.behavior.signals.map(s =>
+                `<div class="list-item"><strong>${escapeHtml(s)}</strong>
+                 <span class="small">Behavior points: ${data.behavior.behavior_points}</span></div>`
+            ).join("");
+            document.getElementById("behavior-list").innerHTML = behaviorHtml;
+
+            const pre = data.preprocessing;
+            document.getElementById("preprocessing-list").innerHTML = `
+                <div class="list-item"><strong>Feature Count</strong><span class="small">${pre.feature_count}</span></div>
+                <div class="list-item"><strong>Hour</strong><span class="small">${pre.hour}</span></div>
+                <div class="list-item"><strong>Is Night</strong><span class="small">${pre.is_night}</span></div>
+                <div class="list-item"><strong>Is Weekend</strong><span class="small">${pre.is_weekend}</span></div>
+                <div class="list-item"><strong>Amount Ratio</strong><span class="small">${pre.amount_ratio}</span></div>
+                <div class="list-item"><strong>Txn Count 24h</strong><span class="small">${pre.txn_count_last_24h}</span></div>
+            `;
+        }
+
+        function renderMetrics(stats) {
+            const metrics = [
+                ["Total",      stats.total_transactions],
+                ["Fraud ML",   stats.fraud_predictions],
+                ["High Risk",  stats.high_risk_transactions],
+                ["Open Alerts",stats.open_alerts],
+                ["Verified",   stats.verified_transactions],
+                ["Avg Risk",   stats.average_risk]
+            ];
+            document.getElementById("metric-grid").innerHTML = metrics.map(([l, v]) =>
+                `<div class="metric"><span>${l}</span><strong>${v}</strong></div>`
+            ).join("");
+        }
+
+        function renderAlerts(alerts) {
+            const el = document.getElementById("alerts-list");
+            if (!alerts.length) { el.innerHTML = '<div class="list-item small">No alerts.</div>'; return; }
+            el.innerHTML = alerts.map(a =>
+                `<div class="list-item">
+                    <strong>${escapeHtml(a.message)}</strong>
+                    <span class="pill ${String(a.severity).toLowerCase()}">${escapeHtml(a.severity)}</span>
+                    <span class="small"> Risk ${a.risk_score} | ${a.acknowledged ? "Acknowledged" : "Open"}</span>
+                    ${a.acknowledged ? "" : `<button type="button" data-alert="${a.id}">Acknowledge</button>`}
+                </div>`
+            ).join("");
+        }
+
+        function renderTransactions(txs) {
+            const body = document.getElementById("transactions-body");
+            if (!txs.length) { body.innerHTML = '<tr><td colspan="7">No transactions yet.</td></tr>'; return; }
+            body.innerHTML = txs.map(t =>
+                `<tr>
+                    <td>${escapeHtml(t.id)}<br><span class="small">${escapeHtml(t.created_at)}</span></td>
+                    <td>${escapeHtml(t.metadata.customer_id)}<br><span class="small">${escapeHtml(t.metadata.merchant)}</span></td>
+                    <td>${Number(t.amount).toFixed(2)}</td>
+                    <td>${escapeHtml(t.label)}<br><span class="small">${(t.fraud_probability*100).toFixed(2)}%</span></td>
+                    <td><span class="pill ${String(t.risk_level).toLowerCase()}">${t.risk_score} ${escapeHtml(t.risk_level)}</span></td>
+                    <td>${escapeHtml(t.verification_status)}</td>
+                    <td>
+                        <button type="button" data-verify="${t.id}" data-status="Approved">Approve</button>
+                        <button type="button" data-verify="${t.id}" data-status="Blocked">Block</button>
+                        <button type="button" data-verify="${t.id}" data-status="False Positive">False Positive</button>
+                    </td>
+                </tr>`
+            ).join("");
+        }
+
+        function renderCsvSummary(data) {
+            const records = data.records.slice(0, 8).map(r =>
+                `<div class="list-item">
+                    <strong>Row ${r.row}: ${escapeHtml(r.label)} | Risk ${r.risk_score} ${escapeHtml(r.risk_level)}</strong>
+                    <span class="small">Transaction ${escapeHtml(r.transaction_id)} | ${escapeHtml(r.customer_id)} | Amount ${Number(r.amount).toFixed(2)}</span>
+                </div>`
+            ).join("");
+            const errors = data.errors.slice(0, 5).map(e =>
+                `<div class="list-item">
+                    <strong>Row ${e.row}: Could not process</strong>
+                    <span class="small">${escapeHtml(e.error)}</span>
+                </div>`
+            ).join("");
+            document.getElementById("csv-result").innerHTML = `
+                <div class="list-item"><strong>CSV Batch Complete</strong>
+                <span class="small">Processed ${data.processed}, failed ${data.failed}, alerts ${data.alerts_created}</span></div>
+                ${records}${errors}
+            `;
+        }
+
+        function renderDashboard(data) {
+            renderMetrics(data.stats);
+            renderAlerts(data.alerts);
+            renderTransactions(data.transactions);
+        }
+
+        async function refreshDashboard() {
+            const resp = await fetch("/api/dashboard");
+            if (resp.ok) renderDashboard(await resp.json());
+        }
+
+        async function verifyTransaction(id, status) {
+            await fetch(`/api/transactions/${id}/verify`, {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({ status, note: "Reviewed in dashboard" })
+            });
+            await refreshDashboard();
+        }
+
+        async function acknowledgeAlert(id) {
+            await fetch(`/api/alerts/${id}/acknowledge`, { method: "POST" });
+            await refreshDashboard();
+        }
+
+        document.getElementById("prediction-form").addEventListener("submit", async e => {
+            e.preventDefault();
+            const err = document.getElementById("prediction-error");
+            err.hidden = true;
+            try {
+                const resp = await fetch("/predict", {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify(buildPayload())
+                });
+                const data = await resp.json();
+                if (!resp.ok) throw new Error(data.error || "Prediction failed.");
+                renderResult(data);
+                renderDashboard(data.dashboard);
+            } catch (ex) {
+                err.hidden = false;
+                err.textContent = ex.message;
+            }
+        });
+
+        document.getElementById("csv-upload-form").addEventListener("submit", async e => {
+            e.preventDefault();
+            const file = document.getElementById("csv_file").files[0];
+            if (!file) return;
+            const formData = new FormData();
+            formData.append("file", file);
+            document.getElementById("csv-result").innerHTML = '<div class="list-item small">Scanning CSV…</div>';
+            try {
+                const resp = await fetch("/api/upload-csv", { method: "POST", body: formData });
+                const data = await resp.json();
+                if (!resp.ok) throw new Error(data.error || "CSV scan failed.");
+                renderCsvSummary(data);
+                renderDashboard(data.dashboard);
+            } catch (ex) {
+                document.getElementById("csv-result").innerHTML =
+                    `<div class="list-item error">${escapeHtml(ex.message)}</div>`;
+            }
+        });
+
+        document.body.addEventListener("click", async e => {
+            if (e.target.matches("[data-sample]")) fillSample(e.target.dataset.sample);
+            if (e.target.matches("[data-verify]")) await verifyTransaction(e.target.dataset.verify, e.target.dataset.status);
+            if (e.target.matches("[data-alert]"))  await acknowledgeAlert(e.target.dataset.alert);
+        });
+
+        document.getElementById("clear").addEventListener("click", () => {
+            document.getElementById("prediction-form").reset();
+            document.getElementById("prediction-error").hidden = true;
+        });
+
+        fillSample("normal");
+        refreshDashboard();
+        setInterval(refreshDashboard, 5000);
+    </script>
+{% endif %}
+</body>
+</html>
