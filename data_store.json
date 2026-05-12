@@ -1,6 +1,150 @@
 {
   "transactions": [
     {
+      "id": "191076f0",
+      "created_at": "2026-05-12T11:29:33+00:00",
+      "operator": "admin",
+      "metadata": {
+        "customer_id": "CUST-009",
+        "card_last4": "9901",
+        "merchant": "Unknown ATM",
+        "merchant_category": "cash",
+        "country": "RU",
+        "channel": "atm",
+        "device_id": "unknown-device-77"
+      },
+      "amount": 500.0,
+      "transaction_date": "2024-01-15",
+      "transaction_time": "02:14:09",
+      "fraud_probability": 0.415711,
+      "prediction": 0,
+      "label": "Normal",
+      "threshold": 0.5,
+      "risk_score": 36,
+      "risk_level": "Medium",
+      "behavior": {
+        "customer_id": "CUST-009",
+        "signals": [
+          "Night-time transaction (00:00\u201305:59)"
+        ],
+        "behavior_points": 6,
+        "profile_transaction_count": 1,
+        "txn_count_last_1h": 0,
+        "txn_count_last_24h": 0,
+        "amount_avg": 500.0,
+        "is_new_country": 0,
+        "is_new_category": 0
+      },
+      "preprocessing": {
+        "feature_count": 15,
+        "hour": 2,
+        "is_night": 1,
+        "is_weekend": 0,
+        "amount_ratio": 1.0,
+        "txn_count_last_24h": 0
+      },
+      "verification_status": "Auto Cleared",
+      "verification_note": "",
+      "verified_by": "",
+      "verified_at": ""
+    },
+    {
+      "id": "86152aff",
+      "created_at": "2026-05-12T11:29:31+00:00",
+      "operator": "admin",
+      "metadata": {
+        "customer_id": "CUST-001",
+        "card_last4": "4242",
+        "merchant": "SuperMart",
+        "merchant_category": "grocery",
+        "country": "US",
+        "channel": "pos",
+        "device_id": "web-laptop-01"
+      },
+      "amount": 45.2,
+      "transaction_date": "2024-01-15",
+      "transaction_time": "09:23:44",
+      "fraud_probability": 0.0,
+      "prediction": 0,
+      "label": "Normal",
+      "threshold": 0.5,
+      "risk_score": 0,
+      "risk_level": "Low",
+      "behavior": {
+        "customer_id": "CUST-001",
+        "signals": [
+          "Behavior matches known customer pattern"
+        ],
+        "behavior_points": 0,
+        "profile_transaction_count": 2,
+        "txn_count_last_1h": 1,
+        "txn_count_last_24h": 1,
+        "amount_avg": 45.2,
+        "is_new_country": 0,
+        "is_new_category": 0
+      },
+      "preprocessing": {
+        "feature_count": 15,
+        "hour": 9,
+        "is_night": 0,
+        "is_weekend": 0,
+        "amount_ratio": 1.0,
+        "txn_count_last_24h": 1
+      },
+      "verification_status": "Auto Cleared",
+      "verification_note": "",
+      "verified_by": "",
+      "verified_at": ""
+    },
+    {
+      "id": "ccb1f65c",
+      "created_at": "2026-05-12T11:29:28+00:00",
+      "operator": "admin",
+      "metadata": {
+        "customer_id": "CUST-001",
+        "card_last4": "4242",
+        "merchant": "SuperMart",
+        "merchant_category": "grocery",
+        "country": "US",
+        "channel": "pos",
+        "device_id": "web-laptop-01"
+      },
+      "amount": 45.2,
+      "transaction_date": "2024-01-15",
+      "transaction_time": "09:23:44",
+      "fraud_probability": 0.0,
+      "prediction": 0,
+      "label": "Normal",
+      "threshold": 0.5,
+      "risk_score": 0,
+      "risk_level": "Low",
+      "behavior": {
+        "customer_id": "CUST-001",
+        "signals": [
+          "Behavior matches known customer pattern"
+        ],
+        "behavior_points": 0,
+        "profile_transaction_count": 1,
+        "txn_count_last_1h": 0,
+        "txn_count_last_24h": 0,
+        "amount_avg": 45.2,
+        "is_new_country": 0,
+        "is_new_category": 0
+      },
+      "preprocessing": {
+        "feature_count": 15,
+        "hour": 9,
+        "is_night": 0,
+        "is_weekend": 0,
+        "amount_ratio": 1.0,
+        "txn_count_last_24h": 0
+      },
+      "verification_status": "Auto Cleared",
+      "verification_note": "",
+      "verified_by": "",
+      "verified_at": ""
+    },
+    {
       "id": "d91c7f16",
       "created_at": "2026-05-10T13:13:08+00:00",
       "operator": "admin",
@@ -111,12 +255,14 @@
   ],
   "behavior_profiles": {
     "CUST-001": {
-      "transaction_count": 1,
-      "amount_total": 45.2,
-      "amount_avg": 45.2,
+      "transaction_count": 3,
+      "amount_total": 135.60000000000002,
+      "amount_avg": 45.20000000000001,
       "amount_max": 45.2,
       "recent_timestamps": [
-        1778418785.933663
+        1778418785.933663,
+        1778585368.310025,
+        1778585371.221597
       ],
       "devices": [
         "web-laptop-01"
@@ -129,12 +275,13 @@
       ]
     },
     "CUST-009": {
-      "transaction_count": 1,
-      "amount_total": 500.0,
+      "transaction_count": 2,
+      "amount_total": 1000.0,
       "amount_avg": 500.0,
       "amount_max": 500.0,
       "recent_timestamps": [
-        1778418788.111305
+        1778418788.111305,
+        1778585373.294885
       ],
       "devices": [
         "unknown-device-77"
