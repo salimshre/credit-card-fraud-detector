@@ -1,0 +1,525 @@
+\documentclass[12pt,a4paper]{report}
+
+% ------------ PACKAGE SETTINGS -----------------
+\usepackage[T1]{fontenc}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{float}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{longtable}
+\usepackage{setspace}
+\usepackage{titlesec}
+
+% Page margins
+\geometry{
+    left=1.25in,
+    right=1in,
+    top=1in,
+    bottom=1in
+}
+
+\onehalfspacing
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    citecolor=black,
+    urlcolor=blue
+}
+
+\newcommand{\projecttitle}{Credit Card Fraud Detection}
+\newcommand{\projectsubtitle}{Random Forest Based Fraud Monitoring Dashboard}
+
+\begin{document}
+
+% -----------------------------------------------
+% ROMAN NUMBERING FOR PRELIMINARY PAGES
+% -----------------------------------------------
+\pagenumbering{roman}
+\setcounter{page}{1}
+
+% ------------ TITLE PAGE -----------------------
+\begin{titlepage}
+    \thispagestyle{empty}
+    \centering
+    {\Large \textbf{PROJECT DOCUMENTATION}}\\[1cm]
+
+    {\Large \textbf{\projecttitle}}\\[0.25cm]
+    {\large \textbf{\projectsubtitle}}\\[2cm]
+
+    {\large Submitted by:}\\[0.5cm]
+    {\large \textbf{Santosh Kumar Shah}}\\
+    {\large \textbf{Surya Chand Yadav}}\\
+    {\large \textbf{Salim Shrestha}}\\[1.5cm]
+
+    {\large Submitted to:}\\[0.4cm]
+    {\large \textbf{Department of Computer Engineering}}\\
+    {\large Kantipur City College, Putalisadak, Kathmandu}\\
+    {\large Affiliated to Purbanchal University}\\[1cm]
+
+    {\large \textbf{Supervisor:}}\\
+    {\large Er. Sagar Dhakal}\\[2cm]
+
+    \vfill
+    {\large \textbf{May, 2026}}
+\end{titlepage}
+
+% ------------ DECLARATION PAGE -----------------
+\chapter*{Declaration}
+\addcontentsline{toc}{chapter}{Declaration}
+
+We hereby declare that this project report entitled ``\textbf{\projecttitle}'' submitted to the Department of Computer Engineering is our original work and has not been submitted elsewhere for the award of any degree.
+
+\vspace{1cm}
+\noindent\textbf{Santosh Kumar Shah}\\
+\textbf{Surya Chand Yadav}\\
+\textbf{Salim Shrestha}
+
+\newpage
+
+% ------------ ACKNOWLEDGMENT -------------------
+\chapter*{Acknowledgment}
+\addcontentsline{toc}{chapter}{Acknowledgment}
+
+We would like to express our sincere gratitude to Er. Sagar Dhakal for his guidance and support throughout this project. We also thank the Department of Computer Engineering at Kantipur City College for providing an academic environment in which this work could be planned, implemented, tested, and documented.
+
+\vspace{1cm}
+\begin{flushright}
+\textbf{Santosh Kumar Shah}\\
+\textbf{Surya Chand Yadav}\\
+\textbf{Salim Shrestha}
+\end{flushright}
+
+\newpage
+
+% ------------ ABSTRACT PAGE --------------------
+\chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+
+This project presents a credit card fraud detection system named Fraud Shield. The system combines a trained Random Forest classifier with a Flask-based monitoring dashboard for real-time and batch transaction analysis. Unlike a standalone machine learning script, the application includes operational features that are important in fraud monitoring: authentication, transaction preprocessing, behavior profiling, risk scoring, alert generation, verification workflow, dashboard metrics, CSV upload, and downloadable reports.
+
+The model uses 15 engineered features derived from transaction time, amount, merchant category, channel, country, and customer behavior. Raw transaction records are transformed by a shared feature engineering module, scaled using a fitted StandardScaler, and classified by a RandomForestClassifier saved as \path{fraud_model.pkl}. The application computes a fraud probability, converts it into a model decision using a configurable threshold, combines it with behavior-based signals, and produces a risk score between 0 and 100. The system supports both single transaction checks through the dashboard/API and CSV batch detection through a manual upload workflow.
+
+The training data stored in \path{creditcard_raw.csv} contains 60,994 transactions, including 890 fraud records, giving a fraud rate of approximately 1.46 percent. The model evaluation reported in the repository shows high overall accuracy while preserving strong fraud-class recall. This documentation is based on the implemented repository and the project research paper \cite{shah2025}.
+
+\newpage
+
+% ------------ TABLE OF CONTENTS ----------------
+\tableofcontents
+\newpage
+
+\listoftables
+\newpage
+
+% -----------------------------------------------
+% SWITCH TO ARABIC NUMBERING FOR CHAPTERS
+% -----------------------------------------------
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+% ------------ CHAPTER 1 ------------------------
+\chapter{Introduction}
+
+\section{Overview}
+Credit card fraud detection is a classification problem in which a system must identify whether a transaction is genuine or fraudulent. The difficulty of the task comes from class imbalance, changing fraud behavior, and the need for rapid decisions. The repository implements a practical fraud monitoring dashboard rather than only a notebook experiment. The main application is written in Flask and uses a trained Random Forest model to classify transactions.
+
+The system is organized around the file \path{app.py}. It loads the model artifact \path{fraud_model.pkl} and the scaler artifact \path{scaler.pkl}, accepts transaction inputs, engineers the required features, predicts fraud probability, assigns a risk score, creates alerts, stores monitoring history, and exposes dashboard/reporting APIs. A shared module, \path{feature_engineering.py}, keeps training-time and inference-time feature definitions consistent.
+
+\section{Problem Statement}
+Manual inspection of card transactions is slow and unreliable when transaction volume is high. A fraud detection system must process transactions quickly, recognize risky behavior, reduce missed fraud cases, and still allow human review for high-risk or uncertain cases. The project addresses this problem by building an application that combines machine learning prediction with practical monitoring workflows.
+
+The system must handle two types of input. First, an operator should be able to submit a single transaction through the dashboard and immediately see fraud probability, prediction label, risk score, behavior signals, and verification status. Second, an operator should be able to upload a CSV file containing multiple transactions and receive a processed summary with errors, alerts, and updated dashboard metrics.
+
+\section{Objectives}
+\begin{itemize}
+    \item Develop a Random Forest based classifier for credit card fraud detection.
+    \item Engineer meaningful transaction and behavior features instead of relying only on raw input fields.
+    \item Build a Flask dashboard for authenticated fraud monitoring.
+    \item Provide single transaction prediction and CSV batch fraud detection.
+    \item Generate risk scores, alerts, transaction history, and downloadable CSV reports.
+    \item Maintain consistency between model training and serving through shared feature definitions.
+    \item Provide smoke tests that verify the main application routes and prediction workflow.
+\end{itemize}
+
+\section{Major Features}
+\begin{itemize}
+    \item \textbf{Authentication:} Operators must sign in before accessing prediction and dashboard APIs.
+    \item \textbf{Machine learning prediction:} A Random Forest classifier returns fraud probability and a binary label.
+    \item \textbf{Behavior analysis:} Customer profiles track previous amounts, countries, devices, merchant categories, and recent transaction counts.
+    \item \textbf{Risk scoring:} Model output and behavior signals are combined into a 0 to 100 risk score.
+    \item \textbf{Real-time alerts:} Fraud predictions and high-risk transactions create alert records.
+    \item \textbf{Verification workflow:} Operators can approve, block, review, or mark transactions as false positives.
+    \item \textbf{CSV batch upload:} Multiple transactions can be processed from a structured CSV file.
+    \item \textbf{Reports:} The system can export monitored transactions as \path{fraud_report.csv}.
+\end{itemize}
+
+\section{Scope}
+The scope of this project includes the training and serving of a Random Forest model, a web dashboard, authenticated APIs, persistence through a JSON store, and test coverage through the included smoke-test script. The implementation is suitable for academic demonstration and for explaining how a fraud monitoring workflow can be built around a machine learning model.
+
+\section{Limitations}
+\begin{itemize}
+    \item The repository uses \path{data_store.json} for persistence instead of a production database.
+    \item Authentication uses simple username/password checking and should be strengthened before production use.
+    \item The dataset in the repository is synthetic and may not capture all real banking fraud patterns.
+    \item Model drift, audit logging, encryption, rate limiting, and role-based access control are outside the current implementation.
+    \item The model threshold is configurable but currently uses a default fraud threshold of 0.5.
+\end{itemize}
+
+\section{Organization of the Document}
+Chapter 2 presents the literature and conceptual background. Chapter 3 describes the requirements and feasibility. Chapter 4 explains the methodology, feature engineering, model training, and prediction workflow. Chapter 5 presents the system design. Chapter 6 describes implementation details from the repository. Chapter 7 summarizes testing and results. Chapter 8 concludes the project and lists future enhancements.
+
+% ------------ CHAPTER 2 ------------------------
+\chapter{Literature Review}
+
+\section{Credit Card Fraud Detection}
+Credit card fraud detection is commonly modeled as a supervised binary classification task. Each transaction is represented by features such as amount, time, merchant behavior, channel, and geographical indicators. The target class indicates whether the transaction is fraudulent. A key challenge is class imbalance: fraud transactions usually represent only a small fraction of the full dataset, so a model can obtain high accuracy while still missing important fraud cases.
+
+\section{Machine Learning for Fraud Detection}
+Machine learning methods are useful because they can learn patterns from historical transaction data and generalize to new transactions. Common algorithms include Logistic Regression, Decision Trees, Random Forests, Support Vector Machines, Gradient Boosting models, and neural networks. For an academic fraud detector, Random Forest is a suitable choice because it handles nonlinear relationships, is robust to noisy features, and provides strong performance without the complexity of deep learning.
+
+\section{Random Forest Model}
+Random Forest is an ensemble learning method that builds many decision trees and combines their predictions. Each tree is trained on a bootstrapped sample of the data and considers a random subset of features at each split. This reduces overfitting compared with a single decision tree and improves generalization. In this repository, \path{train_model.py} trains a RandomForestClassifier with 200 trees, class-weight balancing, maximum depth 12, and a fixed random seed for reproducibility.
+
+\section{Behavior-Based Fraud Signals}
+Fraud detection improves when the model considers behavior beyond a single transaction. The implemented system tracks customer-level profiles, including previous transaction count, average amount, maximum amount, known devices, known countries, known merchant categories, and recent transaction velocity. This behavior analysis helps identify suspicious changes such as a new country, a new device, night-time transaction, high amount, or rapid repeated transactions.
+
+\section{Research Basis}
+The project research paper supports the use of machine learning, specifically the Random Forest model, for credit card fraud detection \cite{shah2025}. The repository extends this idea by turning the model into a working monitoring application with dashboard, alerts, verification, batch upload, and report generation.
+
+% ------------ CHAPTER 3 ------------------------
+\chapter{System Analysis}
+
+\section{Existing System}
+Traditional fraud review relies on rule-based checks or manual investigation. These approaches can be useful, but they are limited when fraud behavior changes or transaction volume increases. Static rules may create many false positives or fail to identify new fraud patterns. Manual review also requires significant time and effort.
+
+\section{Proposed System}
+The proposed system is a web-based credit card fraud detector named Fraud Shield. It uses a Random Forest model for prediction and adds a monitoring layer around the model. Each transaction passes through validation, behavior analysis, feature engineering, scaling, model prediction, risk scoring, alert generation, profile update, and persistence. Operators interact with the system through a browser dashboard and API endpoints.
+
+\section{Functional Requirements}
+\begin{longtable}{p{0.26\textwidth} p{0.64\textwidth}}
+\toprule
+\textbf{Requirement} & \textbf{Description} \\
+\midrule
+Login and logout & The system must authenticate operators before protected routes are accessed. \\
+Single prediction & The system must accept transaction details and return fraud probability, label, risk score, and behavior signals. \\
+CSV upload & The system must process CSV files containing multiple transactions. \\
+Dashboard metrics & The system must show total transactions, fraud predictions, high-risk transactions, open alerts, verified transactions, and average risk. \\
+Alert handling & The system must generate and acknowledge alerts for suspicious transactions. \\
+Verification & The system must allow transactions to be approved, blocked, reviewed, or marked as false positives. \\
+Report export & The system must provide a downloadable CSV report of monitored transactions. \\
+\bottomrule
+\end{longtable}
+
+\section{Non-Functional Requirements}
+\begin{itemize}
+    \item \textbf{Usability:} The dashboard should be easy for an operator to use without command-line interaction.
+    \item \textbf{Reliability:} Model and scaler artifacts must load successfully before prediction.
+    \item \textbf{Maintainability:} Training and inference must share the same feature order and feature names.
+    \item \textbf{Performance:} Predictions should be lightweight enough for real-time dashboard use.
+    \item \textbf{Security:} Protected endpoints must reject unauthenticated requests.
+    \item \textbf{Auditability:} Transaction records should include operator, verification status, behavior signals, and timestamps.
+\end{itemize}
+
+\section{Feasibility Study}
+\subsection{Technical Feasibility}
+The project is technically feasible because it uses well-supported Python libraries: Flask for the web application, Pandas and NumPy for data processing, Scikit-learn for machine learning, and Joblib for model persistence. The repository already contains trained artifacts and a smoke-test script, so the system can be run and tested locally.
+
+\subsection{Economic Feasibility}
+The tools used in this project are open source and do not require licensing fees. The system can run on a standard development machine, making it economically feasible for academic demonstration.
+
+\subsection{Operational Feasibility}
+The dashboard design supports operators by presenting prediction results, alerts, and verification actions in one place. CSV batch upload also makes the system practical for testing multiple transactions without writing API calls manually.
+
+% ------------ CHAPTER 4 ------------------------
+\chapter{Methodology}
+
+\section{Dataset}
+The repository contains the dataset file \path{creditcard_raw.csv}. It has 60,994 transaction records covering dates from 2023-01-01 to 2023-12-31. The target column is \path{is_fraud}. The dataset contains 890 fraud transactions, which is approximately 1.46 percent of the data. This imbalance is realistic for fraud detection and is handled through model training choices such as class-weight balancing.
+
+\section{Input Fields}
+The application requires the following transaction fields for prediction:
+\begin{itemize}
+    \item \path{transaction_date}
+    \item \path{transaction_time}
+    \item \path{amount}
+    \item \path{merchant_category}
+    \item \path{country}
+    \item \path{channel}
+\end{itemize}
+
+Optional metadata fields include \path{customer_id}, \path{card_last4}, \path{merchant}, and \path{device_id}. These fields support behavior analysis, dashboard display, and report generation.
+
+\section{Feature Engineering}
+The file \path{feature_engineering.py} defines the model feature list and the function \path{engineer_single_transaction()}. It converts raw transaction data and behavior signals into the exact 15 features expected by the trained model.
+
+\begin{longtable}{p{0.32\textwidth} p{0.58\textwidth}}
+\caption{Model Features}\\
+\toprule
+\textbf{Feature} & \textbf{Meaning} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Feature} & \textbf{Meaning} \\
+\midrule
+\endhead
+\path{hour} & Hour extracted from transaction time. \\
+\path{day_of_week} & Day index extracted from transaction date. \\
+\path{is_weekend} & Indicates Saturday or Sunday. \\
+\path{is_night} & Indicates transaction between 00:00 and 05:59. \\
+\path{amount} & Transaction amount. \\
+\path{amount_log} & Natural log transform of amount using \path{log1p}. \\
+\path{merchant_category_enc} & Encoded merchant category. \\
+\path{channel_enc} & Encoded transaction channel. \\
+\path{country_enc} & Encoded country. \\
+\path{txn_count_last_1h} & Previous customer transactions in the last hour. \\
+\path{txn_count_last_24h} & Previous customer transactions in the last 24 hours. \\
+\path{avg_amount_prev} & Customer average amount before the current transaction. \\
+\path{amount_ratio} & Current amount divided by previous average amount. \\
+\path{is_new_country} & Indicates a country not previously seen for the customer. \\
+\path{is_new_category} & Indicates a merchant category not previously seen for the customer. \\
+\bottomrule
+\end{longtable}
+
+\section{Model Training}
+Training is implemented in \path{train_model.py}. The script loads \path{creditcard_raw.csv}, validates required columns, computes the engineered features, scales them with StandardScaler, splits the data using a stratified 80/20 train-test split, and trains a RandomForestClassifier.
+
+\begin{table}[H]
+\centering
+\caption{Random Forest Training Configuration}
+\begin{tabular}{ll}
+\toprule
+\textbf{Parameter} & \textbf{Value} \\
+\midrule
+Model & RandomForestClassifier \\
+Number of trees & 200 \\
+Class weight & balanced \\
+Maximum depth & 12 \\
+Random state & 42 \\
+Parallel jobs & -1 \\
+Test size & 20 percent \\
+Cross-validation & 5-fold StratifiedKFold recall \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Prediction Pipeline}
+The application prediction pipeline is implemented by \path{monitor_transaction()} in \path{app.py}. The workflow is:
+\begin{enumerate}
+    \item Validate and sanitize the incoming transaction.
+    \item Load the customer behavior profile before updating it.
+    \item Analyze behavior signals such as new device, new country, high amount, and transaction velocity.
+    \item Engineer the 15 model features.
+    \item Scale features using \path{scaler.pkl}.
+    \item Predict fraud probability using \path{fraud_model.pkl}.
+    \item Convert probability into a binary prediction using the configured threshold.
+    \item Calculate risk score and risk level.
+    \item Create an alert when the transaction is model-flagged or high risk.
+    \item Update the customer behavior profile.
+    \item Save transaction, alert, and profile state to \path{data_store.json}.
+\end{enumerate}
+
+\section{Risk Score Calculation}
+The risk score combines model probability, model decision, and behavior risk points. The implemented calculation is:
+\[
+\text{risk score} = \min(100, \text{round}(72p + f + b))
+\]
+where \(p\) is the model fraud probability, \(f\) is 10 when the model predicts fraud and 0 otherwise, and \(b\) is the behavior component capped at 28 points.
+
+Risk levels are assigned as follows:
+\begin{itemize}
+    \item Low: score below 35
+    \item Medium: score from 35 to 64
+    \item High: score from 65 to 84
+    \item Critical: score 85 or above
+\end{itemize}
+
+% ------------ CHAPTER 5 ------------------------
+\chapter{System Design}
+
+\section{Architecture}
+The system follows a client-server architecture. The browser dashboard communicates with the Flask backend. The backend validates transactions, runs preprocessing, uses the machine learning artifacts, updates in-memory and JSON-based state, and returns JSON responses to the frontend.
+
+\begin{table}[H]
+\centering
+\caption{Main Repository Components}
+\begin{tabular}{p{0.32\textwidth} p{0.58\textwidth}}
+\toprule
+\textbf{Component} & \textbf{Purpose} \\
+\midrule
+\path{app.py} & Flask server, routes, authentication, prediction pipeline, alerts, reports, and persistence. \\
+\path{feature_engineering.py} & Shared feature definitions and single-transaction feature engineering. \\
+\path{train_model.py} & Retraining script for model and scaler artifacts. \\
+\path{fraud_model.pkl} & Trained Random Forest classifier. \\
+\path{scaler.pkl} & Fitted StandardScaler for the 15 model features. \\
+\path{templates/index.html} & Dashboard UI for login, prediction, CSV upload, alerts, and verification. \\
+\path{smoke_test.py} & End-to-end checks for the Flask application. \\
+\path{sample_upload.csv} & Example CSV file for batch detection. \\
+\path{sample_transactions.json} & Example normal and fraud transaction payloads. \\
+\path{data_store.json} & Runtime persistence for transactions, alerts, and behavior profiles. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Data Flow}
+The data flow begins when an operator submits a transaction through the dashboard or uploads a CSV file. For each transaction, the backend creates a sanitized transaction object and metadata object. It then analyzes customer behavior, engineers the model features, applies scaling, predicts fraud probability, calculates risk, creates alerts if necessary, updates the behavior profile, and saves the resulting record.
+
+\section{API Design}
+\begin{longtable}{p{0.12\textwidth} p{0.30\textwidth} p{0.48\textwidth}}
+\caption{Application Routes}\\
+\toprule
+\textbf{Method} & \textbf{Endpoint} & \textbf{Purpose} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Method} & \textbf{Endpoint} & \textbf{Purpose} \\
+\midrule
+\endhead
+GET & \path{/} & Render login page or dashboard. \\
+POST & \path{/login} & Authenticate operator. \\
+POST & \path{/logout} & Clear session. \\
+GET & \path{/health} & Return application status, threshold, model files, and feature list. \\
+POST & \path{/predict} & Process one transaction and return fraud/risk result. \\
+GET & \path{/api/dashboard} & Return dashboard metrics, recent transactions, alerts, and profiles. \\
+GET & \path{/api/transactions} & Return monitored transactions. \\
+GET & \path{/api/alerts} & Return active alerts. \\
+POST & \path{/api/alerts/<alert_id>/acknowledge} & Mark an alert as acknowledged. \\
+POST & \path{/api/transactions/<transaction_id>/verify} & Update transaction verification status. \\
+GET & \path{/api/sample-csv} & Download sample batch upload CSV. \\
+POST & \path{/api/upload-csv} & Process uploaded CSV transactions. \\
+GET & \path{/api/report.csv} & Download monitored transaction report. \\
+\bottomrule
+\end{longtable}
+
+\section{Persistence Design}
+The application stores runtime state in memory and writes it to \path{data_store.json}. The state includes monitored transactions, alerts, and behavior profiles. Profiles contain transaction counts, amount statistics, recent timestamps, known devices, known countries, and known merchant categories. This design is simple and adequate for a demonstration project, but a production system should use a database.
+
+\section{User Interface Design}
+The dashboard in \path{templates/index.html} contains the following major areas:
+\begin{itemize}
+    \item Login panel for unauthenticated users.
+    \item Transaction monitoring form for single prediction.
+    \item Prediction result cards for label, fraud probability, risk score, and verification status.
+    \item CSV upload panel for batch fraud detection.
+    \item Behavior signals and preprocessing summary.
+    \item Alert queue and dashboard metrics.
+    \item Recent transaction table with verification actions.
+\end{itemize}
+
+% ------------ CHAPTER 6 ------------------------
+\chapter{Implementation}
+
+\section{Development Environment}
+The project is implemented in Python. The required dependencies are listed in \path{requirements.txt}: Flask, Pandas, NumPy, Scikit-learn, and Joblib. The application runs locally with:
+\begin{verbatim}
+python app.py
+\end{verbatim}
+and serves the dashboard at \path{http://127.0.0.1:5000/}.
+
+\section{Authentication}
+The application uses session-based authentication. The default credentials are \path{admin} and \path{admin123}. These values can be changed through environment variables \path{APP_USERNAME} and \path{APP_PASSWORD}. Protected endpoints use the \path{require_auth} decorator, which returns HTTP 401 for unauthenticated requests.
+
+\section{Transaction Validation}
+The function \path{parse_transaction()} validates required fields and ensures that \path{amount} is a non-negative finite number. It also fills optional metadata with safe defaults when values are missing. This prevents the model pipeline from receiving incomplete or malformed transaction objects.
+
+\section{Feature Encoding}
+The feature engineering module contains fixed category lists for merchant categories, channels, and countries. Unknown values are mapped to the final \path{other} category. The order of these lists is important because the encoded integer values are part of the model input.
+
+\section{Behavior Analysis}
+The function \path{analyze_behavior()} computes behavior points and signal descriptions. It checks whether the customer is new, whether the amount is much higher than previous average, whether the device, country, or merchant category is new, whether recent transaction count is high, whether the amount is large, and whether the transaction occurs at night.
+
+\section{Prediction and Risk}
+The \path{score_ml()} function calls \path{predict_proba()} on the Random Forest model and uses the configured threshold to decide whether the transaction is fraud. The \path{calculate_risk()} function combines model probability and behavior points to produce the final operational risk score. This means an unusual but model-benign transaction can still become high risk if behavior indicators are strong.
+
+\section{Alerts and Verification}
+The system creates an alert when the transaction is predicted as fraud or when the risk score is at least 65. High-risk transactions are placed in \path{Pending Review}. Operators can update verification status through the dashboard as Approved, Blocked, Reviewed, or False Positive. When a transaction is verified, related alerts are acknowledged.
+
+\section{CSV Batch Detection}
+The CSV upload endpoint reads an uploaded file with Pandas, enforces a maximum of 500 rows, checks required columns, and processes each row through the same monitoring pipeline used by single prediction. Each successful row returns transaction ID, customer ID, amount, label, fraud probability, risk score, risk level, and verification status.
+
+\section{Reporting}
+The report endpoint creates a CSV file with transaction ID, timestamp, customer ID, merchant, amount, fraud probability, model prediction, risk score, risk level, verification status, and behavior signals. This makes the dashboard output easy to preserve or analyze in spreadsheet software.
+
+% ------------ CHAPTER 7 ------------------------
+\chapter{Testing and Results}
+
+\section{Smoke Testing}
+The repository includes \path{smoke_test.py}, which uses the Flask test client for end-to-end checks. The script verifies:
+\begin{itemize}
+    \item \path{/health} returns status 200 and a valid feature count.
+    \item Login succeeds with correct credentials and fails with wrong credentials.
+    \item A normal sample transaction returns the expected Normal label.
+    \item A fraud sample transaction returns the expected Fraud label.
+    \item Fraud probability is within the range 0 to 1.
+    \item Risk score is within the range 0 to 100.
+    \item Behavior and preprocessing fields are present.
+    \item Dashboard, sample CSV, CSV upload, report download, logout, and authentication checks work.
+\end{itemize}
+
+\section{Model Evaluation}
+The model performance reported in the repository is based on a 20 percent stratified test split. The dataset contains 60,994 synthetic transactions with 890 fraud transactions. The reported confusion matrix is shown below.
+
+\begin{table}[H]
+\centering
+\caption{Confusion Matrix}
+\begin{tabular}{lcc}
+\toprule
+ & \textbf{Predicted Normal} & \textbf{Predicted Fraud} \\
+\midrule
+\textbf{Actual Normal} & 12005 & 16 \\
+\textbf{Actual Fraud} & 12 & 166 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Classification Report}
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Class} & \textbf{Precision} & \textbf{Recall} & \textbf{F1-score} & \textbf{Support} \\
+\midrule
+Normal & 0.999 & 0.999 & 0.999 & 12021 \\
+Fraud & 0.912 & 0.933 & 0.922 & 178 \\
+\midrule
+Accuracy & \multicolumn{3}{c}{0.998} & 12199 \\
+Macro average & 0.956 & 0.966 & 0.961 & 12199 \\
+Weighted average & 0.998 & 0.998 & 0.998 & 12199 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The repository reports a 5-fold cross-validation recall of \(0.9242 \pm 0.0271\). These results indicate that the model detects most fraudulent transactions while keeping false positives low enough for dashboard-based verification.
+
+\section{Sample Input Results}
+The repository includes two sample JSON payloads. The normal sample uses a grocery transaction of 45.20 in the United States. The fraud sample uses a cash transaction of 500.00 from Russia at night on an unknown device. The smoke test expects the first sample to be classified as Normal and the second as Fraud.
+
+\section{Discussion}
+The combination of model probability and behavior analysis is important. The Random Forest provides the statistical prediction, while behavior scoring provides operational context. This design supports practical fraud review by exposing both the model output and the reasons a transaction may be risky.
+
+% ------------ CHAPTER 8 ------------------------
+\chapter{Conclusion and Future Work}
+
+\section{Conclusion}
+The project successfully implements a credit card fraud detection system using a Random Forest model and a Flask dashboard. The repository demonstrates an end-to-end workflow: data preparation, feature engineering, model training, prediction serving, risk scoring, alerting, verification, CSV batch detection, and reporting. By using shared feature definitions, the project reduces the risk of mismatch between model training and application inference.
+
+The system is suitable for academic demonstration because it is runnable, testable, and connected to an operator-facing interface. The model evaluation shows strong performance on the available dataset, and the dashboard provides the workflow needed to inspect, verify, and report suspicious transactions.
+
+\section{Future Enhancements}
+\begin{itemize}
+    \item Replace \path{data_store.json} with PostgreSQL or MySQL for reliable persistence.
+    \item Add hashed passwords, role-based access control, and stronger session security.
+    \item Add audit logs for all alert and verification actions.
+    \item Add model versioning and store which model scored each transaction.
+    \item Monitor model drift and retrain with real-world transaction data.
+    \item Add explainability features such as feature importance or per-transaction explanations.
+    \item Add API rate limiting and HTTPS deployment configuration.
+    \item Expand testing with unit tests for feature engineering and risk scoring.
+\end{itemize}
+
+% ------------ REFERENCES -----------------------
+\addcontentsline{toc}{chapter}{References}
+\renewcommand{\bibname}{References}
+\bibliographystyle{unsrt}
+\bibliography{CreditCard}
+
+\end{document}
