@@ -1,0 +1,48 @@
+This is BibTeX, Version 0.99e
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: Creditcard.aux
+Reallocating 'name_of_file' (item size: 1) to 6 items.
+The style file: unsrt.bst
+Reallocating 'name_of_file' (item size: 1) to 11 items.
+Database file #1: CreditCard.bib
+You've used 1 entry,
+            1791 wiz_defined-function locations,
+            453 strings with 3795 characters,
+and the built_in function-call counts, 185 in all, are:
+= -- 16
+> -- 11
+< -- 0
++ -- 4
+- -- 3
+* -- 10
+:= -- 43
+add.period$ -- 4
+call.type$ -- 1
+change.case$ -- 2
+chr.to.int$ -- 0
+cite$ -- 1
+duplicate$ -- 6
+empty$ -- 13
+format.name$ -- 3
+if$ -- 36
+int.to.chr$ -- 0
+int.to.str$ -- 1
+missing$ -- 0
+newline$ -- 9
+num.names$ -- 1
+pop$ -- 0
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 0
+skip$ -- 1
+stack$ -- 0
+substring$ -- 0
+swap$ -- 0
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 0
+warning$ -- 0
+while$ -- 1
+width$ -- 2
+write$ -- 16
