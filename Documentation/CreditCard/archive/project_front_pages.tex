@@ -1,0 +1,238 @@
+%% ============================================================
+%%  Project Report Front Pages — File Encryptor in C++
+%%  Purbanchal University | Kantipur City College
+%%  Compile on Overleaf with pdfLaTeX
+%% ============================================================
+\documentclass[12pt, a4paper]{report}
+
+%% ---------- Packages ----------
+\usepackage[a4paper, top=2.5cm, bottom=2.5cm, left=3cm, right=2.5cm]{geometry}
+\usepackage{graphicx}          % \includegraphics
+\usepackage{setspace}          % \onehalfspacing, \doublespacing
+\usepackage{ragged2e}          % \Centering, \RaggedRight
+\usepackage{booktabs}          % nicer tables
+\usepackage{array}             % extended column types
+\usepackage{parskip}           % space between paragraphs
+\usepackage{microtype}         % better justification
+\usepackage{fontenc}           % T1 fonts
+\usepackage{inputenc}          % UTF-8 input
+\usepackage{hyperref}          % clickable links (load last)
+\hypersetup{colorlinks=false, pdfborder={0 0 0}}
+
+\setlength{\parindent}{0pt}
+
+%% ============================================================
+\begin{document}
+
+%% ============================================================
+%% PAGE 1 — TITLE PAGE (Cover)
+%% ============================================================
+\begin{titlepage}
+  \centering
+  \vspace*{1.5cm}
+
+  {\large A Project Report}\\[0.4cm]
+  {\large on}\\[0.6cm]
+  {\LARGE \textbf{File Encryptor in C++}}\\[2cm]
+
+  {\normalsize Submitted in partial fulfillment of the requirement of PROJECT}\\[0.2cm]
+  {\normalsize \textbf{PROJECT-II (BCE5017)}}\\[0.2cm]
+  {\normalsize of}\\[0.2cm]
+  {\normalsize Bachelor in Computer Engineering}\\[2cm]
+
+  {\large \textbf{Submitted to}}\\[0.6cm]
+
+  %% University logo — replace with your actual logo file
+  %% Upload "pu_logo.png" to Overleaf and uncomment the next line:
+  % \includegraphics[width=3.5cm]{pu_logo.png}\\[0.4cm]
+
+  {\large Purbanchal University}\\[0.2cm]
+  {\large Biratnagar, Nepal}\\[2cm]
+
+  {\large \textbf{Submitted By}}\\[0.4cm]
+  Salim Shrestha (731759)\\[0.1cm]
+  Saraswati Rokaya\\[0.1cm]
+  Aayush Kumar Mallik\\[2cm]
+
+  {\large \textbf{Project Supervisor}}\\[0.4cm]
+  Mr. Kiran Khanal\\
+  Senior Assistant Professor\\[1.5cm]
+
+  {\large \textbf{KANTIPUR CITY COLLEGE}}\\
+  Putalisadak, Kathmandu
+
+\end{titlepage}
+
+%% ============================================================
+%% ROMAN-NUMERAL FRONT-MATTER
+%% ============================================================
+\pagenumbering{roman}
+\setcounter{page}{2}           % adjust starting number as needed
+\onehalfspacing
+
+%% ============================================================
+%% ABSTRACT
+%% ============================================================
+\chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+
+This project \textit{"File Encryptor in C++"} demonstrates the encryption and decryption of
+files using the Caesar Cipher algorithm. It incorporates core programming concepts such as
+file handling and user interaction. A graphical interface built with the WinBGIm library
+provides visual feedback, sound effects, and a history log for all operations.
+
+The system allows users to select files, apply encryption or decryption, and save outputs
+while supporting text, numbers, and punctuation. Additional features include loading
+animations, error handling, and an intuitive menu-based design. Although the Caesar Cipher
+offers limited security, it serves as an educational model to understand cryptographic basics
+and practical implementation.
+
+This work aims to help beginners grasp the fundamentals of cryptography while offering a
+foundation for future enhancements, such as stronger algorithms and cross-platform
+compatibility.
+
+\newpage
+
+%% ============================================================
+%% ACKNOWLEDGEMENT
+%% ============================================================
+\chapter*{Acknowledgement}
+\addcontentsline{toc}{chapter}{Acknowledgement}
+
+We would like to express our sincere gratitude to all those who supported and guided us in
+the successful completion of this project titled \textit{"File Encryptor in C++"}.
+
+First and foremost, we extend our deepest appreciation to our supervisor \textbf{Mr.~Kiran
+Khanal} for his invaluable guidance, constructive feedback, and continuous encouragement
+throughout the development process. His expertise and mentorship were instrumental in
+shaping the direction and quality of this work.
+
+We also wish to express our heartfelt thanks to \textbf{Mr.~Nishan Lamichhane} who taught
+us C Programming in the first semester and C++ Programming in the second semester. His
+dedication to teaching and the solid foundation he provided in programming concepts have
+been vital to the successful execution of this project.
+
+Furthermore, we are grateful to the faculty members and staff of the Department of Computer
+Engineering for providing the necessary resources and a supportive learning environment. We
+sincerely appreciate the suggestions, cooperation, and moral support from our classmates and
+friends.
+
+Lastly, we owe our deepest thanks to our families for their patience, understanding, and
+unwavering encouragement throughout this journey.
+
+\newpage
+
+%% ============================================================
+%% DECLARATION
+%% ============================================================
+\chapter*{Declaration}
+\addcontentsline{toc}{chapter}{Declaration}
+
+We hereby declare that the project report entitled \textit{"File Encryptor in C++"}, submitted
+in partial fulfillment of the requirements for the degree of Bachelor of Engineering in
+Computer Engineering, is the result of our original work carried out under the supervision of
+\textbf{Mr.~Kiran Khanal}.
+
+We affirm that:
+
+\begin{enumerate}
+  \item This work has not been submitted previously for the award of any degree, diploma, or
+        similar title at any other institution or university. In accordance with academic and
+        ethical standards, proper acknowledgements have been given wherever the work of
+        others has been referenced.
+
+  \item The project complies with the rules and regulations of Purbanchal University and
+        Kantipur City College.
+\end{enumerate}
+
+We understand that any violation of academic integrity may result in disciplinary action.
+
+\vspace{1.5cm}
+
+\textbf{Signatures:}
+
+\vspace{0.5cm}
+
+\begin{tabular}{>{\bfseries}p{5cm} p{4cm} p{3.5cm}}
+  \toprule
+  Name & Signature & Date \\
+  \midrule
+  Salim Shrestha    & \rule{3cm}{0.4pt} & 15 August 2025 \\[0.8cm]
+  Saraswati Rokaya  & \rule{3cm}{0.4pt} & 15 August 2025 \\[0.8cm]
+  Aayush Kumar Mallik & \rule{3cm}{0.4pt} & 15 August 2025 \\
+  \bottomrule
+\end{tabular}
+
+\newpage
+
+%% ============================================================
+%% SUPERVISOR'S APPROVAL
+%% ============================================================
+\chapter*{Supervisor's Approval}
+\addcontentsline{toc}{chapter}{Supervisor's Approval}
+
+This is to certify that the major project entitled \textit{"File Encryptor in C++"}, undertaken
+and successfully demonstrated by \textbf{Salim Shrestha}, \textbf{Saraswati Rokaya}, and
+\textbf{Aayush Kumar Mallik}, has been completed under my guidance.
+
+This project is submitted as partial fulfillment of the requirements for the degree of Bachelor
+of Engineering in Computer Engineering under Purbanchal University. Throughout the
+duration of the project, the students have demonstrated dedication, strong technical skills,
+and a clear understanding of the subject matter.
+
+Their performance during the development and presentation of the project reflects their
+readiness to take on professional responsibilities in the field. I hereby approve this project
+for certification by the concerned authority.
+
+\vspace{2cm}
+
+\noindent\rule{5cm}{0.4pt}\\[0.2cm]
+\textbf{Mr.~Kiran Khanal}\\
+Senior Assistant Professor\\[0.4cm]
+Date: 15 August 2025
+
+\newpage
+
+%% ============================================================
+%% CERTIFICATE FROM DEPARTMENT
+%% ============================================================
+\chapter*{Certificate from Department}
+\addcontentsline{toc}{chapter}{Certificate from Department}
+
+This is to certify that, following the Supervisor's Approval and Examiners' Acceptance, the
+project entitled \textit{"File Encryptor in C++"}, submitted by \textbf{Salim Shrestha},
+\textbf{Saraswati Rokaya}, and \textbf{Aayush Kumar Mallik}, has been officially approved as
+a partial fulfillment of the requirements for the degree of Bachelor of Engineering in Computer
+Engineering under Purbanchal University. The department acknowledges the students' efforts
+and successful completion of the project.
+
+We commend their work and wish them continued success in all their future endeavors.
+
+\vspace{2cm}
+
+\noindent\rule{5cm}{0.4pt}\\[0.2cm]
+\textbf{Er.~Subash Rajkarnikar}\\
+Head of Department,\\
+Department of Computer Engineering,\\
+Kantipur City College\\[0.4cm]
+Date: 2025-08-15
+
+\newpage
+
+%% ============================================================
+%% TABLE OF CONTENTS  (optional — delete if not needed)
+%% ============================================================
+\tableofcontents
+
+%% ============================================================
+%% MAIN BODY STARTS HERE
+%% ============================================================
+\newpage
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+%% Add your chapters below, e.g.:
+% \chapter{Introduction}
+% \input{chapters/introduction}
+
+\end{document}

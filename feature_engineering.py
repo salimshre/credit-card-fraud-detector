@@ -62,8 +62,9 @@ MODEL_FEATURES = [
 def encode_category(value: object, category_list: list) -> int:
     """Return the index of *value* in *category_list*, or the last index."""
     v = str(value).lower().strip()
+    normalized_categories = [str(item).lower().strip() for item in category_list]
     try:
-        return category_list.index(v)
+        return normalized_categories.index(v)
     except ValueError:
         return len(category_list) - 1          # catch-all "other" slot
 

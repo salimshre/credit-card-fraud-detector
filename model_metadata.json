@@ -1,0 +1,164 @@
+{
+  "trained_at": "2026-05-20T16:45:24+00:00",
+  "dataset": "creditcard_raw.csv",
+  "rows": 59978,
+  "fraud_rows": 922,
+  "split": "chronological_70_15_15",
+  "features": [
+    "hour",
+    "day_of_week",
+    "is_weekend",
+    "is_night",
+    "amount",
+    "amount_log",
+    "merchant_category_enc",
+    "channel_enc",
+    "country_enc",
+    "txn_count_last_1h",
+    "txn_count_last_24h",
+    "avg_amount_prev",
+    "amount_ratio",
+    "is_new_country",
+    "is_new_category"
+  ],
+  "model": "RandomForestClassifier",
+  "model_params": {
+    "n_estimators": 200,
+    "class_weight": "balanced",
+    "max_depth": 12,
+    "random_state": 42,
+    "n_jobs": -1
+  },
+  "recommended_threshold": 0.4489721377589445,
+  "threshold_selection": {
+    "selection_rule": "max_fbeta_with_min_precision",
+    "beta": 2.0,
+    "min_precision": 0.55,
+    "precision": 0.5581395348837209,
+    "recall": 0.5142857142857142,
+    "fbeta": 0.5224963715529752
+  },
+  "validation_metrics": {
+    "threshold": 0.4489721377589445,
+    "precision": 0.5581395348837209,
+    "recall": 0.5142857142857142,
+    "f1": 0.5353159851301115,
+    "f2": 0.5224963715529753,
+    "pr_auc": 0.5446215356031663,
+    "roc_auc": 0.9363578444813626
+  },
+  "test_metrics": {
+    "threshold": 0.4489721377589445,
+    "precision": 0.4230769230769231,
+    "recall": 0.4782608695652174,
+    "f1": 0.4489795918367347,
+    "f2": 0.4661016949152542,
+    "pr_auc": 0.5215726102586757,
+    "roc_auc": 0.9495755565043983
+  },
+  "confusion_matrix": [
+    [
+      8769,
+      90
+    ],
+    [
+      72,
+      66
+    ]
+  ],
+  "classification_report": {
+    "0": {
+      "precision": 0.991856124872752,
+      "recall": 0.9898408398239079,
+      "f1-score": 0.9908474576271187,
+      "support": 8859.0
+    },
+    "1": {
+      "precision": 0.4230769230769231,
+      "recall": 0.4782608695652174,
+      "f1-score": 0.4489795918367347,
+      "support": 138.0
+    },
+    "accuracy": 0.9819939979993331,
+    "macro avg": {
+      "precision": 0.7074665239748376,
+      "recall": 0.7340508546945627,
+      "f1-score": 0.7199135247319267,
+      "support": 8997.0
+    },
+    "weighted avg": {
+      "precision": 0.9831319357154968,
+      "recall": 0.9819939979993331,
+      "f1-score": 0.982536046547973,
+      "support": 8997.0
+    }
+  },
+  "chronological_cv": {
+    "folds": [
+      {
+        "threshold": 0.4489721377589445,
+        "precision": 0.7894736842105263,
+        "recall": 0.22388059701492538,
+        "f1": 0.3488372093023256,
+        "f2": 0.2613240418118467,
+        "pr_auc": 0.4496531272467073,
+        "roc_auc": 0.9342097512913786,
+        "fold": 1,
+        "validation_rows": 8496,
+        "validation_fraud_rows": 134
+      },
+      {
+        "threshold": 0.4489721377589445,
+        "precision": 0.6842105263157895,
+        "recall": 0.2689655172413793,
+        "f1": 0.38613861386138615,
+        "f2": 0.30612244897959184,
+        "pr_auc": 0.45522636457001386,
+        "roc_auc": 0.9284995808885164,
+        "fold": 2,
+        "validation_rows": 8496,
+        "validation_fraud_rows": 145
+      },
+      {
+        "threshold": 0.4489721377589445,
+        "precision": 0.5921052631578947,
+        "recall": 0.3629032258064516,
+        "f1": 0.45,
+        "f2": 0.39335664335664333,
+        "pr_auc": 0.48026458792447735,
+        "roc_auc": 0.9419050444646518,
+        "fold": 3,
+        "validation_rows": 8496,
+        "validation_fraud_rows": 124
+      },
+      {
+        "threshold": 0.4489721377589445,
+        "precision": 0.5757575757575758,
+        "recall": 0.456,
+        "f1": 0.5089285714285714,
+        "f2": 0.4757929883138564,
+        "pr_auc": 0.537463921409269,
+        "roc_auc": 0.9375453350854139,
+        "fold": 4,
+        "validation_rows": 8496,
+        "validation_fraud_rows": 125
+      },
+      {
+        "threshold": 0.4489721377589445,
+        "precision": 0.5701754385964912,
+        "recall": 0.5038759689922481,
+        "f1": 0.5349794238683128,
+        "f2": 0.5158730158730159,
+        "pr_auc": 0.5462459162748168,
+        "roc_auc": 0.9368393550521011,
+        "fold": 5,
+        "validation_rows": 8496,
+        "validation_fraud_rows": 129
+      }
+    ],
+    "recall_mean": 0.36312506181100085,
+    "recall_std": 0.1064816059580916,
+    "pr_auc_mean": 0.4937707834850569,
+    "pr_auc_std": 0.04068706674841844
+  }
+}

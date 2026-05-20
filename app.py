@@ -32,9 +32,39 @@ app.secret_key = os.getenv("SECRET_KEY", "change-this-demo-secret")
 BASE_DIR    = Path(__file__).resolve().parent
 MODEL_PATH  = BASE_DIR / "fraud_model.pkl"
 SCALER_PATH = BASE_DIR / "scaler.pkl"
-STORE_PATH  = BASE_DIR / "data_store.json"    # persistence file
+METADATA_PATH = BASE_DIR / "model_metadata.json"
 
-THRESHOLD = float(os.getenv("FRAUD_THRESHOLD", "0.5"))
+DEFAULT_STORE_PATH = BASE_DIR / "instance" / "data_store.json"
+LEGACY_STORE_PATH  = BASE_DIR / "data_store.json"
+
+
+def _resolve_store_path() -> Path:
+    configured = os.getenv("FRAUD_STORE_PATH")
+    if not configured:
+        return DEFAULT_STORE_PATH
+    path = Path(configured).expanduser()
+    return path if path.is_absolute() else BASE_DIR / path
+
+
+STORE_PATH = _resolve_store_path()
+
+def _load_threshold() -> float:
+    configured = os.getenv("FRAUD_THRESHOLD")
+    if configured not in (None, ""):
+        return float(configured)
+
+    if not METADATA_PATH.exists():
+        return 0.5
+
+    try:
+        metadata = json.loads(METADATA_PATH.read_text(encoding="utf-8"))
+        return float(metadata.get("recommended_threshold", 0.5))
+    except (OSError, TypeError, ValueError, json.JSONDecodeError) as exc:
+        logger.warning("Could not load model threshold from metadata: %s", exc)
+        return 0.5
+
+
+THRESHOLD = _load_threshold()
 
 APP_USERNAME = os.getenv("APP_USERNAME", "admin")
 APP_PASSWORD = os.getenv("APP_PASSWORD", "admin123")
@@ -83,6 +113,7 @@ def _dict_to_profile(d: dict) -> dict:
 def save_state() -> None:
     """Persist TRANSACTIONS, ALERTS, and BEHAVIOR_PROFILES to disk."""
     try:
+        STORE_PATH.parent.mkdir(parents=True, exist_ok=True)
         state = {
             "transactions":      TRANSACTIONS,
             "alerts":            ALERTS,
@@ -99,10 +130,14 @@ def save_state() -> None:
 
 def load_state() -> None:
     """Load persisted state from disk on startup."""
-    if not STORE_PATH.exists():
+    load_path = STORE_PATH
+    if not load_path.exists() and STORE_PATH == DEFAULT_STORE_PATH and LEGACY_STORE_PATH.exists():
+        load_path = LEGACY_STORE_PATH
+
+    if not load_path.exists():
         return
     try:
-        state = json.loads(STORE_PATH.read_text(encoding="utf-8"))
+        state = json.loads(load_path.read_text(encoding="utf-8"))
         TRANSACTIONS[:] = state.get("transactions", [])
         ALERTS[:]       = state.get("alerts", [])
         BEHAVIOR_PROFILES.update(
@@ -110,8 +145,8 @@ def load_state() -> None:
              for k, v in state.get("behavior_profiles", {}).items()}
         )
         logger.info(
-            "Loaded %d transactions, %d alerts, %d profiles.",
-            len(TRANSACTIONS), len(ALERTS), len(BEHAVIOR_PROFILES),
+            "Loaded %d transactions, %d alerts, %d profiles from %s.",
+            len(TRANSACTIONS), len(ALERTS), len(BEHAVIOR_PROFILES), load_path,
         )
     except Exception as exc:
         logger.warning("Could not load state: %s", exc)
@@ -127,7 +162,14 @@ def load_artifacts():
     missing = [p.name for p in (MODEL_PATH, SCALER_PATH) if not p.exists()]
     if missing:
         raise FileNotFoundError(f"Missing required file(s): {', '.join(missing)}")
-    return joblib.load(MODEL_PATH), joblib.load(SCALER_PATH)
+    loaded_model = joblib.load(MODEL_PATH)
+    loaded_scaler = joblib.load(SCALER_PATH)
+    if hasattr(loaded_model, "set_params"):
+        try:
+            loaded_model.set_params(n_jobs=1)
+        except ValueError:
+            pass
+    return loaded_model, loaded_scaler
 
 
 model, scaler = load_artifacts()
@@ -166,6 +208,39 @@ def sanitize_text(value: object, default: str) -> str:
 
 
 # ── Behavior helpers ──────────────────────────────────────────────────────────
+
+def require_text(value: object, field: str) -> str:
+    cleaned = sanitize_text(value, "")
+    if not cleaned:
+        raise ValueError(f"{field} must not be empty.")
+    return cleaned
+
+
+def normalize_transaction_date(value: object) -> str:
+    cleaned = require_text(value, "transaction_date")
+    try:
+        datetime.strptime(cleaned, "%Y-%m-%d")
+    except ValueError:
+        raise ValueError("transaction_date must use YYYY-MM-DD format.")
+    return cleaned
+
+
+def normalize_transaction_time(value: object) -> str:
+    cleaned = require_text(value, "transaction_time")
+    parts = cleaned.split(":")
+    if len(parts) == 2:
+        cleaned = f"{parts[0].zfill(2)}:{parts[1].zfill(2)}:00"
+    elif len(parts) == 3:
+        cleaned = ":".join(part.zfill(2) for part in parts)
+    else:
+        raise ValueError("transaction_time must use HH:MM or HH:MM:SS format.")
+
+    try:
+        datetime.strptime(cleaned, "%H:%M:%S")
+    except ValueError:
+        raise ValueError("transaction_time must use HH:MM or HH:MM:SS format.")
+    return cleaned
+
 
 def _count_recent_both(profile: dict) -> tuple[int, int]:
     """
@@ -311,7 +386,8 @@ def preprocess_transaction(txn: dict, behavior: dict):
 
 
 def score_ml(prepared_df) -> tuple[float, int]:
-    probability = float(model.predict_proba(prepared_df)[0, 1])
+    model_input = prepared_df.to_numpy() if hasattr(prepared_df, "to_numpy") else prepared_df
+    probability = float(model.predict_proba(model_input)[0, 1])
     prediction  = int(probability >= THRESHOLD)
     return probability, prediction
 
@@ -373,12 +449,12 @@ def parse_transaction(payload: object) -> tuple[dict, dict]:
         raise ValueError("amount must be a non-negative finite number.")
 
     txn = {
-        "transaction_date": sanitize_text(payload.get("transaction_date"), "2024-01-01"),
-        "transaction_time": sanitize_text(payload.get("transaction_time"), "12:00:00"),
+        "transaction_date": normalize_transaction_date(payload.get("transaction_date")),
+        "transaction_time": normalize_transaction_time(payload.get("transaction_time")),
         "amount":           amount,
-        "merchant_category": sanitize_text(payload.get("merchant_category"), "other"),
-        "country":          sanitize_text(payload.get("country"), "US"),
-        "channel":          sanitize_text(payload.get("channel"),  "web"),
+        "merchant_category": require_text(payload.get("merchant_category"), "merchant_category"),
+        "country":          require_text(payload.get("country"), "country"),
+        "channel":          require_text(payload.get("channel"), "channel"),
     }
     metadata = {
         "customer_id":     sanitize_text(payload.get("customer_id"),  "CUST-DEMO"),

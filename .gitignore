@@ -4,4 +4,15 @@ __pycache__/
 .env
 .ipynb_checkpoints/
 creditcard.csv
+data_store.json
+instance/
+model_metadata.local.json
+Documentation/texput.log
+Documentation/CreditCard/*.aux
+Documentation/CreditCard/*.bbl
+Documentation/CreditCard/*.blg
+Documentation/CreditCard/*.log
+Documentation/CreditCard/*.lot
+Documentation/CreditCard/*.out
+Documentation/CreditCard/*.toc
 *.tar.gz
