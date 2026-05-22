@@ -1,0 +1,57 @@
+﻿ .gitignore
+  app.py
+  creditcard_raw.csv
+  data_store.json
+  feature_engineering.py
+  fraud_model.pkl
+  model_metadata.json
+  project-file-tree.txt
+  README.md
+  readme.txt
+  requirements.txt
+  sample_transactions.json
+  sample_upload.csv
+  scaler.pkl
+  self.ipynb
+  smoke_test.py
+  synthetic_data.py
+  train_model.py
+  backup -All Versions upgrade\current version -backup.rar
+  backup -All Versions upgrade\version 1 (simple).rar
+  backup -All Versions upgrade\version 2 (logical analysis).rar
+  Documentation\readme.md
+  Documentation\readme.txt
+  Documentation\texput.log
+  Documentation\archive\archive.zip
+  Documentation\archive\CreditCard.bib
+  Documentation\archive\Creditcard.tex
+  Documentation\archive\ResearchPaper.zip
+  Documentation\CreditCard\CreditCard.bib
+  Documentation\CreditCard\Creditcard.pdf
+  Documentation\CreditCard\Creditcard.tex
+  Documentation\CreditCard\README.md
+  Documentation\CreditCard\archive\archive.zip
+  Documentation\CreditCard\archive\CreditCard.bib
+  Documentation\CreditCard\archive\Creditcard.tex
+  Documentation\CreditCard\archive\Project Docs on Front pages.docx
+  Documentation\CreditCard\archive\project_front_pages.tex
+  Documentation\CreditCard\assets\logo.jpg
+  Documentation\CreditCard\assets\screenshots\alert-transaction-table.png
+  Documentation\CreditCard\assets\screenshots\csv-upload.png
+  Documentation\CreditCard\assets\screenshots\login-page.png
+  Documentation\CreditCard\assets\screenshots\prediction-form.png
+  Documentation\CreditCard\assets\screenshots\result-view.png
+  Documentation\CreditCard\reference\proFront.pdf
+  Documentation\ResearchPaper\Analysis_of_Credit_Card_Fraud_detection.pdf
+  Documentation\ResearchPaper\Credit Card Fraud Detection with Autoencoder andProbabilistic Random Forest.pdf
+  Documentation\ResearchPaper\Credit-Card-Fraud-Detection-Using-Machine-Learning-and-Artificial-Intelligence-Imbalanced-Dataset.pdf
+  Documentation\ResearchPaper\CREDIT-CARD-REPORT.pdf
+  Documentation\ResearchPaper\Credit_Card_Fraud_Detection_using_Machin.pdf
+  Documentation\ResearchPaper\Fraud Detection using Machine Learning.pdf
+  Documentation\ResearchPaper\IJERT_Credit_Card_Fraud_Detection_ (second).pdf
+  Documentation\ResearchPaper\IJERT_Credit_Card_Fraud_Detection_using.pdf
+  Documentation\ResearchPaper\IRJET_REAL_TIME_CREDIT_CARD_FRAUD_DETECT.pdf
+  Documentation\ResearchPaper\Machine Learning Methods for Credit Card Fraud Detection.pdf
+  Documentation\ResearchPaper\Online_Payment_Fraud_Detection_Model_Using_Machine_Learning_Techniques.pdf
+  instance\data_store.json
+  templates\index.html

@@ -1,4 +1,4 @@
-\begin{thebibliography}{10}
+\begin{thebibliography}{1}
 
 \bibitem{mallidi2021analysis}
 Manoj Kumar~Reddy Mallidi and Yeshwanth Zagabathuni.
@@ -19,30 +19,6 @@ Faisal Tadvi, Sejal Shinde, Devendra Patil, and Sejal Dmello.
 \newblock {\em International Research Journal of Engineering and Technology},
   8(5), 2021.
 
-\bibitem{lin2021autoencoder}
-Tzu-Hsuan Lin and Jehn-Ruey Jiang.
-\newblock Credit card fraud detection with autoencoder and probabilistic random
-  forest.
-\newblock {\em Mathematics}, 9(21):2683, 2021.
-
-\bibitem{maniraj2019creditcard}
-S.~P. Maniraj, Aditya Saini, Swarna~Deep Sarkar, and Shadab Ahmed.
-\newblock Credit card fraud detection using machine learning and data science.
-\newblock {\em International Journal of Engineering Research \& Technology},
-  8(9), 2019.
-
-\bibitem{varunkumar2020creditcard}
-K.~S. Varun~Kumar, V.~G. Vijaya~Kumar, A.~Vijay~Shankar, and K.~Pratibha.
-\newblock Credit card fraud detection using machine learning algorithms.
-\newblock {\em International Journal of Engineering Research \& Technology},
-  9(7), 2020.
-
-\bibitem{shukur2019creditcard}
-Hamzah~Ali Shukur and Sefer Kurnaz.
-\newblock Credit card fraud detection using machine learning methodology.
-\newblock {\em International Journal of Computer Science and Mobile Computing},
-  8(3):257--260, 2019.
-
 \bibitem{he2022mlmethods}
 Yihong He.
 \newblock Machine learning methods for credit card fraud detection.
@@ -55,18 +31,16 @@ Aditya Oza.
 \newblock Fraud detection using machine learning.
 \newblock Course project report, Stanford University, 2019.
 
+\bibitem{lin2021autoencoder}
+Tzu-Hsuan Lin and Jehn-Ruey Jiang.
+\newblock Credit card fraud detection with autoencoder and probabilistic random
+  forest.
+\newblock {\em Mathematics}, 9(21):2683, 2021.
+
 \bibitem{almazroi2023onlinepayment}
 Abdulwahab~Ali Almazroi and Nasir Ayub.
 \newblock Online payment fraud detection model using machine learning
   techniques.
 \newblock {\em IEEE Access}, 2023.
-
-\bibitem{veltech2023creditcard}
-P.~Sai Sesha~Varma, K.~Lahari Sai~Sree, and D.~Sai~Krupa.
-\newblock Credit card fraud detection.
-\newblock B.tech project report, Vel Tech Rangarajan Dr. Sagunthala R\&D
-  Institute of Science and Technology, 2023.
-\newblock Under the guidance of Dr. M. Guru Vimal Kumar, Department of Computer
-  Science \& Engineering.
 
 \end{thebibliography}

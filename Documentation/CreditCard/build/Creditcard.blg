@@ -1,48 +1,48 @@
 This is BibTeX, Version 0.99e
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
-The top-level auxiliary file: Creditcard.aux
+The top-level auxiliary file: build\Creditcard.aux
 Reallocating 'name_of_file' (item size: 1) to 6 items.
 The style file: unsrt.bst
 Reallocating 'name_of_file' (item size: 1) to 11 items.
 Database file #1: CreditCard.bib
-You've used 11 entries,
+You've used 7 entries,
             1791 wiz_defined-function locations,
-            512 strings with 5559 characters,
-and the built_in function-call counts, 2119 in all, are:
-= -- 186
-> -- 101
+            493 strings with 4717 characters,
+and the built_in function-call counts, 1352 in all, are:
+= -- 121
+> -- 54
 < -- 1
-+ -- 38
-- -- 27
-* -- 140
-:= -- 373
-add.period$ -- 35
-call.type$ -- 11
-change.case$ -- 13
++ -- 21
+- -- 14
+* -- 86
+:= -- 233
+add.period$ -- 22
+call.type$ -- 7
+change.case$ -- 8
 chr.to.int$ -- 0
-cite$ -- 11
-duplicate$ -- 92
-empty$ -- 202
-format.name$ -- 27
-if$ -- 455
+cite$ -- 7
+duplicate$ -- 61
+empty$ -- 136
+format.name$ -- 14
+if$ -- 293
 int.to.chr$ -- 0
-int.to.str$ -- 11
-missing$ -- 9
-newline$ -- 60
-num.names$ -- 11
-pop$ -- 18
+int.to.str$ -- 7
+missing$ -- 6
+newline$ -- 39
+num.names$ -- 7
+pop$ -- 14
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 35
+skip$ -- 23
 stack$ -- 0
-substring$ -- 93
-swap$ -- 10
+substring$ -- 68
+swap$ -- 7
 text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
 warning$ -- 0
-while$ -- 18
-width$ -- 13
-write$ -- 127
+while$ -- 12
+width$ -- 8
+write$ -- 81
