@@ -35,8 +35,12 @@ $env:SECRET_KEY = "replace-with-a-random-secret"
 
 | File / Folder | Purpose |
 | --- | --- |
-| `app.py` | Flask app, routes, authentication, scoring, alerts, verification, and reports |
-| `templates/index.html` | Dashboard UI |
+| `app.py` | Thin compatibility launcher for `python app.py` |
+| `app/app.py` | Flask application factory and blueprint registration |
+| `app/routes/` | Auth, dashboard, alert, and prediction route modules |
+| `app/services/` | Scoring, behavior analysis, and alert creation services |
+| `app/persistence/storage.py` | JSON-backed runtime state loading and saving |
+| `app/templates/index.html` | Dashboard UI |
 | `feature_engineering.py` | Shared feature constants and single-transaction feature engineering |
 | `synthetic_data.py` | Synthetic transaction generator used for model development |
 | `train_model.py` | Retrains the model from `creditcard_raw.csv` |
@@ -119,4 +123,4 @@ This is an educational/demo project. The next serious upgrades are:
 - Use hashed passwords, role-based access control, and environment-only secrets.
 - Add audit logs for verification and alert actions.
 - Add model threshold tuning, drift monitoring, and model version comparisons.
-- Split `app.py` into route, service, persistence, and model modules as the project grows.
+- Move runtime state from JSON files to SQLite or PostgreSQL before real multi-user use.

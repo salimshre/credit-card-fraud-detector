@@ -109,8 +109,8 @@
   {\Large Biratnagar, Nepal}\\[1.30cm]
 
   {\Large \textbf{Submitted By}}\\[0.55cm]
-  {\Large Surya Chand Yadav}\\[0.35cm]
   {\Large Santosh Kumar Shah}\\[0.35cm]
+  {\Large Surya Chand Yadav}\\[0.35cm]
   {\Large Salim Shrestha}\\[1.20cm]
 
   {\Large \textbf{Project Supervisor}}\\[0.45cm]
@@ -678,52 +678,46 @@ The data flow diagram shows how transaction data moves through the dashboard, ba
 
 
 %---------diagram start.
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
 \resizebox{\textwidth}{!}{%
 \begin{tikzpicture}[
-    node distance=0.95cm and 0.65cm,
-    external/.style={rectangle, draw=black, fill=white, align=center, minimum width=2.35cm, minimum height=0.85cm},
-    process/.style={rectangle, rounded corners, draw=black, fill=gray!10, align=center, minimum width=2.45cm, minimum height=0.9cm},
-    store/.style={cylinder, shape border rotate=90, aspect=0.25, draw=black, fill=gray!15, align=center, minimum width=2.55cm, minimum height=0.95cm},
-    labeltext/.style={fill=white, inner sep=1.5pt, font=\scriptsize},
-    arrow/.style={-{Latex[length=2.2mm]}, thick}
+    node distance=0.78cm,
+    pipeline/.style={rectangle, rounded corners, draw=teal!65!black, fill=teal!7, align=center, minimum width=6.4cm, minimum height=0.9cm, font=\small},
+    mlbox/.style={rectangle, rounded corners, draw=blue!65!black, fill=blue!7, align=center, minimum width=6.4cm, minimum height=0.9cm, font=\small},
+    store/.style={rectangle, rounded corners, draw=orange!80!black, fill=orange!10, align=center, minimum width=3.5cm, minimum height=0.9cm, font=\small},
+    endpoint/.style={rectangle, rounded corners, draw=black!55, fill=gray!12, align=center, minimum width=4.2cm, minimum height=0.75cm, font=\small},
+    arrow/.style={-{Latex[length=2.1mm]}, thick}
 ]
-\node[external] (operator) at (0,0) {Operator / Admin};
-\node[process] (dashboard) at (3,0) {Browser\\Dashboard};
-\node[process] (backend) at (6,0) {Flask\\Backend};
-\node[process] (pipeline) at (9,0) {Validation and\\Feature Engineering};
-\node[process] (risk) at (12,0) {Prediction, Risk\\and Alert Logic};
-\node[external] (outputs) at (15,0) {Dashboard Results\\CSV Reports};
+\node[endpoint] (browser) {Operator / browser};
+\node[pipeline, below=of browser] (validate) {\textbf{Validate and parse}\\\path{parse_transaction()} fields, date format, amount};
+\node[pipeline, below=of validate] (behavior) {\textbf{Behavior analysis}\\\path{analyze_behavior()} signals, behavior points};
+\node[pipeline, below=of behavior] (features) {\textbf{Feature engineering}\\\path{engineer_single_transaction()} 15 features};
+\node[mlbox, below=of features] (predict) {\textbf{Scale and ML prediction}\\StandardScaler, \path{predict_proba()}, threshold};
+\node[pipeline, below=of predict] (risk) {\textbf{Risk scoring and alerts}\\\path{calculate_risk()} and \path{create_alert_if_needed()}};
+\node[pipeline, below=of risk] (persist) {\textbf{Update profile and persist}\\\path{update_behavior_profile()} and \path{save_state()}};
+\node[endpoint, below=of persist] (response) {Dashboard / CSV response};
 
-\node[store] (model) at (9,-2.0) {Model Artifacts\\\path{fraud_model.pkl}\\\path{scaler.pkl}};
-\node[store] (runtime) at (12,-2.0) {Runtime Store\\Transactions\\Alerts\\Profiles};
+\node[store, left=1.15cm of behavior] (profiles) {\textbf{Behavior profiles}\\\path{BEHAVIOR_PROFILES} dict};
+\node[mlbox, right=1.15cm of predict, minimum width=3.5cm] (artifacts) {\textbf{Model artifacts}\\\path{fraud_model.pkl}\\\path{scaler.pkl}};
+\node[store, right=1.15cm of persist] (runtime) {\textbf{Runtime store}\\\path{instance/data_store.json}};
 
-% Horizontal arrows
-\draw[arrow] (operator) -- node[labeltext, above] {transaction / CSV input} (dashboard);
-\draw[arrow] (dashboard) -- node[labeltext, above] {HTTP request} (backend);
-\draw[arrow] (backend) -- node[labeltext, above] {validated request data} (pipeline);
-\draw[arrow] (pipeline) -- node[labeltext, above] {engineered features and behavior signals} (risk);
-\draw[arrow] (risk) -- node[labeltext, above] {label, risk score, alert status} (outputs);
-\draw[arrow] (outputs) to[bend left=18] node[labeltext, below, yshift=-2pt] {review and verification actions} (operator);
-
-% Vertical arrows: model -> pipeline (left side to avoid overlap)
-\draw[arrow] (model) -- node[labeltext, left] {scaler and trained model} (pipeline);
-
-% Arrow from model to risk: split into two segments to place label clearly
-\draw[arrow] (model) -- (12,-2) -- (risk);
-\node[labeltext, fill=white] at (12,-1.2) {fraud probability support};
-
-% Vertical arrows between runtime and risk
-\draw[arrow] (runtime) -- node[labeltext, left] {history for behavior profile} (risk);
-\draw[arrow] (risk) -- node[labeltext, right, xshift=2pt] {save scored transactions and alerts} (runtime);
-
+\draw[arrow] (browser) -- (validate);
+\draw[arrow] (validate) -- (behavior);
+\draw[arrow] (behavior) -- (features);
+\draw[arrow] (features) -- (predict);
+\draw[arrow] (predict) -- (risk);
+\draw[arrow] (risk) -- (persist);
+\draw[arrow] (persist) -- (response);
+\draw[arrow] (profiles) -- node[above, font=\scriptsize] {read} (behavior);
+\draw[arrow] (behavior) -- node[below, font=\scriptsize] {update} (profiles);
+\draw[arrow] (artifacts) -- node[above, font=\scriptsize] {load} (predict);
+\draw[arrow] (persist) -- node[below, font=\scriptsize] {write} (runtime);
 \end{tikzpicture}
 }
 \caption{Data Flow Diagram}
 \label{fig:data-flow-diagram}
 \end{figure}
-
 %---------diagram end.
 
 

@@ -21,6 +21,7 @@ if TEST_STORE_PATH.exists():
 os.environ["FRAUD_STORE_PATH"] = str(TEST_STORE_PATH)
 
 import app as fraud_app
+from app.persistence import storage
 from feature_engineering import COUNTRIES, encode_category
 
 app = fraud_app.app
@@ -38,12 +39,12 @@ def check(name: str, condition: bool, detail: str = "") -> None:
 
 
 def reset_test_state() -> None:
-    fraud_app.STORE_PATH = TEST_STORE_PATH
+    storage.STORE_PATH = TEST_STORE_PATH
     if TEST_STORE_PATH.exists():
         TEST_STORE_PATH.unlink()
-    fraud_app.TRANSACTIONS.clear()
-    fraud_app.ALERTS.clear()
-    fraud_app.BEHAVIOR_PROFILES.clear()
+    storage.TRANSACTIONS.clear()
+    storage.ALERTS.clear()
+    storage.BEHAVIOR_PROFILES.clear()
 
 
 def main() -> None:
