@@ -8,3 +8,5 @@ python -m pip install -r requirements.txt
 python app.py
 python smoke_test.py
 python train_model.py
+
+// thi is devlometns versons
