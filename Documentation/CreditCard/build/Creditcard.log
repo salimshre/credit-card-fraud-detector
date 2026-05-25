@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.5.19)  22 MAY 2026 22:13
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.5.24)  24 MAY 2026 19:40
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1144,7 +1144,7 @@ LaTeX Font Info:    Font shape `T1/ntxtlf/b/n' will be
 (Font)              scaled to size 14.4pt on input line 66.
 LaTeX Font Info:    Font shape `T1/ntxtlf/b/n' will be
 (Font)              scaled to size 12.0pt on input line 69.
-<assets/logo.jpg, id=313, 99.5355pt x 100.1925pt>
+<assets/logo.jpg, id=309, 99.5355pt x 100.1925pt>
 File: assets/logo.jpg Graphic file (type jpg)
 <use assets/logo.jpg>
 Package pdftex.def Info: assets/logo.jpg  used on input line 74.
@@ -1251,18 +1251,6 @@ LaTeX Font Info:    Font shape `U/ntxexa/m/n' will be
 LaTeX Font Info:    Font shape `U/ntxexa/m/n' will be
 (Font)              scaled to size 6.6pt on input line 182.
 
-
-LaTeX Warning: Citation `mallidi2021analysis' on page iv undefined on input lin
-e 184.
-
-
-LaTeX Warning: Citation `adesina2024creditcard' on page iv undefined on input l
-ine 184.
-
-
-LaTeX Warning: Citation `tadvi2021realtime' on page iv undefined on input line 
-184.
-
 [4
 
 ] [5
@@ -1293,55 +1281,19 @@ Chapter 1.
 
 ]
 LaTeX Font Info:    Trying to load font information for TS1+ntxtlf on input lin
-e 278.
+e 277.
 
 (C:\Users\StudyAcer\AppData\Local\Programs\MiKTeX\tex/latex/newtx\ts1ntxtlf.fd
 File: ts1ntxtlf.fd 2015/01/18 v1.0 fd file for TS1/ntxtlf
 )
 LaTeX Font Info:    Font shape `TS1/ntxtlf/m/n' will be
-(Font)              scaled to size 12.0pt on input line 278.
+(Font)              scaled to size 12.0pt on input line 277.
 [2{C:/Users/StudyAcer/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/tex-gyre/q-
 ts1.enc}] [3] [4]
 Chapter 2.
-
-LaTeX Warning: Citation `he2022mlmethods' on page 5 undefined on input line 330
-.
-
-
-LaTeX Warning: Citation `oza2019fraud' on page 5 undefined on input line 330.
-
-
-LaTeX Warning: Citation `lin2021autoencoder' on page 5 undefined on input line 
-330.
-
-
-LaTeX Warning: Citation `mallidi2021analysis' on page 5 undefined on input line
- 330.
-
-
-LaTeX Warning: Citation `adesina2024creditcard' on page 5 undefined on input li
-ne 330.
-
 [5
 
-]
-
-LaTeX Warning: Citation `adesina2024creditcard' on page 6 undefined on input li
-ne 337.
-
-
-LaTeX Warning: Citation `mallidi2021analysis' on page 6 undefined on input line
- 337.
-
-
-LaTeX Warning: Citation `tadvi2021realtime' on page 6 undefined on input line 3
-45.
-
-
-LaTeX Warning: Citation `almazroi2023onlinepayment' on page 6 undefined on inpu
-t line 345.
-
-[6] [7]
+] [6] [7]
 Chapter 3.
 ignored error: Infinite glue shrinkage found in box being split [8
 
@@ -1349,296 +1301,347 @@ ignored error: Infinite glue shrinkage found in box being split [8
 [10]
 Chapter 4.
 
-Underfull \hbox (badness 10000) in paragraph at lines 418--418
+Underfull \hbox (badness 10000) in paragraph at lines 417--417
 []|\T1/ntxtlf/m/n/12 HTML, CSS, and
  []
 
 [11
 
-] [12] [13] [14] [15]
+] [12] [13] [14]
+<assets/screenshots/PredictionWorkflowFlowchart.pdf, id=558, 682.55pt x 1585.92
+5pt>
+File: assets/screenshots/PredictionWorkflowFlowchart.pdf Graphic file (type pdf
+)
+<use assets/screenshots/PredictionWorkflowFlowchart.pdf>
+Package pdftex.def Info: assets/screenshots/PredictionWorkflowFlowchart.pdf  us
+ed on input line 534.
+(pdftex.def)             Requested size: 283.39877pt x 658.48541pt.
+ [15]
 LaTeX Font Info:    Font shape `T1/ntxtlf/m/n' will be
-(Font)              scaled to size 8.8pt on input line 561.
+(Font)              scaled to size 8.8pt on input line 542.
 LaTeX Font Info:    Font shape `T1/ntxtlf/m/n' will be
-(Font)              scaled to size 6.6pt on input line 561.
- [16{C:/Users/StudyAcer/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/newtx/ntx
--ot1-tlf.enc}]
+(Font)              scaled to size 6.6pt on input line 542.
+ [16 <./assets/screenshots/PredictionWorkflowFlowchart.pdf>] [17{C:/Users/Study
+Acer/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/newtx/ntx-ot1-tlf.enc}]
 Chapter 5.
-LaTeX Font Info:    Font shape `T1/ntxtlf/m/n' will be
-(Font)              scaled to size 10.95pt on input line 650.
-[17
+<assets/screenshots/SystemArchitecture.pdf, id=600, 682.55pt x 1124.2pt>
+File: assets/screenshots/SystemArchitecture.pdf Graphic file (type pdf)
+<use assets/screenshots/SystemArchitecture.pdf>
+Package pdftex.def Info: assets/screenshots/SystemArchitecture.pdf  used on inp
+ut line 562.
+(pdftex.def)             Requested size: 382.71489pt x 630.35394pt.
+[18
 
-]
-Underfull \hbox (badness 1931) in paragraph at lines 662--663
+] [19 <./assets/screenshots/SystemArchitecture.pdf>]
+LaTeX Font Info:    Font shape `T1/ntxtlf/m/n' will be
+(Font)              scaled to size 10.95pt on input line 606.
+
+Underfull \hbox (badness 1931) in paragraph at lines 618--619
 []|\T1/ntxtlf/m/n/12 Flask server, routes, au-then-ti-ca-tion, pre-dic-tion
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 670--670
+Underfull \hbox (badness 10000) in paragraph at lines 626--626
 []|$\T1/ntxtt/m/n/12 sample _ transactions .
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 671--671
+Underfull \hbox (badness 10000) in paragraph at lines 627--627
 []|$\T1/ntxtt/m/n/12 instance / data _ store .
  []
 
+[20]
+LaTeX Font Info:    Font shape `T1/ntxtlf/b/n' will be
+(Font)              scaled to size 10.95pt on input line 674.
+LaTeX Font Info:    Font shape `T1/ntxtt/m/n' will be
+(Font)              scaled to size 10.95pt on input line 674.
+LaTeX Font Info:    Font shape `OT1/minntx/m/n' will be
+(Font)              scaled to size 10.95pt on input line 674.
+LaTeX Font Info:    Font shape `OT1/minntx/m/n' will be
+(Font)              scaled to size 8.0pt on input line 674.
+LaTeX Font Info:    Font shape `OT1/minntx/m/n' will be
+(Font)              scaled to size 6.1pt on input line 674.
+LaTeX Font Info:    Font shape `OML/ntxmi/m/it' will be
+(Font)              scaled to size 10.95pt on input line 674.
+LaTeX Font Info:    Font shape `OML/ntxmi/m/it' will be
+(Font)              scaled to size 8.0pt on input line 674.
+LaTeX Font Info:    Font shape `OML/ntxmi/m/it' will be
+(Font)              scaled to size 6.1pt on input line 674.
+LaTeX Font Info:    Font shape `LMS/ntxsy/m/n' will be
+(Font)              scaled to size 10.95pt on input line 674.
+LaTeX Font Info:    Font shape `LMS/ntxsy/m/n' will be
+(Font)              scaled to size 8.0pt on input line 674.
+LaTeX Font Info:    Font shape `LMS/ntxsy/m/n' will be
+(Font)              scaled to size 6.1pt on input line 674.
+LaTeX Font Info:    Font shape `LMX/ntxexx/m/n' will be
+(Font)              scaled to size 10.95pt on input line 674.
+LaTeX Font Info:    Font shape `LMX/ntxexx/m/n' will be
+(Font)              scaled to size 8.0pt on input line 674.
+LaTeX Font Info:    Font shape `LMX/ntxexx/m/n' will be
+(Font)              scaled to size 6.1pt on input line 674.
+LaTeX Font Info:    Font shape `U/ntxmia/m/it' will be
+(Font)              scaled to size 10.95pt on input line 674.
+LaTeX Font Info:    Font shape `U/ntxmia/m/it' will be
+(Font)              scaled to size 8.0pt on input line 674.
+LaTeX Font Info:    Font shape `U/ntxmia/m/it' will be
+(Font)              scaled to size 6.1pt on input line 674.
+LaTeX Font Info:    Font shape `U/ntxsym/m/n' will be
+(Font)              scaled to size 10.95pt on input line 674.
+LaTeX Font Info:    Font shape `U/ntxsym/m/n' will be
+(Font)              scaled to size 8.0pt on input line 674.
+LaTeX Font Info:    Font shape `U/ntxsym/m/n' will be
+(Font)              scaled to size 6.1pt on input line 674.
+LaTeX Font Info:    Font shape `U/ntxsyc/m/n' will be
+(Font)              scaled to size 10.95pt on input line 674.
+LaTeX Font Info:    Font shape `U/ntxsyc/m/n' will be
+(Font)              scaled to size 8.0pt on input line 674.
+LaTeX Font Info:    Font shape `U/ntxsyc/m/n' will be
+(Font)              scaled to size 6.1pt on input line 674.
+LaTeX Font Info:    Font shape `U/ntxexa/m/n' will be
+(Font)              scaled to size 10.95pt on input line 674.
+LaTeX Font Info:    Font shape `U/ntxexa/m/n' will be
+(Font)              scaled to size 8.0pt on input line 674.
+LaTeX Font Info:    Font shape `U/ntxexa/m/n' will be
+(Font)              scaled to size 6.1pt on input line 674.
+LaTeX Font Info:    Font shape `T1/ntxtlf/m/n' will be
+(Font)              scaled to size 8.0pt on input line 674.
 
-Underfull \hbox (badness 10000) in paragraph at lines 691--692
+Underfull \hbox (badness 10000) in paragraph at lines 697--698
 []|\T1/ntxtlf/m/n/12 Process one trans-ac-tion and re-turn
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 695--695
+Underfull \hbox (badness 10000) in paragraph at lines 701--701
 []|$\T1/ntxtt/m/n/12 /api / alerts / <[]alert _
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 696--696
+Underfull \hbox (badness 10000) in paragraph at lines 702--702
 []|$\T1/ntxtt/m/n/12 /api / transactions /
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 696--696
+Underfull \hbox (badness 10000) in paragraph at lines 702--702
 \T1/ntxtt/m/n/12 <[]transaction _ id >[]
  []
 
-[18] [19]
-<assets/screenshots/login-page.png, id=586, 349.305pt x 279.29344pt>
+ignored error: Infinite glue shrinkage found in box being split [21]
+<assets/screenshots/login-page.png, id=627, 349.305pt x 279.29344pt>
 File: assets/screenshots/login-page.png Graphic file (type png)
 <use assets/screenshots/login-page.png>
 Package pdftex.def Info: assets/screenshots/login-page.png  used on input line 
-723.
+729.
 (pdftex.def)             Requested size: 382.71446pt x 306.0262pt.
-<assets/screenshots/prediction-form.png, id=588, 531.48563pt x 345.54094pt>
+ [22]
+[23]
+<assets/screenshots/prediction-form.png, id=637, 531.48563pt x 345.54094pt>
 File: assets/screenshots/prediction-form.png Graphic file (type png)
 <use assets/screenshots/prediction-form.png>
 Package pdftex.def Info: assets/screenshots/prediction-form.png  used on input 
-line 730.
+line 736.
 (pdftex.def)             Requested size: 382.71446pt x 248.8209pt.
- [20 <./assets/screenshots/login-page.png>]
-<assets/screenshots/result-view.png, id=594, 475.7775pt x 152.82094pt>
+<assets/screenshots/result-view.png, id=638, 475.7775pt x 152.82094pt>
 File: assets/screenshots/result-view.png Graphic file (type png)
 <use assets/screenshots/result-view.png>
 Package pdftex.def Info: assets/screenshots/result-view.png  used on input line
- 737.
+ 743.
 (pdftex.def)             Requested size: 382.71446pt x 122.93546pt.
-<assets/screenshots/csv-upload.png, id=595, 1007.26312pt x 243.91125pt>
+ [24 <./assets/screenshots/login-page.png> <./assets/screenshots/prediction-for
+m.png>]
+<assets/screenshots/csv-upload.png, id=645, 1007.26312pt x 243.91125pt>
 File: assets/screenshots/csv-upload.png Graphic file (type png)
 <use assets/screenshots/csv-upload.png>
 Package pdftex.def Info: assets/screenshots/csv-upload.png  used on input line 
-744.
+750.
 (pdftex.def)             Requested size: 382.71446pt x 92.67606pt.
-<assets/screenshots/alert-transaction-table.png, id=596, 1008.76875pt x 434.372
+<assets/screenshots/alert-transaction-table.png, id=646, 1008.76875pt x 434.372
 82pt>
 File: assets/screenshots/alert-transaction-table.png Graphic file (type png)
 <use assets/screenshots/alert-transaction-table.png>
 Package pdftex.def Info: assets/screenshots/alert-transaction-table.png  used o
-n input line 751.
+n input line 757.
 (pdftex.def)             Requested size: 382.71446pt x 164.79826pt.
- [21 <./assets/screenshots/prediction-form.png> <./assets/screenshots/result-vi
-ew.png> <./assets/screenshots/csv-upload.png>] [22 <./assets/screenshots/alert-
-transaction-table.png>]
+ [25 <./assets/screenshots/result-view.png> <./assets/screenshots/csv-upload.pn
+g> <./assets/screenshots/alert-transaction-table.png>]
 Chapter 6.
-[23
+[26
 
-] [24]
+] [27]
 Chapter 7.
 LaTeX Font Info:    Font shape `T1/ntxtlf/m/n' will be
-(Font)              scaled to size 10.0pt on input line 806.
+(Font)              scaled to size 10.0pt on input line 812.
 LaTeX Font Info:    Font shape `OT1/minntx/m/n' will be
-(Font)              scaled to size 10.0pt on input line 807.
+(Font)              scaled to size 10.0pt on input line 813.
 LaTeX Font Info:    Font shape `OT1/minntx/m/n' will be
-(Font)              scaled to size 7.3pt on input line 807.
+(Font)              scaled to size 7.3pt on input line 813.
 LaTeX Font Info:    Font shape `OT1/minntx/m/n' will be
-(Font)              scaled to size 5.5pt on input line 807.
+(Font)              scaled to size 5.5pt on input line 813.
 LaTeX Font Info:    Font shape `OML/ntxmi/m/it' will be
-(Font)              scaled to size 10.0pt on input line 807.
+(Font)              scaled to size 10.0pt on input line 813.
 LaTeX Font Info:    Font shape `OML/ntxmi/m/it' will be
-(Font)              scaled to size 7.3pt on input line 807.
+(Font)              scaled to size 7.3pt on input line 813.
 LaTeX Font Info:    Font shape `OML/ntxmi/m/it' will be
-(Font)              scaled to size 5.5pt on input line 807.
+(Font)              scaled to size 5.5pt on input line 813.
 LaTeX Font Info:    Font shape `LMS/ntxsy/m/n' will be
-(Font)              scaled to size 10.0pt on input line 807.
+(Font)              scaled to size 10.0pt on input line 813.
 LaTeX Font Info:    Font shape `LMS/ntxsy/m/n' will be
-(Font)              scaled to size 7.3pt on input line 807.
+(Font)              scaled to size 7.3pt on input line 813.
 LaTeX Font Info:    Font shape `LMS/ntxsy/m/n' will be
-(Font)              scaled to size 5.5pt on input line 807.
+(Font)              scaled to size 5.5pt on input line 813.
 LaTeX Font Info:    Font shape `LMX/ntxexx/m/n' will be
-(Font)              scaled to size 10.0pt on input line 807.
+(Font)              scaled to size 10.0pt on input line 813.
 LaTeX Font Info:    Font shape `LMX/ntxexx/m/n' will be
-(Font)              scaled to size 7.3pt on input line 807.
+(Font)              scaled to size 7.3pt on input line 813.
 LaTeX Font Info:    Font shape `LMX/ntxexx/m/n' will be
-(Font)              scaled to size 5.5pt on input line 807.
+(Font)              scaled to size 5.5pt on input line 813.
 LaTeX Font Info:    Font shape `U/ntxmia/m/it' will be
-(Font)              scaled to size 10.0pt on input line 807.
+(Font)              scaled to size 10.0pt on input line 813.
 LaTeX Font Info:    Font shape `U/ntxmia/m/it' will be
-(Font)              scaled to size 7.3pt on input line 807.
+(Font)              scaled to size 7.3pt on input line 813.
 LaTeX Font Info:    Font shape `U/ntxmia/m/it' will be
-(Font)              scaled to size 5.5pt on input line 807.
+(Font)              scaled to size 5.5pt on input line 813.
 LaTeX Font Info:    Font shape `U/ntxsym/m/n' will be
-(Font)              scaled to size 10.0pt on input line 807.
+(Font)              scaled to size 10.0pt on input line 813.
 LaTeX Font Info:    Font shape `U/ntxsym/m/n' will be
-(Font)              scaled to size 7.3pt on input line 807.
+(Font)              scaled to size 7.3pt on input line 813.
 LaTeX Font Info:    Font shape `U/ntxsym/m/n' will be
-(Font)              scaled to size 5.5pt on input line 807.
+(Font)              scaled to size 5.5pt on input line 813.
 LaTeX Font Info:    Font shape `U/ntxsyc/m/n' will be
-(Font)              scaled to size 10.0pt on input line 807.
+(Font)              scaled to size 10.0pt on input line 813.
 LaTeX Font Info:    Font shape `U/ntxsyc/m/n' will be
-(Font)              scaled to size 7.3pt on input line 807.
+(Font)              scaled to size 7.3pt on input line 813.
 LaTeX Font Info:    Font shape `U/ntxsyc/m/n' will be
-(Font)              scaled to size 5.5pt on input line 807.
+(Font)              scaled to size 5.5pt on input line 813.
 LaTeX Font Info:    Font shape `U/ntxexa/m/n' will be
-(Font)              scaled to size 10.0pt on input line 807.
+(Font)              scaled to size 10.0pt on input line 813.
 LaTeX Font Info:    Font shape `U/ntxexa/m/n' will be
-(Font)              scaled to size 7.3pt on input line 807.
+(Font)              scaled to size 7.3pt on input line 813.
 LaTeX Font Info:    Font shape `U/ntxexa/m/n' will be
-(Font)              scaled to size 5.5pt on input line 807.
+(Font)              scaled to size 5.5pt on input line 813.
 LaTeX Font Info:    Font shape `T1/ntxtlf/b/n' will be
-(Font)              scaled to size 10.0pt on input line 809.
+(Font)              scaled to size 10.0pt on input line 815.
 LaTeX Font Info:    Font shape `T1/ntxtt/m/n' will be
-(Font)              scaled to size 10.0pt on input line 811.
+(Font)              scaled to size 10.0pt on input line 817.
 
-Underfull \hbox (badness 1436) in paragraph at lines 811--811
+Underfull \hbox (badness 1436) in paragraph at lines 817--817
 []|\T1/ntxtlf/m/n/10 Indexes matched ex-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 812--812
+Underfull \hbox (badness 10000) in paragraph at lines 818--818
 []|\T1/ntxtlf/m/n/10 Endpoint re-turned
  []
 
 
-Underfull \hbox (badness 2564) in paragraph at lines 813--813
+Underfull \hbox (badness 2564) in paragraph at lines 819--819
 []|\T1/ntxtlf/m/n/10 User is au-then-ti-cated
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 814--814
+Underfull \hbox (badness 10000) in paragraph at lines 820--820
 []|\T1/ntxtlf/m/n/10 Login failed with
  []
 
 
-Underfull \hbox (badness 6927) in paragraph at lines 815--815
+Underfull \hbox (badness 6927) in paragraph at lines 821--821
 []|\T1/ntxtlf/m/n/10 Normal pre-dic-
  []
 
 
-Underfull \hbox (badness 2529) in paragraph at lines 816--816
+Underfull \hbox (badness 2529) in paragraph at lines 822--822
 []|\T1/ntxtlf/m/n/10 Label is Fraud with
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 818--818
+Underfull \hbox (badness 10000) in paragraph at lines 824--824
 []|\T1/ntxtlf/m/n/10 Upload $\T1/ntxtt/m/n/10 sample _
  []
 
 
-Underfull \hbox (badness 7944) in paragraph at lines 818--818
+Underfull \hbox (badness 7944) in paragraph at lines 824--824
 []|\T1/ntxtlf/m/n/10 Rows are pro-cessed
  []
 
 
-Underfull \hbox (badness 5756) in paragraph at lines 819--819
+Underfull \hbox (badness 5756) in paragraph at lines 825--825
 []|\T1/ntxtlf/m/n/10 Metrics, trans-ac-tions,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 819--819
+Underfull \hbox (badness 10000) in paragraph at lines 825--825
 []|\T1/ntxtlf/m/n/10 Dashboard pay-load
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 820--820
+Underfull \hbox (badness 10000) in paragraph at lines 826--826
 []|\T1/ntxtlf/m/n/10 Request
  []
 
 
-Underfull \hbox (badness 5302) in paragraph at lines 820--820
+Underfull \hbox (badness 5302) in paragraph at lines 826--826
 []|\T1/ntxtlf/m/n/10 Non-empty CSV re-
  []
 
 
-Underfull \hbox (badness 7468) in paragraph at lines 820--820
+Underfull \hbox (badness 7468) in paragraph at lines 826--826
 []|\T1/ntxtlf/m/n/10 CSV re-sponse was
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 821--821
+Underfull \hbox (badness 10000) in paragraph at lines 827--827
 []|\T1/ntxtlf/m/n/10 Logout pro-tec-
  []
 
 
-Underfull \hbox (badness 1565) in paragraph at lines 821--821
+Underfull \hbox (badness 1565) in paragraph at lines 827--827
 []|\T1/ntxtlf/m/n/10 Logout and re-quest
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 821--821
+Underfull \hbox (badness 10000) in paragraph at lines 827--827
 []|\T1/ntxtlf/m/n/10 Dashboard re-turned
  []
 
-[25
+[28
 
-] [26] [27] [28]
+] [29] [30] [31]
 Chapter 8.
-[29
+[32
 
 ]
 Appendix A.
-[30
+[33
 
-]
-(C:\Users\StudyAcer\OneDrive\Documents\GitHub\credit-card-fraud-detector\Docume
-ntation\CreditCard\build\Creditcard.bbl [31]) [32
+] (Creditcard.bbl [34]) [35
 
 ] (Creditcard.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2020/03/25>
  ***********
-
-
-LaTeX Warning: There were undefined references.
-
 Package rerunfilecheck Info: File `Creditcard.out' has not changed.
-(rerunfilecheck)             Checksum: D2A319A41A56D45EEDA260C25BDDA473;11230.
+(rerunfilecheck)             Checksum: D8861B0A34AFE26844724FFB9BE5D9E4;11135.
  ) 
 Here is how much of TeX's memory you used:
- 27681 strings out of 467871
- 503647 string characters out of 5416440
- 882143 words of memory out of 5000000
- 55893 multiletter control sequences out of 15000+600000
- 702040 words of font info for 116 fonts, out of 8000000 for 9000
+ 27659 strings out of 467870
+ 503113 string characters out of 5416419
+ 886365 words of memory out of 5000000
+ 55871 multiletter control sequences out of 15000+600000
+ 719805 words of font info for 143 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 84i,11n,94p,1201b,849s stack positions out of 10000i,1000n,20000p,200000b,200000s
-
-pdfTeX warning (dest): name{figure.5.9} has been referenced but does not exist,
- replaced by a fixed one
-
-
-pdfTeX warning (dest): name{figure.5.8} has been referenced but does not exist,
- replaced by a fixed one
-
-
-pdfTeX warning (dest): name{section.5.8} has been referenced but does not exist
-, replaced by a fixed one
-
-
-pdfTeX warning (dest): name{section.5.7} has been referenced but does not exist
-, replaced by a fixed one
-
-<C:/Users/StudyAcer/AppData/Local/Programs/MiKTeX/fonts/type1/public/newtx/NewT
-XMI.pfb><C:/Users/StudyAcer/AppData/Local/Programs/MiKTeX/fonts/type1/public/te
-x-gyre/qtmr.pfb><C:/Users/StudyAcer/AppData/Local/Programs/MiKTeX/fonts/type1/p
-ublic/txfonts/t1xtt.pfb><C:/Users/StudyAcer/AppData/Local/Programs/MiKTeX/fonts
-/type1/public/newtx/txmiaX.pfb><C:/Users/StudyAcer/AppData/Local/Programs/MiKTe
-X/fonts/type1/public/newtx/txsys.pfb><C:/Users/StudyAcer/AppData/Local/Programs
-/MiKTeX/fonts/type1/public/newtx/ztmb.pfb><C:/Users/StudyAcer/AppData/Local/Pro
-grams/MiKTeX/fonts/type1/public/newtx/ztmr.pfb><C:/Users/StudyAcer/AppData/Loca
-l/Programs/MiKTeX/fonts/type1/public/newtx/ztmri.pfb>
-Output written on Creditcard.pdf (44 pages, 430205 bytes).
+ 84i,12n,94p,1201b,954s stack positions out of 10000i,1000n,20000p,200000b,200000s
+<C:/Users/StudyAcer/AppData/Local/Programs/MiKTeX/fonts/type1/public/newtx/Ne
+wTXMI.pfb><C:/Users/StudyAcer/AppData/Local/Programs/MiKTeX/fonts/type1/public/
+tex-gyre/qtmr.pfb><C:/Users/StudyAcer/AppData/Local/Programs/MiKTeX/fonts/type1
+/public/txfonts/t1xtt.pfb><C:/Users/StudyAcer/AppData/Local/Programs/MiKTeX/fon
+ts/type1/public/newtx/txmiaX.pfb><C:/Users/StudyAcer/AppData/Local/Programs/MiK
+TeX/fonts/type1/public/newtx/txsys.pfb><C:/Users/StudyAcer/AppData/Local/Progra
+ms/MiKTeX/fonts/type1/public/newtx/ztmb.pfb><C:/Users/StudyAcer/AppData/Local/P
+rograms/MiKTeX/fonts/type1/public/newtx/ztmr.pfb><C:/Users/StudyAcer/AppData/Lo
+cal/Programs/MiKTeX/fonts/type1/public/newtx/ztmri.pfb>
+Output written on Creditcard.pdf (47 pages, 469911 bytes).
 PDF statistics:
- 736 PDF objects out of 1000 (max. 8388607)
- 164 named destinations out of 1000 (max. 500000)
- 659 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 775 PDF objects out of 1000 (max. 8388607)
+ 165 named destinations out of 1000 (max. 500000)
+ 661 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -530,26 +530,8 @@ The application prediction pipeline is implemented by \path{monitor_transaction(
 \end{enumerate}
 
 \begin{figure}[H]
-\centering
-\begin{tikzpicture}[
-    node distance=0.55cm,
-    flowstep/.style={rectangle, rounded corners, draw=black, fill=gray!10, align=center, minimum width=0.82\textwidth, minimum height=0.8cm},
-    arrow/.style={-{Latex[length=2.2mm]}, thick}
-]
-\node[flowstep] (input) {Dashboard/API transaction input};
-\node[flowstep, below=of input] (validate) {Validate fields and normalize transaction metadata};
-\node[flowstep, below=of validate] (behavior) {Analyze customer behavior profile};
-\node[flowstep, below=of behavior] (features) {Engineer 15 features and apply StandardScaler};
-\node[flowstep, below=of features] (model) {Random Forest predicts fraud probability};
-\node[flowstep, below=of model] (risk) {Apply threshold, calculate risk score, assign risk level};
-\node[flowstep, below=of risk] (store) {Create alerts when needed, update profile, save transaction};
-\draw[arrow] (input) -- (validate);
-\draw[arrow] (validate) -- (behavior);
-\draw[arrow] (behavior) -- (features);
-\draw[arrow] (features) -- (model);
-\draw[arrow] (model) -- (risk);
-\draw[arrow] (risk) -- (store);
-\end{tikzpicture}
+\centering %0.72 width %0.88
+\includegraphics[width=0.88\textwidth,height=0.94\textheight,keepaspectratio]{assets/screenshots/PredictionWorkflowFlowchart.pdf}
 \caption{Prediction Workflow Flowchart}
 \label{fig:prediction-workflow}
 \end{figure}
@@ -576,33 +558,8 @@ Risk levels are assigned as follows:
 The system follows a client-server architecture. The browser dashboard communicates with the Flask backend. The backend validates transactions, runs preprocessing, uses the machine learning artifacts, updates in-memory and JSON-based state, and returns JSON responses to the frontend.
 
 \begin{figure}[H]
-\centering
-\resizebox{\textwidth}{!}{%
-\begin{tikzpicture}[
-    node distance=1.45cm and 1.65cm,
-    box/.style={rectangle, rounded corners, draw=black, fill=gray!10, align=center, minimum width=3.35cm, minimum height=1.05cm},
-    data/.style={cylinder, shape border rotate=90, aspect=0.25, draw=black, fill=gray!15, align=center, minimum width=3.15cm, minimum height=1.15cm},
-    arrow/.style={-{Latex[length=2.2mm]}, thick}
-]
-\node[box] (browser) {Browser Dashboard\\\path{templates/index.html}};
-\node[box, below=of browser] (flask) {Flask Application\\\path{app.py}};
-\node[box, left=of flask] (batch) {CSV Upload\\Report Export};
-\node[box, right=of flask] (features) {Feature Engineering\\\path{feature_engineering.py}};
-\node[data, below left=1.25cm and 0.8cm of flask] (artifacts) {Model Artifacts\\\path{fraud_model.pkl}\\\path{scaler.pkl}};
-\node[data, below right=1.25cm and 0.8cm of flask] (store) {Runtime Store\\\path{instance/data_store.json}};
-
-\draw[arrow] (browser) -- (flask);
-\draw[arrow] ([xshift=-0.35cm]flask.north) -- ([xshift=-0.35cm]browser.south);
-\draw[arrow] (batch) -- (flask);
-\draw[arrow] (flask) -- (batch);
-\draw[arrow] (flask) -- (features);
-\draw[arrow] (features) -- (flask);
-\draw[arrow] (flask) -- (artifacts);
-\draw[arrow] (artifacts) -- (flask);
-\draw[arrow] (flask) -- (store);
-\draw[arrow] (store) -- (flask);
-\end{tikzpicture}
-}
+\centering %0.72
+\includegraphics[width=0.88\textwidth,height=0.97\textheight,keepaspectratio]{assets/screenshots/SystemArchitecture.pdf}
 \caption{System Architecture}
 \label{fig:system-architecture}
 \end{figure}

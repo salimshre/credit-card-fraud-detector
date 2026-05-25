@@ -39,39 +39,38 @@
 \contentsline {section}{\numberline {4.7}Feature Engineering}{13}{section.4.7}%
 \contentsline {section}{\numberline {4.8}Model Training}{14}{section.4.8}%
 \contentsline {section}{\numberline {4.9}Prediction Pipeline}{15}{section.4.9}%
-\contentsline {section}{\numberline {4.10}Risk Score Calculation}{16}{section.4.10}%
-\contentsline {chapter}{\numberline {5}System Design}{17}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Architecture}{17}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Use Case Design}{17}{section.5.2}%
-\contentsline {section}{\numberline {5.3}Data Flow}{19}{section.5.3}%
-\contentsline {section}{\numberline {5.4}Sequence Design}{19}{section.5.4}%
-\contentsline {section}{\numberline {5.5}API Design}{20}{section.5.5}%
-\contentsline {section}{\numberline {5.6}Persistence Design}{20}{section.5.6}%
-\contentsline {section}{\numberline {5.7}User Interface Design}{21}{section.5.7}%
-\contentsline {section}{\numberline {5.8}User Interface Screenshots}{21}{section.5.8}%
-\contentsline {chapter}{\numberline {6}Implementation}{24}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Development Environment}{24}{section.6.1}%
-\contentsline {section}{\numberline {6.2}Authentication}{24}{section.6.2}%
-\contentsline {section}{\numberline {6.3}Transaction Validation}{24}{section.6.3}%
-\contentsline {section}{\numberline {6.4}Feature Encoding}{24}{section.6.4}%
-\contentsline {section}{\numberline {6.5}Behavior Analysis}{25}{section.6.5}%
-\contentsline {section}{\numberline {6.6}Prediction and Risk}{25}{section.6.6}%
-\contentsline {section}{\numberline {6.7}Alerts and Verification}{25}{section.6.7}%
-\contentsline {section}{\numberline {6.8}CSV Batch Detection}{25}{section.6.8}%
-\contentsline {section}{\numberline {6.9}Reporting}{25}{section.6.9}%
-\contentsline {chapter}{\numberline {7}Testing and Results}{26}{chapter.7}%
-\contentsline {section}{\numberline {7.1}Smoke Testing}{26}{section.7.1}%
-\contentsline {section}{\numberline {7.2}Evaluation Metrics}{27}{section.7.2}%
-\contentsline {section}{\numberline {7.3}Model Evaluation}{27}{section.7.3}%
-\contentsline {section}{\numberline {7.4}Sample Input Results}{28}{section.7.4}%
-\contentsline {section}{\numberline {7.5}Issues and Resolutions}{29}{section.7.5}%
-\contentsline {section}{\numberline {7.6}Discussion}{29}{section.7.6}%
-\contentsline {chapter}{\numberline {8}Conclusion and Future Work}{30}{chapter.8}%
-\contentsline {section}{\numberline {8.1}Conclusion}{30}{section.8.1}%
-\contentsline {section}{\numberline {8.2}Future Enhancements}{30}{section.8.2}%
-\contentsline {chapter}{\numberline {A}Installation and User Guide}{31}{appendix.A}%
-\contentsline {section}{\numberline {A.1}Environment Setup}{31}{section.A.1}%
-\contentsline {section}{\numberline {A.2}Running the Application}{31}{section.A.2}%
-\contentsline {section}{\numberline {A.3}CSV Batch Upload}{32}{section.A.3}%
-\contentsline {section}{\numberline {A.4}Testing Command}{32}{section.A.4}%
-\contentsline {chapter}{References}{32}{section.A.4}%
+\contentsline {section}{\numberline {4.10}Risk Score Calculation}{17}{section.4.10}%
+\contentsline {chapter}{\numberline {5}System Design}{18}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Architecture}{18}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Use Case Design}{20}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Data Flow Design}{21}{section.5.3}%
+\contentsline {section}{\numberline {5.4}API Design}{21}{section.5.4}%
+\contentsline {section}{\numberline {5.5}Persistence Design}{22}{section.5.5}%
+\contentsline {section}{\numberline {5.6}User Interface Design}{22}{section.5.6}%
+\contentsline {section}{\numberline {5.7}User Interface Screenshots}{23}{section.5.7}%
+\contentsline {chapter}{\numberline {6}Implementation}{26}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Development Environment}{26}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Authentication}{26}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Transaction Validation}{26}{section.6.3}%
+\contentsline {section}{\numberline {6.4}Feature Encoding}{26}{section.6.4}%
+\contentsline {section}{\numberline {6.5}Behavior Analysis}{27}{section.6.5}%
+\contentsline {section}{\numberline {6.6}Prediction and Risk}{27}{section.6.6}%
+\contentsline {section}{\numberline {6.7}Alerts and Verification}{27}{section.6.7}%
+\contentsline {section}{\numberline {6.8}CSV Batch Detection}{27}{section.6.8}%
+\contentsline {section}{\numberline {6.9}Reporting}{27}{section.6.9}%
+\contentsline {chapter}{\numberline {7}Testing and Results}{28}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Smoke Testing}{28}{section.7.1}%
+\contentsline {section}{\numberline {7.2}Evaluation Metrics}{29}{section.7.2}%
+\contentsline {section}{\numberline {7.3}Model Evaluation}{29}{section.7.3}%
+\contentsline {section}{\numberline {7.4}Sample Input Results}{30}{section.7.4}%
+\contentsline {section}{\numberline {7.5}Issues and Resolutions}{31}{section.7.5}%
+\contentsline {section}{\numberline {7.6}Discussion}{31}{section.7.6}%
+\contentsline {chapter}{\numberline {8}Conclusion and Future Work}{32}{chapter.8}%
+\contentsline {section}{\numberline {8.1}Conclusion}{32}{section.8.1}%
+\contentsline {section}{\numberline {8.2}Future Enhancements}{32}{section.8.2}%
+\contentsline {chapter}{\numberline {A}Installation and User Guide}{33}{appendix.A}%
+\contentsline {section}{\numberline {A.1}Environment Setup}{33}{section.A.1}%
+\contentsline {section}{\numberline {A.2}Running the Application}{33}{section.A.2}%
+\contentsline {section}{\numberline {A.3}CSV Batch Upload}{34}{section.A.3}%
+\contentsline {section}{\numberline {A.4}Testing Command}{34}{section.A.4}%
+\contentsline {chapter}{References}{34}{section.A.4}%
