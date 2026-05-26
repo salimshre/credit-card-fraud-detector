@@ -34,6 +34,12 @@ startCommand: gunicorn app:app
 
 ## Deployment Steps on Render
 
+Quick deploy link for the `dev` branch:
+
+```text
+https://render.com/deploy?repo=https://github.com/salimshre/credit-card-fraud-detector/tree/dev
+```
+
 1. Go to:
 
 ```text
