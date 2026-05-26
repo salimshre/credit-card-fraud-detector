@@ -14,6 +14,20 @@ The model uses 15 engineered features from transaction time, amount, merchant ca
 - Dashboard metrics, recent transaction history, and CSV report export.
 - Retraining script that saves model artifacts and model metadata.
 
+## Live Demo
+
+The app is deployed on Render:
+
+```text
+https://credit-card-fraud-detector-j4ms.onrender.com
+```
+
+Deployment notes are documented in:
+
+```text
+Documentation/render-deployment-guide.md
+```
+
 ## Demo Login
 
 Default local credentials:

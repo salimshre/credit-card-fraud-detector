@@ -4,15 +4,13 @@ This project is a Flask application, so it cannot be deployed as a real working 
 
 Use Render's free web service instead.
 
-## Live App Target
+## Live App
 
-After deployment, the app URL will look like:
+This repository is deployed on Render at:
 
 ```text
-https://credit-card-fraud-detector.onrender.com
+https://credit-card-fraud-detector-j4ms.onrender.com
 ```
-
-The exact URL can vary if Render assigns a slightly different service slug.
 
 ## Files Added for Deployment
 
@@ -125,7 +123,7 @@ After Render finishes deploying, open the app URL and check:
 Example:
 
 ```text
-https://credit-card-fraud-detector.onrender.com/health
+https://credit-card-fraud-detector-j4ms.onrender.com/health
 ```
 
 Expected result:
