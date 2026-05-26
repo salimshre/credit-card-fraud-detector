@@ -6,6 +6,38 @@ This can happen because the app is stateful. The same visible form data is not a
 
 Fraud Shield stores customer behavior history after each prediction. When the same `customer_id` is used again, the app compares the new transaction against the customer's updated history.
 
+### Simple Explanation
+
+After the app first loads, the customer may have no behavior history yet.
+
+First submit:
+
+```text
+customer_id = CUST-1
+country = US
+device_id = web-demo
+merchant_category = online
+
+History: none
+Signals: new customer, new country, new device, new category
+Possible result: Fraud
+```
+
+Second submit with the same visible data:
+
+```text
+customer_id = CUST-1
+country = US
+device_id = web-demo
+merchant_category = online
+
+History: already seen from the first submit
+Signals: behavior matches known customer pattern
+Possible result: Normal
+```
+
+The visible form data is the same, but the hidden behavior history is different.
+
 ### What Happens
 
 1. The first transaction for a customer is treated as a new behavior profile.
