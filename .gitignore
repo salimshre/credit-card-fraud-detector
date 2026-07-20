@@ -16,3 +16,12 @@ Documentation/CreditCard/*.lot
 Documentation/CreditCard/*.out
 Documentation/CreditCard/*.toc
 *.tar.gz
+
+tmp/
+
+prepare_config.json
+prepare_for_deepseek.py
+.prepare_config.json
+.prepare_for_deepseek.py
+
+
