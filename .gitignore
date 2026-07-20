@@ -18,6 +18,7 @@ Documentation/CreditCard/*.toc
 *.tar.gz
 
 tmp/
+tmp1/
 
 prepare_config.json
 prepare_for_deepseek.py
@@ -25,3 +26,6 @@ prepare_for_deepseek.py
 .prepare_for_deepseek.py
 
 
+FILE_STRUCTURE.md 
+
+copy_to_tmp_v1(include-all-files).bat
