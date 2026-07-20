@@ -20,8 +20,8 @@ Documentation/CreditCard/*.toc
 tmp/
 tmp1/
 tmp2/
-prepare_config.json
-prepare_for_deepseek.py
+#prepare_config.json
+#prepare_for_deepseek.py
 .prepare_config.json
 .prepare_for_deepseek.py
 
