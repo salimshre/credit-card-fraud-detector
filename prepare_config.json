@@ -1,5 +1,5 @@
 {
-  "code_extensions": [".php", ".js", ".css", ".html"],
+  "code_extensions": [".php", ".js", ".css", ".html", ".py", ".ipynb", ".json"],
   "skip_top_level": [
     "archive", ".git", ".github", ".agents", "tmp",
     "journal", "data", "deploy", "versions"
