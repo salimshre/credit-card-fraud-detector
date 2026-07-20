@@ -14,5 +14,6 @@
   "tmp_dir": "tmp",
   "tree_output_file": "FILE_STRUCTURE.md",
   "use_gitignore": true,
-  "force_include": ["app"]
+  "force_include": ["app"],
+  "force_exclude": ["Documentation"]
 }

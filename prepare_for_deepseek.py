@@ -49,8 +49,8 @@ DEFAULT_CONFIG = {
     "tree_output_file": "FILE_STRUCTURE.md",
     "use_gitignore": True,
     "open_csv": False,
-#    "force_include": []
-    
+    "force_include": [],
+    "force_exclude": [],
 }
 
 def human_size(n_bytes: int) -> str:
@@ -98,6 +98,7 @@ def validate_config(config: dict) -> None:
         "use_gitignore": bool,
         "open_csv": bool,
         "force_include": list,
+        "force_exclude": list,
     }
     for key, expected_type in required_keys.items():
         if key not in config:
@@ -196,6 +197,15 @@ def should_skip_file(rel_path: Path, ext: str, config: dict, gitignore_spec) -> 
             inc_clean = inc.strip("/\\")
             if inc_clean and inc_clean in rel_path.parts:
                 return False, ""  # never skip this path
+
+    # Forced exclude overrides – if any substring of the relative path matches a force_exclude entry, skip (unless overridden by force_include above).
+    force_exclude = config.get("force_exclude", [])
+    if force_exclude:
+        rel_str = str(rel_path)
+        for exc in force_exclude:
+            exc_clean = exc.strip("/\\")
+            if exc_clean and exc_clean in rel_str:
+                return True, "force_excluded"
 
     # 1. Extension not in whitelist
     if ext.lower() not in [e.lower() for e in config["code_extensions"]]:
