@@ -24,6 +24,9 @@ import app as fraud_app
 from app.persistence import storage
 from feature_engineering import COUNTRIES, encode_category
 
+# Use the same password we set in the environment
+ADMIN_PASSWORD = os.getenv("DEFAULT_ADMIN_PASSWORD", "9705550012")
+
 app = fraud_app.app
 
 failures: list[str] = []
@@ -64,9 +67,10 @@ def main() -> None:
         check("feature_count > 0", data.get("feature_count", 0) > 0)
 
         print("\n[2] Login")
+        # Use the admin credentials (password from environment)
         resp = client.post(
             "/login",
-            json={"username": fraud_app.APP_USERNAME, "password": fraud_app.APP_PASSWORD},
+            json={"username": fraud_app.APP_USERNAME, "password": ADMIN_PASSWORD},
         )
         data = resp.get_json()
         check("status 200", resp.status_code == 200, f"got {resp.status_code}")
@@ -80,7 +84,7 @@ def main() -> None:
 
         client.post(
             "/login",
-            json={"username": fraud_app.APP_USERNAME, "password": fraud_app.APP_PASSWORD},
+            json={"username": fraud_app.APP_USERNAME, "password": ADMIN_PASSWORD},
         )
 
         print("\n[3] Predictions")
@@ -165,3 +169,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+    

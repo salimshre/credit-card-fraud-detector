@@ -1,17 +1,5 @@
 from app.app import app, create_app, main
-from app.config import APP_PASSWORD, APP_USERNAME, THRESHOLD
-from app.persistence import storage
 from app.persistence.storage import ALERTS, BEHAVIOR_PROFILES, TRANSACTIONS
+from app.config import APP_USERNAME, THRESHOLD
 
-__all__ = [
-    "ALERTS",
-    "APP_PASSWORD",
-    "APP_USERNAME",
-    "BEHAVIOR_PROFILES",
-    "THRESHOLD",
-    "TRANSACTIONS",
-    "app",
-    "create_app",
-    "main",
-    "storage",
-]
+__all__ = ["app", "create_app", "main", "ALERTS", "BEHAVIOR_PROFILES", "TRANSACTIONS", "APP_USERNAME", "THRESHOLD"]
