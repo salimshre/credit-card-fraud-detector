@@ -38,9 +38,7 @@ tmp/
 tmp1/
 tmp2/
 
-# Hidden config / scripts (commented out as per your list)
-#prepare_config.json
-#prepare_for_deepseek.py
+
 
 # Hidden variants (these are not commented, so they are active)
 .prepare_config.json
@@ -60,7 +58,7 @@ creditcard_raw.csv
 Documentation/CreditCard/build/
 
 # --- Helper Scripts (Uncomment or ADD these) ---
-prepare_for_deepseek.py
-prepare_config.json
+#prepare_for_deepseek.py
+#prepare_config.json
 
 
