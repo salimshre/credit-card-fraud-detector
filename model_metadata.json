@@ -1,5 +1,5 @@
 {
-  "trained_at": "2026-05-20T16:45:24+00:00",
+  "trained_at": "2026-07-21T16:04:32+00:00",
   "dataset": "creditcard_raw.csv",
   "rows": 59978,
   "fraud_rows": 922,

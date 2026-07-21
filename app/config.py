@@ -12,6 +12,7 @@ METADATA_PATH = BASE_DIR / "model_metadata.json"
 
 DEFAULT_STORE_PATH = BASE_DIR / "instance" / "data_store.json"
 LEGACY_STORE_PATH = BASE_DIR / "data_store.json"
+DEFAULT_DB_PATH = BASE_DIR / "instance" / "fraud_shield.db"
 
 APP_USERNAME = os.getenv("APP_USERNAME", "admin")
 APP_PASSWORD = os.getenv("APP_PASSWORD", "admin123")
@@ -39,6 +40,14 @@ def resolve_store_path() -> Path:
     return path if path.is_absolute() else BASE_DIR / path
 
 
+def resolve_db_path() -> Path:
+    configured = os.getenv("FRAUD_DB_PATH")
+    if not configured:
+        return DEFAULT_DB_PATH
+    path = Path(configured).expanduser()
+    return path if path.is_absolute() else BASE_DIR / path
+
+
 def load_threshold() -> float:
     configured = os.getenv("FRAUD_THRESHOLD")
     if configured not in (None, ""):
@@ -56,3 +65,4 @@ def load_threshold() -> float:
 
 
 THRESHOLD = load_threshold()
+DB_PATH = resolve_db_path()

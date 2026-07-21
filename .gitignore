@@ -62,3 +62,6 @@ Documentation/CreditCard/build/
 #prepare_config.json
 
 
+
+*.db
+instance/
