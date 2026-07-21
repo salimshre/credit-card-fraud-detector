@@ -48,3 +48,19 @@ tmp2/
 
 # Generated file structure markdown
 FILE_STRUCTURE.md
+
+
+# --- Generated ML Models & Data (ADD THESE) ---
+fraud_model.pkl
+scaler.pkl
+model_metadata.json
+creditcard_raw.csv
+
+# --- Browser Build Cache (ADD THIS) ---
+Documentation/CreditCard/build/
+
+# --- Helper Scripts (Uncomment or ADD these) ---
+prepare_for_deepseek.py
+prepare_config.json
+
+
