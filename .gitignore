@@ -16,6 +16,7 @@ Documentation/CreditCard/*.lot
 Documentation/CreditCard/*.out
 Documentation/CreditCard/*.toc
 *.tar.gz
+venv
 
 tmp/
 tmp1/
