@@ -1,6 +1,8 @@
-from flask import Blueprint, jsonify, redirect, render_template, request, session, url_for
+from flask import Blueprint, jsonify, redirect, render_template, request, session, url_for, current_app
 
-from app.config import APP_PASSWORD, APP_USERNAME, MODEL_PATH, SCALER_PATH, THRESHOLD
+from app.config import APP_USERNAME, MODEL_PATH, SCALER_PATH, THRESHOLD
+from app.extensions import limiter
+from app.persistence.storage import get_user_by_username
 from app.routes import wants_json
 from app.services.scoring_service import sanitize_text
 from feature_engineering import MODEL_FEATURES
@@ -20,18 +22,23 @@ def home():
 
 
 @auth_bp.post("/login")
+@limiter.limit("5 per minute")
 def login():
     payload = request.get_json(silent=True) if request.is_json else request.form
     username = sanitize_text(payload.get("username") if payload else None, "")
     password = sanitize_text(payload.get("password") if payload else None, "")
 
-    if username == APP_USERNAME and password == APP_PASSWORD:
-        session["authenticated"] = True
-        session["username"] = username
-        if wants_json():
-            return jsonify({"status": "ok", "username": username})
-        return redirect(url_for("auth.home"))
+    user = get_user_by_username(username)
+    if user:
+        bcrypt = current_app.bcrypt
+        if bcrypt.check_password_hash(user["password_hash"], password):
+            session["authenticated"] = True
+            session["username"] = username
+            if wants_json():
+                return jsonify({"status": "ok", "username": username})
+            return redirect(url_for("auth.home"))
 
+    # Generic error to prevent user enumeration
     if wants_json():
         return jsonify({"error": "Invalid username or password."}), 401
     return render_template(
@@ -72,3 +79,4 @@ def health():
             "CSV Batch Detection",
         ],
     })
+    

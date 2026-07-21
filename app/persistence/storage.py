@@ -13,7 +13,7 @@ ALERTS: list = []
 BEHAVIOR_PROFILES: dict = {}
 
 
-# --- Helper serialization for JSON fields ---
+# --- Helper serialisation for JSON fields ---
 
 def _json_dumps(obj):
     return json.dumps(obj, default=str)
@@ -27,7 +27,7 @@ def _json_loads(data):
 # --- Database initialisation ---
 
 def init_db() -> None:
-    """Create tables if they don't exist."""
+    """Create all tables (including users) if they don't exist."""
     DB_PATH.parent.mkdir(parents=True, exist_ok=True)
     with sqlite3.connect(DB_PATH) as conn:
         conn.execute("""
@@ -77,9 +77,58 @@ def init_db() -> None:
                 merchant_categories TEXT
             )
         """)
+        # ---- NEW: users table ----
+        conn.execute("""
+            CREATE TABLE IF NOT EXISTS users (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                username TEXT UNIQUE NOT NULL,
+                password_hash TEXT NOT NULL,
+                created_at TEXT DEFAULT CURRENT_TIMESTAMP
+            )
+        """)
         conn.execute("PRAGMA foreign_keys = ON")
         conn.commit()
     logger.info(f"Database initialized at {DB_PATH}")
+
+
+# ---- NEW: user helpers ----
+
+def get_user_by_username(username: str) -> dict | None:
+    with sqlite3.connect(DB_PATH) as conn:
+        conn.row_factory = sqlite3.Row
+        row = conn.execute("SELECT * FROM users WHERE username = ?", (username,)).fetchone()
+        return dict(row) if row else None
+
+
+def create_user(username: str, password_hash: str) -> None:
+    with sqlite3.connect(DB_PATH) as conn:
+        conn.execute("INSERT INTO users (username, password_hash) VALUES (?, ?)", (username, password_hash))
+        conn.commit()
+
+
+def seed_default_user(bcrypt) -> None:
+    """Create a default admin user if the users table is empty."""
+    import os
+    from app.config import APP_USERNAME
+
+    default_password = os.getenv("DEFAULT_ADMIN_PASSWORD")
+    if not default_password:
+        default_password = "admin123"
+        logger.warning(
+            "DEFAULT_ADMIN_PASSWORD not set. Using default 'admin123'. "
+            "Please change immediately via environment variable."
+        )
+
+    with sqlite3.connect(DB_PATH) as conn:
+        count = conn.execute("SELECT COUNT(*) FROM users").fetchone()[0]
+        if count == 0:
+            password_hash = bcrypt.generate_password_hash(default_password).decode('utf-8')
+            conn.execute(
+                "INSERT INTO users (username, password_hash) VALUES (?, ?)",
+                (APP_USERNAME, password_hash)
+            )
+            conn.commit()
+            logger.info(f"Default admin user '{APP_USERNAME}' created.")
 
 
 # --- Profile conversion (set↔list) ---
@@ -144,7 +193,6 @@ def load_state() -> None:
 
 def save_state() -> None:
     with sqlite3.connect(DB_PATH) as conn:
-        # Clear existing data
         conn.execute("DELETE FROM transactions")
         conn.execute("DELETE FROM alerts")
         conn.execute("DELETE FROM behavior_profiles")
@@ -194,7 +242,6 @@ def save_state() -> None:
 
 # --- Optional: migrate from old JSON (if exists and DB empty) ---
 def _migrate_from_json_if_needed() -> None:
-    """One‑time migration of legacy JSON data into SQLite."""
     load_path = DEFAULT_STORE_PATH
     if (
         not load_path.exists()
@@ -207,12 +254,10 @@ def _migrate_from_json_if_needed() -> None:
         return
 
     with sqlite3.connect(DB_PATH) as conn:
-        # Check if DB already has data
         count = conn.execute("SELECT COUNT(*) FROM transactions").fetchone()[0]
         if count > 0:
-            return  # already has data
+            return
 
-        # Load JSON
         try:
             import json
             state = json.loads(load_path.read_text(encoding="utf-8"))
@@ -220,19 +265,16 @@ def _migrate_from_json_if_needed() -> None:
             alerts = state.get("alerts", [])
             profiles = state.get("behavior_profiles", {})
 
-            # Populate globals (they will be written to DB by save_state)
             TRANSACTIONS[:] = transactions
             ALERTS[:] = alerts
             BEHAVIOR_PROFILES.update({
                 key: dict_to_profile(value)
                 for key, value in profiles.items()
             })
-            # Save to SQLite
             save_state()
             logger.info(f"Migrated {len(TRANSACTIONS)} transactions, {len(ALERTS)} alerts, {len(BEHAVIOR_PROFILES)} profiles from JSON.")
         except Exception as exc:
             logger.warning(f"Could not migrate JSON data: {exc}")
 
 
-# Invoke the migration on first load
 _migrate_from_json_if_needed()

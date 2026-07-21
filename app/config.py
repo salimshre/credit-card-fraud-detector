@@ -15,8 +15,14 @@ LEGACY_STORE_PATH = BASE_DIR / "data_store.json"
 DEFAULT_DB_PATH = BASE_DIR / "instance" / "fraud_shield.db"
 
 APP_USERNAME = os.getenv("APP_USERNAME", "admin")
-APP_PASSWORD = os.getenv("APP_PASSWORD", "admin123")
-SECRET_KEY = os.getenv("SECRET_KEY", "change-this-demo-secret")
+
+# --- CRITICAL: Enforce a strong SECRET_KEY ---
+SECRET_KEY = os.getenv("SECRET_KEY")
+if not SECRET_KEY or SECRET_KEY == "change-this-demo-secret":
+    raise ValueError(
+        "SECRET_KEY environment variable is not set or is using the insecure default. "
+        "Generate a new key with: python -c 'import secrets; print(secrets.token_hex(32))'"
+    )
 
 REQUIRED_FIELDS = [
     "transaction_date",

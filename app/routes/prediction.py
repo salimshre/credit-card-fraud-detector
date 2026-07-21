@@ -5,6 +5,7 @@ import pandas as pd
 from flask import Blueprint, Response, jsonify, request
 
 from app.config import BASE_DIR, MAX_CSV_ROWS, OPTIONAL_FIELDS, REQUIRED_FIELDS
+from app.extensions import limiter
 from app.persistence.storage import TRANSACTIONS
 from app.routes import require_auth
 from app.routes.dashboard import dashboard_payload
@@ -28,6 +29,7 @@ def api_sample_csv():
 
 @prediction_bp.post("/api/upload-csv")
 @require_auth
+@limiter.limit("10 per hour")
 def api_upload_csv():
     upload = request.files.get("file")
     if upload is None or not upload.filename:
@@ -122,6 +124,7 @@ def api_report_csv():
 
 @prediction_bp.post("/predict")
 @require_auth
+@limiter.limit("60 per minute")
 def predict():
     try:
         record, alert = monitor_transaction(request.get_json(silent=True))
@@ -141,3 +144,4 @@ def predict():
         })
     except Exception as exc:
         return jsonify({"error": str(exc)}), 400
+        
