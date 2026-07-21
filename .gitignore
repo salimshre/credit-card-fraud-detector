@@ -49,8 +49,8 @@ FILE_STRUCTURE.md
 
 
 # --- Generated ML Models & Data (ADD THESE) ---
-fraud_model.pkl
-scaler.pkl
+#fraud_model.pkl
+#scaler.pkl
 model_metadata.json
 creditcard_raw.csv
 
