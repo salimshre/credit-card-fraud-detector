@@ -65,3 +65,6 @@ Documentation/CreditCard/build/
 
 *.db
 instance/
+
+
+student.pkl
