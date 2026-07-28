@@ -6,7 +6,7 @@ import joblib
 import pandas as pd
 from flask import session
 
-from app.config import MAX_RECORDS, MODEL_PATH, REQUIRED_FIELDS, SCALER_PATH, THRESHOLD
+from app.config import MAX_RECORDS, MODEL_PATH, NPR_BLOCK_AMOUNT, NPR_REVIEW_AMOUNT, REQUIRED_FIELDS, SCALER_PATH, THRESHOLD
 from app.persistence.storage import TRANSACTIONS, save_state
 from app.services.alert_service import create_alert_if_needed
 from app.services.behavior_service import (
@@ -162,12 +162,55 @@ def calculate_risk(probability: float, prediction: int, behavior: dict) -> tuple
 def monitor_transaction(payload: object) -> tuple[dict, object]:
     txn, metadata = parse_transaction(payload)
     profile = get_behavior_profile(metadata["customer_id"])
-    behavior = analyze_behavior(txn, metadata, profile)
 
+    # 1. Analyze behavior and ML
+    behavior = analyze_behavior(txn, metadata, profile)  # Includes 3x average rule
     prepared_df, preprocessing = preprocess_transaction(txn, behavior)
     probability, prediction = score_ml(prepared_df)
-    risk_score, risk_level = calculate_risk(probability, prediction, behavior)
+    base_risk_score, base_risk_level = calculate_risk(probability, prediction, behavior)
 
+    amount = txn["amount"]
+
+    # 2. Apply NPR Business Rules to determine outcome (Normal / Review Required / Blocked / Fraud)
+    final_label = "Normal"
+    final_risk_level = base_risk_level
+    final_risk_score = base_risk_score
+    verification_status = "Auto Cleared"
+
+    if amount >= NPR_BLOCK_AMOUNT:
+        final_label = "Blocked"
+        final_risk_level = "Critical"
+        final_risk_score = 100
+        verification_status = "Blocked – Limit Exceeded"
+    
+    elif amount >= NPR_REVIEW_AMOUNT:
+        if prediction == 1:
+            final_label = "Fraud"
+        else:
+            final_label = "Review Required"
+        verification_status = "Pending Review"
+        final_risk_level = "High"
+        final_risk_score = max(base_risk_score, 65)
+
+    else:
+        # Amount < 100,000 NPR
+        if prediction == 1:
+            final_label = "Fraud"
+            verification_status = "Pending Review"
+            final_risk_level = "Critical"
+            final_risk_score = max(base_risk_score, 65)
+        else:
+            # Check for strong behavior signals (like relative 3x rule or multiple anomalies)
+            if behavior["behavior_points"] >= 20:
+                final_label = "Review Required"
+                verification_status = "Pending Review"
+                final_risk_level = "High"
+                final_risk_score = max(base_risk_score, 65)
+            else:
+                final_label = "Normal"
+                verification_status = "Auto Cleared"
+
+    # 3. Construct the record
     record = {
         "id": str(uuid.uuid4())[:8],
         "created_at": now_iso(),
@@ -178,21 +221,25 @@ def monitor_transaction(payload: object) -> tuple[dict, object]:
         "transaction_time": txn["transaction_time"],
         "fraud_probability": round(probability, 6),
         "prediction": prediction,
-        "label": "Fraud" if prediction else "Normal",
+        "label": final_label,          # Normal, Review Required, Blocked, Fraud
         "threshold": THRESHOLD,
-        "risk_score": risk_score,
-        "risk_level": risk_level,
+        "risk_score": final_risk_score,
+        "risk_level": final_risk_level,
         "behavior": behavior,
         "preprocessing": preprocessing,
-        "verification_status": "Pending Review" if risk_score >= 65 else "Auto Cleared",
+        "verification_status": verification_status,
         "verification_note": "",
         "verified_by": "",
         "verified_at": "",
     }
 
     alert = create_alert_if_needed(record)
-    update_behavior_profile(txn, metadata)
 
+    # 4. Update Profile ONLY if transaction is NOT Blocked
+    if final_label != "Blocked":
+        update_behavior_profile(txn, metadata)
+
+    # 5. Persist to memory and DB
     TRANSACTIONS.insert(0, record)
     del TRANSACTIONS[MAX_RECORDS:]
     save_state()

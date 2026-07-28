@@ -64,6 +64,12 @@ def analyze_behavior(txn: dict, metadata: dict, profile: dict) -> dict:
             signals.append(f"Rapid transactions: {txn_1h} in last hour")
             behavior_points += 8
 
+    # ---- NEW RELATIVE SPENDING RULE (3× Average) ----
+    if profile["transaction_count"] > 0 and profile["amount_avg"] > 0:
+        if amount > 3 * profile["amount_avg"]:
+            signals.append(f"Amount is more than 3x customer's average ({profile['amount_avg']:.2f} NPR)")
+            behavior_points += 12
+
     if amount >= 1000:
         signals.append("High transaction amount")
         behavior_points += 10
@@ -109,3 +115,4 @@ def update_behavior_profile(txn: dict, metadata: dict) -> None:
     profile["devices"].add(metadata.get("device_id", "unknown"))
     profile["countries"].add(txn["country"])
     profile["merchant_categories"].add(txn["merchant_category"])
+    
