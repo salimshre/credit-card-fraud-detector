@@ -39,6 +39,18 @@ def api_verify_transaction(transaction_id: str):
     for record in TRANSACTIONS:
         if record["id"] == transaction_id:
             record["verification_status"] = status
+            
+            # ---- NEW: Update the static label to match the user's verdict ----
+            if status == "Approved":
+                record["label"] = "Approved"
+            elif status == "Blocked":
+                record["label"] = "Blocked"
+            elif status == "False Positive":
+                record["label"] = "False Positive"
+            elif status == "Reviewed":
+                record["label"] = "Reviewed"
+            # ------------------------------------------------------------------
+
             record["verification_note"] = note
             record["verified_by"] = session.get("username", "")
             record["verified_at"] = now_iso()
@@ -49,3 +61,4 @@ def api_verify_transaction(transaction_id: str):
             return jsonify(record)
 
     return jsonify({"error": "Transaction not found."}), 404
+    

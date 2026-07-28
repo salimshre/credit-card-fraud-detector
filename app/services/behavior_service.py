@@ -48,9 +48,11 @@ def analyze_behavior(txn: dict, metadata: dict, profile: dict) -> dict:
     else:
         effective_avg = profile["amount_avg"]
 
-        if effective_avg > 0 and amount > max(effective_avg * 3, 500):
-            signals.append("Amount much higher than customer average")
-            behavior_points += 14
+        # --- REMOVED: Old vague 3x rule (prevents duplicate signals) ---
+        # if effective_avg > 0 and amount > max(effective_avg * 3, 500):
+        #    signals.append("Amount much higher than customer average")
+        #    behavior_points += 14
+
         if metadata.get("device_id") not in profile["devices"]:
             signals.append("New device for this customer")
             behavior_points += 10
@@ -65,10 +67,11 @@ def analyze_behavior(txn: dict, metadata: dict, profile: dict) -> dict:
             behavior_points += 8
 
     # ---- NEW RELATIVE SPENDING RULE (3× Average) ----
+    # Increased to +14 points to match the original rule's severity
     if profile["transaction_count"] > 0 and profile["amount_avg"] > 0:
         if amount > 3 * profile["amount_avg"]:
             signals.append(f"Amount is more than 3x customer's average ({profile['amount_avg']:.2f} NPR)")
-            behavior_points += 12
+            behavior_points += 14
 
     if amount >= 1000:
         signals.append("High transaction amount")
