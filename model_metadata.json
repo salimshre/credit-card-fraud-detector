@@ -1,5 +1,5 @@
 {
-  "trained_at": "2026-07-29T05:21:42+00:00",
+  "trained_at": "2026-07-30T04:18:08+00:00",
   "dataset": "creditcard_raw.csv",
   "rows": 59978,
   "fraud_rows": 922,
@@ -29,7 +29,7 @@
     "random_state": 42,
     "n_jobs": -1
   },
-  "recommended_threshold": 0.37106655420677576,
+  "recommended_threshold": 0.3710665542067758,
   "threshold_selection": {
     "selection_rule": "max_fbeta_with_min_precision",
     "beta": 2.0,
@@ -39,7 +39,7 @@
     "fbeta": 0.6497948016415868
   },
   "validation_metrics": {
-    "threshold": 0.37106655420677576,
+    "threshold": 0.3710665542067758,
     "precision": 0.5555555555555556,
     "recall": 0.6785714285714286,
     "f1": 0.6109324758842444,
@@ -48,7 +48,7 @@
     "roc_auc": 0.966303488765948
   },
   "test_metrics": {
-    "threshold": 0.37106655420677576,
+    "threshold": 0.3710665542067758,
     "precision": 0.5222222222222223,
     "recall": 0.6811594202898551,
     "f1": 0.5911949685534591,
@@ -96,7 +96,7 @@
   "chronological_cv": {
     "folds": [
       {
-        "threshold": 0.37106655420677576,
+        "threshold": 0.3710665542067758,
         "precision": 0.7758620689655172,
         "recall": 0.3358208955223881,
         "f1": 0.46875,
@@ -108,7 +108,7 @@
         "validation_fraud_rows": 134
       },
       {
-        "threshold": 0.37106655420677576,
+        "threshold": 0.3710665542067758,
         "precision": 0.7628865979381443,
         "recall": 0.5103448275862069,
         "f1": 0.6115702479338843,
@@ -120,7 +120,7 @@
         "validation_fraud_rows": 145
       },
       {
-        "threshold": 0.37106655420677576,
+        "threshold": 0.3710665542067758,
         "precision": 0.5934959349593496,
         "recall": 0.5887096774193549,
         "f1": 0.5910931174089069,
@@ -132,7 +132,7 @@
         "validation_fraud_rows": 124
       },
       {
-        "threshold": 0.37106655420677576,
+        "threshold": 0.3710665542067758,
         "precision": 0.6030534351145038,
         "recall": 0.632,
         "f1": 0.6171875,
@@ -144,7 +144,7 @@
         "validation_fraud_rows": 125
       },
       {
-        "threshold": 0.37106655420677576,
+        "threshold": 0.3710665542067758,
         "precision": 0.5512820512820513,
         "recall": 0.6666666666666666,
         "f1": 0.6035087719298246,
