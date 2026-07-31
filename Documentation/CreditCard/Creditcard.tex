@@ -184,7 +184,7 @@ This project presents a credit card fraud detection system named Fraud Shield. T
 
 The model uses 15 engineered features derived from transaction time, amount, merchant category, channel, country, and customer behavior. Raw transaction records are transformed by a shared feature engineering module, scaled using a fitted StandardScaler, and classified by a RandomForestClassifier saved as \path{fraud_model.pkl}. The application computes a fraud probability, converts it into a model decision using the configured threshold, combines it with behavior-based signals, and produces a risk score between 0 and 100. The system supports both single transaction checks through the dashboard/API and CSV batch detection through a manual upload workflow.
 
-The training data stored in \path{creditcard_raw.csv} contains 59,978 transactions, including 922 fraud records, giving a fraud rate of approximately 1.54 percent. The current repository metadata reports a chronological 70/15/15 train-validation-test split and a recommended fraud probability threshold of approximately 0.449. On the test split, the model records 98.20 percent accuracy, 42.31 percent fraud precision, 47.83 percent fraud recall, 52.16 percent PR-AUC, and 94.96 percent ROC-AUC. This documentation is based on the implemented repository and related credit card fraud detection studies on imbalanced transaction classification and Random Forest based detection \cite{mallidi2021analysis,adesina2024creditcard,tadvi2021realtime}.
+The training data stored in \path{creditcard_raw.csv} contains 59,978 synthetic transactions, including 922 fraud records, giving a fraud rate of approximately 1.54 percent. The current repository metadata reports a chronological 70/15/15 train-validation-test split and a recommended fraud probability threshold of approximately 0.371. On the test split, the model records 98.56 percent accuracy, 52.22 percent fraud precision, 68.12 percent fraud recall, 65.22 percent PR-AUC, and 97.32 percent ROC-AUC. These results demonstrate performance on the repository's synthetic benchmark; they should not be interpreted as performance on real bank transaction data. This documentation is based on the implemented repository and related credit card fraud detection studies on imbalanced transaction classification and Random Forest based detection \cite{mallidi2021analysis,adesina2024creditcard,tadvi2021realtime}.
 
 \vspace{0.5cm}
 \noindent\textbf{Keywords:} Credit card fraud detection, Random Forest, machine learning, Flask dashboard, risk scoring, transaction monitoring, behavior analysis, fraud alerts.
@@ -542,7 +542,7 @@ Random state & 42 \\ \hline
 Parallel jobs & -1 \\ \hline
 Split strategy & Chronological 70/15/15 train-validation-test split \\ \hline
 Threshold selection & F2 score on validation data with minimum precision guard \\ \hline
-Recommended threshold & 0.448972 \\ \hline
+Recommended threshold & 0.371067 \\ \hline
 Cross-validation & 5-fold TimeSeriesSplit on training data \\ \hline
 \end{tabular}
 \end{table}
@@ -830,7 +830,7 @@ The evaluation uses metrics that are suitable for imbalanced fraud detection:
 \end{itemize}
 
 \section{Model Evaluation}
-The model performance reported in \path{model_metadata.json} is based on the current chronological test split. The dataset contains 59,978 synthetic transactions with 922 fraud transactions. The reported confusion matrix is shown below.
+The model performance reported in \path{model_metadata.json} is based on the current chronological test split. The dataset contains 59,978 synthetic transactions with 922 fraud transactions. Therefore, the following results evaluate consistency with the synthetic data-generation process and should not be generalized to real banking operations without validation on representative, privacy-approved real-world data. The reported confusion matrix is shown below.
 
 \begin{table}[H]
 \centering
@@ -838,8 +838,8 @@ The model performance reported in \path{model_metadata.json} is based on the cur
 \begin{tabular}{|l|c|c|}
 \hline
  & \textbf{Predicted Normal} & \textbf{Predicted Fraud} \\ \hline
-\textbf{Actual Normal} & 8769 & 90 \\ \hline
-\textbf{Actual Fraud} & 72 & 66 \\ \hline
+\textbf{Actual Normal} & 8773 & 86 \\ \hline
+\textbf{Actual Fraud} & 44 & 94 \\ \hline
 \end{tabular}
 \end{table}
 
@@ -849,15 +849,15 @@ The model performance reported in \path{model_metadata.json} is based on the cur
 \begin{tabular}{|l|c|c|c|c|}
 \hline
 \textbf{Class} & \textbf{Precision} & \textbf{Recall} & \textbf{F1-score} & \textbf{Support} \\ \hline
-Normal & 0.992 & 0.990 & 0.991 & 8859 \\ \hline
-Fraud & 0.423 & 0.478 & 0.449 & 138 \\ \hline
-Accuracy & \multicolumn{3}{c|}{0.982} & 8997 \\ \hline
-Macro average & 0.707 & 0.734 & 0.720 & 8997 \\ \hline
-Weighted average & 0.983 & 0.982 & 0.983 & 8997 \\ \hline
+Normal & 0.995 & 0.990 & 0.993 & 8859 \\ \hline
+Fraud & 0.522 & 0.681 & 0.591 & 138 \\ \hline
+Accuracy & \multicolumn{3}{c|}{0.986} & 8997 \\ \hline
+Macro average & 0.759 & 0.836 & 0.792 & 8997 \\ \hline
+Weighted average & 0.988 & 0.986 & 0.986 & 8997 \\ \hline
 \end{tabular}
 \end{table}
 
-The repository metadata reports 5-fold time-series cross-validation on training data with a mean fraud recall of \(0.3631 \pm 0.1065\) and a mean PR-AUC of \(0.4938 \pm 0.0407\). These results show that the model performs well for normal-class separation, but fraud-class recall remains an important improvement area because the dataset is highly imbalanced.
+The repository metadata reports 5-fold time-series cross-validation on training data with a mean fraud recall of \(0.5467 \pm 0.1177\) and a mean PR-AUC of \(0.6374 \pm 0.0417\). These results show that the model performs well for normal-class separation, but fraud-class recall remains an important improvement area because the dataset is highly imbalanced.
 
 \section{Sample Input Results}
 The repository includes two sample JSON payloads. The normal sample uses a grocery transaction of 45.20 in the United States. The fraud sample uses a cash transaction of 500.00 from Russia at night on an unknown device. The smoke test expects the first sample to be classified as Normal and the second as Fraud.
@@ -888,7 +888,7 @@ The combination of model probability and behavior analysis is important. The Ran
 \section{Conclusion}
 The project successfully implements a credit card fraud detection system using a Random Forest model and a Flask dashboard. The repository demonstrates an end-to-end workflow: data preparation, feature engineering, model training, prediction serving, risk scoring, alerting, verification, CSV batch detection, and reporting. By using shared feature definitions, the project reduces the risk of mismatch between model training and application inference.
 
-The system is suitable for academic demonstration because it is runnable, testable, and connected to an operator-facing interface. The model evaluation shows strong performance on the available dataset, and the dashboard provides the workflow needed to inspect, verify, and report suspicious transactions.
+The system is suitable for academic demonstration because it is runnable, testable, and connected to an operator-facing interface. The model evaluation shows useful performance on the available synthetic dataset, and the dashboard provides the workflow needed to inspect, verify, and report suspicious transactions. Validation with representative real-world data is required before making claims about production fraud-detection performance.
 
 \section{Future Enhancements}
 \begin{itemize}
