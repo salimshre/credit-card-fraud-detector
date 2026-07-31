@@ -352,18 +352,20 @@ Traditional fraud review relies on rule-based checks or manual investigation. Th
 The proposed system is a web-based credit card fraud detector named Fraud Shield. It uses a Random Forest model for prediction and adds a monitoring layer around the model. Each transaction passes through validation, behavior analysis, feature engineering, scaling, model prediction, risk scoring, alert generation, profile update, and persistence. Operators interact with the system through a browser dashboard and API endpoints.
 
 \section{Functional Requirements}
-\begin{longtable}{p{0.26\textwidth} p{0.64\textwidth}}
-\toprule
-\textbf{Requirement} & \textbf{Description} \\
-\midrule
-Login and logout & The system must authenticate operators before protected routes are accessed. \\
-Single prediction & The system must accept transaction details and return fraud probability, label, risk score, and behavior signals. \\
-CSV upload & The system must process CSV files containing multiple transactions. \\
-Dashboard metrics & The system must show total transactions, fraud predictions, high-risk transactions, open alerts, verified transactions, and average risk. \\
-Alert handling & The system must generate and acknowledge alerts for suspicious transactions. \\
-Verification & The system must allow transactions to be approved, blocked, reviewed, or marked as false positives. \\
-Report export & The system must provide a downloadable CSV report of monitored transactions. \\
-\bottomrule
+\begin{longtable}{|p{0.26\textwidth}|p{0.62\textwidth}|}
+\hline
+\textbf{Requirement} & \textbf{Description} \\ \hline
+\endfirsthead
+\hline
+\textbf{Requirement} & \textbf{Description} \\ \hline
+\endhead
+Login and logout & The system must authenticate operators before protected routes are accessed. \\ \hline
+Single prediction & The system must accept transaction details and return fraud probability, label, risk score, and behavior signals. \\ \hline
+CSV upload & The system must process CSV files containing multiple transactions. \\ \hline
+Dashboard metrics & The system must show total transactions, fraud predictions, high-risk transactions, open alerts, verified transactions, and average risk. \\ \hline
+Alert handling & The system must generate and acknowledge alerts for suspicious transactions. \\ \hline
+Verification & The system must allow transactions to be approved, blocked, reviewed, or marked as false positives. \\ \hline
+Report export & The system must provide a downloadable CSV report of monitored transactions. \\ \hline
 \end{longtable}
 
 \section{Non-Functional Requirements}
@@ -421,20 +423,18 @@ This project follows the Agile development approach, where the system developmen
 \begin{table}[H]
 \centering
 \caption{Technology and Tools Used}
-\begin{tabular}{p{0.30\textwidth} p{0.58\textwidth}}
-\toprule
-\textbf{Technology / Tool} & \textbf{Purpose} \\
-\midrule
-Python & Main programming language for backend logic, data processing, and machine learning. \\
-Flask & Web application framework used for dashboard routes, APIs, authentication, and request handling. \\
-Scikit-learn & Machine learning library used for Random Forest training, scaling, metrics, and validation. \\
-Pandas and NumPy & Data loading, preprocessing, feature computation, and numerical operations. \\
-Joblib & Saving and loading trained model and scaler artifacts. \\
-HTML, CSS, and JavaScript & Frontend dashboard interface and user interaction. \\
-JSON & Lightweight runtime persistence for transactions, alerts, and behavior profiles. \\
-LaTeX & Project report preparation and academic documentation. \\
-Visual Studio Code & Development environment for editing, testing, and organizing source files. \\
-\bottomrule
+\begin{tabular}{|p{0.30\textwidth}|p{0.55\textwidth}|}
+\hline
+\textbf{Technology / Tool} & \textbf{Purpose} \\ \hline
+Python & Main programming language for backend logic, data processing, and machine learning. \\ \hline
+Flask & Web application framework used for dashboard routes, APIs, authentication, and request handling. \\ \hline
+Scikit-learn & Machine learning library used for Random Forest training, scaling, metrics, and validation. \\ \hline
+Pandas and NumPy & Data loading, preprocessing, feature computation, and numerical operations. \\ \hline
+Joblib & Saving and loading trained model and scaler artifacts. \\ \hline
+HTML, CSS, and JavaScript & Frontend dashboard interface and user interaction. \\ \hline
+JSON & Lightweight runtime persistence for transactions, alerts, and behavior profiles. \\ \hline
+LaTeX & Project report preparation and academic documentation. \\ \hline
+Visual Studio Code & Development environment for editing, testing, and organizing source files. \\ \hline
 \end{tabular}
 \end{table}
 
@@ -442,14 +442,24 @@ Visual Studio Code & Development environment for editing, testing, and organizin
 \begin{table}[H]
 \centering
 \caption{Roles and Responsibilities of Team Members}
-\begin{tabular}{p{0.28\textwidth} p{0.60\textwidth}}
-\toprule
-\textbf{Team Member} & \textbf{Primary Responsibilities} \\
-\midrule
-Santosh Kumar Shah & Model training support, feature engineering review, prediction workflow testing, and documentation contribution. \\
-Surya Chand Yadav & Flask dashboard support, CSV batch workflow, API testing, smoke-test verification, and result analysis. \\
-Salim Shrestha & Report preparation, system design diagrams, frontend review, literature review, and final documentation formatting. \\
-\bottomrule
+\begin{tabular}{|l|p{9.5cm}|}
+\hline
+\textbf{Team Member} & \textbf{Primary Responsibilities} \\ \hline
+Santosh Kumar Shah &
+\textbullet\ Model training support. \\
+& \textbullet\ Feature engineering review. \\
+& \textbullet\ Prediction workflow testing. \\
+& \textbullet\ Documentation contribution. \\ \hline
+Surya Chand Yadav &
+\textbullet\ Flask dashboard support. \\
+& \textbullet\ CSV batch workflow. \\
+& \textbullet\ API testing and smoke-test verification. \\
+& \textbullet\ Result analysis. \\ \hline
+Salim Shrestha &
+\textbullet\ Report preparation. \\
+& \textbullet\ System design diagrams. \\
+& \textbullet\ Frontend review and literature review. \\
+& \textbullet\ Final documentation formatting. \\ \hline
 \end{tabular}
 \end{table}
 
@@ -477,32 +487,29 @@ Optional metadata fields include \path{customer_id}, \path{card_last4}, \path{me
 \section{Feature Engineering}
 The file \path{feature_engineering.py} defines the model feature list and the function \path{engineer_single_transaction()}. It converts raw transaction data and behavior signals into the exact 15 features expected by the trained model.
 
-\begin{longtable}{p{0.32\textwidth} p{0.58\textwidth}}
+\begin{longtable}{|p{0.32\textwidth}|p{0.55\textwidth}|}
 \caption{Model Features}\\
-\toprule
-\textbf{Feature} & \textbf{Meaning} \\
-\midrule
+\hline
+\textbf{Feature} & \textbf{Meaning} \\ \hline
 \endfirsthead
-\toprule
-\textbf{Feature} & \textbf{Meaning} \\
-\midrule
+\hline
+\textbf{Feature} & \textbf{Meaning} \\ \hline
 \endhead
-\path{hour} & Hour extracted from transaction time. \\
-\path{day_of_week} & Day index extracted from transaction date. \\
-\path{is_weekend} & Indicates Saturday or Sunday. \\
-\path{is_night} & Indicates transaction between 00:00 and 05:59. \\
-\path{amount} & Transaction amount. \\
-\path{amount_log} & Natural log transform of amount using \path{log1p}. \\
-\path{merchant_category_enc} & Encoded merchant category. \\
-\path{channel_enc} & Encoded transaction channel. \\
-\path{country_enc} & Encoded country. \\
-\path{txn_count_last_1h} & Previous customer transactions in the last hour. \\
-\path{txn_count_last_24h} & Previous customer transactions in the last 24 hours. \\
-\path{avg_amount_prev} & Customer average amount before the current transaction. \\
-\path{amount_ratio} & Current amount divided by previous average amount. \\
-\path{is_new_country} & Indicates a country not previously seen for the customer. \\
-\path{is_new_category} & Indicates a merchant category not previously seen for the customer. \\
-\bottomrule
+\path{hour} & Hour extracted from transaction time. \\ \hline
+\path{day_of_week} & Day index extracted from transaction date. \\ \hline
+\path{is_weekend} & Indicates Saturday or Sunday. \\ \hline
+\path{is_night} & Indicates transaction between 00:00 and 05:59. \\ \hline
+\path{amount} & Transaction amount. \\ \hline
+\path{amount_log} & Natural log transform of amount using \path{log1p}. \\ \hline
+\path{merchant_category_enc} & Encoded merchant category. \\ \hline
+\path{channel_enc} & Encoded transaction channel. \\ \hline
+\path{country_enc} & Encoded country. \\ \hline
+\path{txn_count_last_1h} & Previous customer transactions in the last hour. \\ \hline
+\path{txn_count_last_24h} & Previous customer transactions in the last 24 hours. \\ \hline
+\path{avg_amount_prev} & Customer average amount before the current transaction. \\ \hline
+\path{amount_ratio} & Current amount divided by previous average amount. \\ \hline
+\path{is_new_country} & Indicates a country not previously seen for the customer. \\ \hline
+\path{is_new_category} & Indicates a merchant category not previously seen for the customer. \\ \hline
 \end{longtable}
 
 \section{Model Training}
@@ -511,21 +518,19 @@ Training is implemented in \path{train_model.py}. The script loads \path{creditc
 \begin{table}[H]
 \centering
 \caption{Random Forest Training Configuration}
-\begin{tabular}{ll}
-\toprule
-\textbf{Parameter} & \textbf{Value} \\
-\midrule
-Model & RandomForestClassifier \\
-Number of trees & 200 \\
-Class weight & balanced \\
-Maximum depth & 12 \\
-Random state & 42 \\
-Parallel jobs & -1 \\
-Split strategy & Chronological 70/15/15 train-validation-test split \\
-Threshold selection & F2 score on validation data with minimum precision guard \\
-Recommended threshold & 0.448972 \\
-Cross-validation & 5-fold TimeSeriesSplit on training data \\
-\bottomrule
+\begin{tabular}{|p{0.30\textwidth}|p{0.55\textwidth}|}
+\hline
+\textbf{Parameter} & \textbf{Value} \\ \hline
+Model & RandomForestClassifier \\ \hline
+Number of trees & 200 \\ \hline
+Class weight & balanced \\ \hline
+Maximum depth & 12 \\ \hline
+Random state & 42 \\ \hline
+Parallel jobs & -1 \\ \hline
+Split strategy & Chronological 70/15/15 train-validation-test split \\ \hline
+Threshold selection & F2 score on validation data with minimum precision guard \\ \hline
+Recommended threshold & 0.448972 \\ \hline
+Cross-validation & 5-fold TimeSeriesSplit on training data \\ \hline
 \end{tabular}
 \end{table}
 
@@ -627,21 +632,19 @@ The main actor of the system is the operator or administrator who reviews transa
 \begin{table}[H]
 \centering
 \caption{Main Repository Components}
-\begin{tabular}{p{0.32\textwidth} p{0.58\textwidth}}
-\toprule
-\textbf{Component} & \textbf{Purpose} \\
-\midrule
-\path{app.py} & Flask server, routes, authentication, prediction pipeline, alerts, reports, and persistence. \\
-\path{feature_engineering.py} & Shared feature definitions and single-transaction feature engineering. \\
-\path{train_model.py} & Retraining script for model and scaler artifacts. \\
-\path{fraud_model.pkl} & Trained Random Forest classifier. \\
-\path{scaler.pkl} & Fitted StandardScaler for the 15 model features. \\
-\path{templates/index.html} & Dashboard UI for login, prediction, CSV upload, alerts, and verification. \\
-\path{smoke_test.py} & End-to-end checks for the Flask application. \\
-\path{sample_upload.csv} & Example CSV file for batch detection. \\
-\path{sample_transactions.json} & Example normal and fraud transaction payloads. \\
-\path{instance/data_store.json} & Runtime persistence for transactions, alerts, and behavior profiles. \\
-\bottomrule
+\begin{tabular}{|p{0.32\textwidth}|p{0.55\textwidth}|}
+\hline
+\textbf{Component} & \textbf{Purpose} \\ \hline
+\path{app.py} & Flask server, routes, authentication, prediction pipeline, alerts, reports, and persistence. \\ \hline
+\path{feature_engineering.py} & Shared feature definitions and single-transaction feature engineering. \\ \hline
+\path{train_model.py} & Retraining script for model and scaler artifacts. \\ \hline
+\path{fraud_model.pkl} & Trained Random Forest classifier. \\ \hline
+\path{scaler.pkl} & Fitted StandardScaler for the 15 model features. \\ \hline
+\path{templates/index.html} & Dashboard UI for login, prediction, CSV upload, alerts, and verification. \\ \hline
+\path{smoke_test.py} & End-to-end checks for the Flask application. \\ \hline
+\path{sample_upload.csv} & Example CSV file for batch detection. \\ \hline
+\path{sample_transactions.json} & Example normal and fraud transaction payloads. \\ \hline
+\path{instance/data_store.json} & Runtime persistence for transactions, alerts, and behavior profiles. \\ \hline
 \end{tabular}
 \end{table}
 
@@ -696,30 +699,27 @@ The data flow diagram shows how transaction data moves through the dashboard, ba
 
 
 \section{API Design}
-\begin{longtable}{p{0.12\textwidth} p{0.30\textwidth} p{0.48\textwidth}}
+\begin{longtable}{|p{0.12\textwidth}|p{0.28\textwidth}|p{0.45\textwidth}|}
 \caption{Application Routes}\\
-\toprule
-\textbf{Method} & \textbf{Endpoint} & \textbf{Purpose} \\
-\midrule
+\hline
+\textbf{Method} & \textbf{Endpoint} & \textbf{Purpose} \\ \hline
 \endfirsthead
-\toprule
-\textbf{Method} & \textbf{Endpoint} & \textbf{Purpose} \\
-\midrule
+\hline
+\textbf{Method} & \textbf{Endpoint} & \textbf{Purpose} \\ \hline
 \endhead
-GET & \path{/} & Render login page or dashboard. \\
-POST & \path{/login} & Authenticate operator. \\
-POST & \path{/logout} & Clear session. \\
-GET & \path{/health} & Return application status, threshold, model files, and feature list. \\
-POST & \path{/predict} & Process one transaction and return fraud/risk result. \\
-GET & \path{/api/dashboard} & Return dashboard metrics, recent transactions, alerts, and profiles. \\
-GET & \path{/api/transactions} & Return monitored transactions. \\
-GET & \path{/api/alerts} & Return active alerts. \\
-POST & \path{/api/alerts/<alert_id>/acknowledge} & Mark an alert as acknowledged. \\
-POST & \path{/api/transactions/<transaction_id>/verify} & Update transaction verification status. \\
-GET & \path{/api/sample-csv} & Download sample batch upload CSV. \\
-POST & \path{/api/upload-csv} & Process uploaded CSV transactions. \\
-GET & \path{/api/report.csv} & Download monitored transaction report. \\
-\bottomrule
+GET & \path{/} & Render login page or dashboard. \\ \hline
+POST & \path{/login} & Authenticate operator. \\ \hline
+POST & \path{/logout} & Clear session. \\ \hline
+GET & \path{/health} & Return application status, threshold, model files, and feature list. \\ \hline
+POST & \path{/predict} & Process one transaction and return fraud/risk result. \\ \hline
+GET & \path{/api/dashboard} & Return dashboard metrics, recent transactions, alerts, and profiles. \\ \hline
+GET & \path{/api/transactions} & Return monitored transactions. \\ \hline
+GET & \path{/api/alerts} & Return active alerts. \\ \hline
+POST & \path{/api/alerts/<alert_id>/acknowledge} & Mark an alert as acknowledged. \\ \hline
+POST & \path{/api/transactions/<transaction_id>/verify} & Update transaction verification status. \\ \hline
+GET & \path{/api/sample-csv} & Download sample batch upload CSV. \\ \hline
+POST & \path{/api/upload-csv} & Process uploaded CSV transactions. \\ \hline
+GET & \path{/api/report.csv} & Download monitored transaction report. \\ \hline
 \end{longtable}
 
 \section{Persistence Design}
@@ -826,22 +826,20 @@ The repository includes \path{smoke_test.py}, which uses the Flask test client f
 \centering
 \caption{Functional Test Cases}
 \footnotesize
-\begin{tabular}{@{}p{0.16\textwidth} p{0.20\textwidth} p{0.22\textwidth} p{0.21\textwidth} p{0.07\textwidth}@{}}
-\toprule
-\textbf{Test Case} & \textbf{Input / Action} & \textbf{Expected Result} & \textbf{Actual Result} & \textbf{Status} \\
-\midrule
-Feature encoding & Encode \path{US} and lowercase \path{ru}. & Correct country indexes are returned. & Indexes matched expected values. & Pass \\
-Health check & Request \path{/health}. & HTTP 200 with status \path{ok} and feature count. & Endpoint returned valid health data. & Pass \\
-Valid login & Submit correct username and password. & User is authenticated successfully. & Login returned status \path{ok}. & Pass \\
-Invalid login & Submit wrong password. & Request is rejected with HTTP 401. & Login failed with HTTP 401. & Pass \\
-Normal prediction & Submit normal sample transaction. & Label is Normal with valid score fields. & Normal label and valid scores returned. & Pass \\
-Fraud prediction & Submit fraud sample transaction. & Label is Fraud with valid score fields. & Fraud label and valid scores returned. & Pass \\
-Validation error & Submit invalid transaction date. & Request is rejected with HTTP 400. & Invalid date returned HTTP 400. & Pass \\
-CSV upload & Upload \path{sample_upload.csv}. & Rows are processed with zero sample failures. & Records returned and failed count was zero. & Pass \\
-Dashboard & Request authenticated dashboard API. & Metrics, transactions, and alerts are returned. & Dashboard payload was returned. & Pass \\
-Report download & Request \path{/api/report.csv}. & Non-empty CSV response is downloaded. & CSV response was generated. & Pass \\
-Logout protection & Logout and request dashboard again. & Protected route rejects unauthenticated user. & Dashboard returned HTTP 401. & Pass \\
-\bottomrule
+\begin{tabular}{|p{0.15\textwidth}|p{0.19\textwidth}|p{0.21\textwidth}|p{0.20\textwidth}|p{0.06\textwidth}|}
+\hline
+\textbf{Test Case} & \textbf{Input / Action} & \textbf{Expected Result} & \textbf{Actual Result} & \textbf{Status} \\ \hline
+Feature encoding & Encode \path{US} and lowercase \path{ru}. & Correct country indexes are returned. & Indexes matched expected values. & Pass \\ \hline
+Health check & Request \path{/health}. & HTTP 200 with status \path{ok} and feature count. & Endpoint returned valid health data. & Pass \\ \hline
+Valid login & Submit correct username and password. & User is authenticated successfully. & Login returned status \path{ok}. & Pass \\ \hline
+Invalid login & Submit wrong password. & Request is rejected with HTTP 401. & Login failed with HTTP 401. & Pass \\ \hline
+Normal prediction & Submit normal sample transaction. & Label is Normal with valid score fields. & Normal label and valid scores returned. & Pass \\ \hline
+Fraud prediction & Submit fraud sample transaction. & Label is Fraud with valid score fields. & Fraud label and valid scores returned. & Pass \\ \hline
+Validation error & Submit invalid transaction date. & Request is rejected with HTTP 400. & Invalid date returned HTTP 400. & Pass \\ \hline
+CSV upload & Upload \path{sample_upload.csv}. & Rows are processed with zero sample failures. & Records returned and failed count was zero. & Pass \\ \hline
+Dashboard & Request authenticated dashboard API. & Metrics, transactions, and alerts are returned. & Dashboard payload was returned. & Pass \\ \hline
+Report download & Request \path{/api/report.csv}. & Non-empty CSV response is downloaded. & CSV response was generated. & Pass \\ \hline
+Logout protection & Logout and request dashboard again. & Protected route rejects unauthenticated user. & Dashboard returned HTTP 401. & Pass \\ \hline
 \end{tabular}
 \end{table}
 \normalsize
@@ -863,30 +861,25 @@ The model performance reported in \path{model_metadata.json} is based on the cur
 \begin{table}[H]
 \centering
 \caption{Confusion Matrix}
-\begin{tabular}{lcc}
-\toprule
- & \textbf{Predicted Normal} & \textbf{Predicted Fraud} \\
-\midrule
-\textbf{Actual Normal} & 8769 & 90 \\
-\textbf{Actual Fraud} & 72 & 66 \\
-\bottomrule
+\begin{tabular}{|l|c|c|}
+\hline
+ & \textbf{Predicted Normal} & \textbf{Predicted Fraud} \\ \hline
+\textbf{Actual Normal} & 8769 & 90 \\ \hline
+\textbf{Actual Fraud} & 72 & 66 \\ \hline
 \end{tabular}
 \end{table}
 
 \begin{table}[H]
 \centering
 \caption{Classification Report}
-\begin{tabular}{lcccc}
-\toprule
-\textbf{Class} & \textbf{Precision} & \textbf{Recall} & \textbf{F1-score} & \textbf{Support} \\
-\midrule
-Normal & 0.992 & 0.990 & 0.991 & 8859 \\
-Fraud & 0.423 & 0.478 & 0.449 & 138 \\
-\midrule
-Accuracy & \multicolumn{3}{c}{0.982} & 8997 \\
-Macro average & 0.707 & 0.734 & 0.720 & 8997 \\
-Weighted average & 0.983 & 0.982 & 0.983 & 8997 \\
-\bottomrule
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+\textbf{Class} & \textbf{Precision} & \textbf{Recall} & \textbf{F1-score} & \textbf{Support} \\ \hline
+Normal & 0.992 & 0.990 & 0.991 & 8859 \\ \hline
+Fraud & 0.423 & 0.478 & 0.449 & 138 \\ \hline
+Accuracy & \multicolumn{3}{c|}{0.982} & 8997 \\ \hline
+Macro average & 0.707 & 0.734 & 0.720 & 8997 \\ \hline
+Weighted average & 0.983 & 0.982 & 0.983 & 8997 \\ \hline
 \end{tabular}
 \end{table}
 
@@ -899,18 +892,16 @@ The repository includes two sample JSON payloads. The normal sample uses a groce
 \begin{table}[H]
 \centering
 \caption{Issues Encountered and Resolutions}
-\begin{tabular}{p{0.34\textwidth} p{0.54\textwidth}}
-\toprule
-\textbf{Issue} & \textbf{Resolution} \\
-\midrule
-Class imbalance in fraud data & Used class-weight balancing in Random Forest training and selected a probability threshold using validation metrics. \\
-Training and inference feature mismatch risk & Centralized feature names and single-transaction engineering in \path{feature_engineering.py}. \\
-Unreliable first-transaction behavior features & Used neutral behavior values for new customer profiles so the current transaction does not distort its own score. \\
-CSV input errors & Added required-column validation, row limits, date/time normalization, and per-row error reporting. \\
-False positive handling & Added analyst verification statuses such as Approved, Blocked, Reviewed, and False Positive. \\
-Runtime persistence limitation & Used JSON persistence for demonstration and listed relational database migration as future work. \\
-Operational visibility & Added dashboard metrics, alerts, transaction history, and downloadable reports. \\
-\bottomrule
+\begin{tabular}{|p{0.32\textwidth}|p{9.3cm}|}
+\hline
+\textbf{Issue} & \textbf{Resolution} \\ \hline
+Class imbalance in fraud data & \textbullet\ Used class-weight balancing in Random Forest training and selected a probability threshold using validation metrics. \\ \hline
+Training and inference feature mismatch risk & \textbullet\ Centralized feature names and single-transaction engineering in \path{feature_engineering.py}. \\ \hline
+Unreliable first-transaction behavior features & \textbullet\ Used neutral behavior values for new customer profiles so the current transaction does not distort its own score. \\ \hline
+CSV input errors & \textbullet\ Added required-column validation, row limits, date/time normalization, and per-row error reporting. \\ \hline
+False positive handling & \textbullet\ Added analyst verification statuses such as Approved, Blocked, Reviewed, and False Positive. \\ \hline
+Runtime persistence limitation & \textbullet\ Used JSON persistence for demonstration and listed relational database migration as future work. \\ \hline
+Operational visibility & \textbullet\ Added dashboard metrics, alerts, transaction history, and downloadable reports. \\ \hline
 \end{tabular}
 \end{table}
 
