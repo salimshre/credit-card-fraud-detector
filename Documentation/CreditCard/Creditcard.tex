@@ -285,13 +285,8 @@ The system must handle two types of input. First, an operator should be able to 
 
 \section{Objectives}
 \begin{itemize}
-    \item Develop a Random Forest based classifier for credit card fraud detection.
-    \item Engineer meaningful transaction and behavior features instead of relying only on raw input fields.
-    \item Build a Flask dashboard for authenticated fraud monitoring.
-    \item Provide single transaction prediction and CSV batch fraud detection.
-    \item Generate risk scores, alerts, transaction history, and downloadable CSV reports.
-    \item Maintain consistency between model training and serving through shared feature definitions.
-    \item Provide smoke tests that verify the main application routes and prediction workflow.
+    \item Develop a Random Forest based credit card fraud detection model using engineered transaction and behavior features.
+    \item Build a Flask-based monitoring dashboard that supports single and batch (CSV) fraud detection, along with risk scoring, alerts, verification workflow, and downloadable reports.
 \end{itemize}
 
 \section{Major Features}
@@ -592,12 +587,14 @@ Risk levels are assigned as follows:
 \section{Architecture}
 The system follows a client-server architecture. The browser dashboard communicates with the Flask backend. The backend validates transactions, runs preprocessing, uses the machine learning artifacts, updates in-memory and JSON-based state, and returns JSON responses to the frontend.
 
+\clearpage
 \begin{figure}[H]
 \centering %0.72
 \includegraphics[width=0.88\textwidth,height=0.97\textheight,keepaspectratio]{assets/screenshots/system_architecture_clean.drawio.png}
 \caption{System Architecture}
 \label{fig:system-architecture}
 \end{figure}
+\clearpage
 
 \section{Use Case Design}
 The main actor of the system is the operator or administrator who reviews transactions and manages fraud alerts. The use case diagram in Figure~\ref{fig:use-case-diagram} summarizes the primary dashboard functions available to this actor.
