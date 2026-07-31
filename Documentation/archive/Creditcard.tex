@@ -97,11 +97,11 @@ We would like to express our sincere gratitude to Er. Sagar Dhakal for his guida
 \chapter*{Abstract}
 \addcontentsline{toc}{chapter}{Abstract}
 
-This project presents a credit card fraud detection system named Fraud Shield. The system combines a trained Random Forest classifier with a Flask-based monitoring dashboard for real-time and batch transaction analysis. Unlike a standalone machine learning script, the application includes operational features that are important in fraud monitoring: authentication, transaction preprocessing, behavior profiling, risk scoring, alert generation, verification workflow, dashboard metrics, CSV upload, and downloadable reports.
+This project presents Fraud Shield, a credit card fraud detection system that combines a Random Forest classifier with a Flask-based monitoring dashboard. It supports single and batch transaction analysis, authentication, risk scoring, alerts, verification, CSV uploads, and downloadable reports.
 
-The model uses 15 engineered features derived from transaction time, amount, merchant category, channel, country, and customer behavior. Raw transaction records are transformed by a shared feature engineering module, scaled using a fitted StandardScaler, and classified by a RandomForestClassifier saved as \path{fraud_model.pkl}. The application computes a fraud probability, converts it into a model decision using a configurable threshold, combines it with behavior-based signals, and produces a risk score between 0 and 100. The system supports both single transaction checks through the dashboard/API and CSV batch detection through a manual upload workflow.
+The model uses 15 engineered transaction and customer-behavior features. Shared preprocessing and scaling ensure consistency between training and prediction. Each transaction receives a fraud probability, model decision, behavior-based risk signals, and a risk score from 0 to 100.
 
-The training data stored in \path{creditcard_raw.csv} contains 60,994 transactions, including 890 fraud records, giving a fraud rate of approximately 1.46 percent. The model evaluation reported in the repository shows high overall accuracy while preserving strong fraud-class recall. This documentation is based on the implemented repository and the project research paper \cite{shah2025}.
+The training dataset contains 60,994 transactions, including 890 fraudulent records (approximately 1.46 percent). Repository evaluation indicates high accuracy and strong fraud-class recall. This documentation is based on the implemented system and the related research paper \cite{shah2025}.
 
 \newpage
 
