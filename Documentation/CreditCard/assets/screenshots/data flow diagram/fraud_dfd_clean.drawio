@@ -1,0 +1,98 @@
+<mxGraphModel dx="800" dy="600" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+  <root>
+    <mxCell id="0" />
+    <mxCell id="1" parent="0" />
+
+    <!-- Title -->
+    <mxCell id="title" value="Fraud Detection System — Data Flow Diagram (Level 1)" style="text;html=1;fontSize=16;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
+      <mxGeometry x="40" y="20" width="700" height="30" as="geometry" />
+    </mxCell>
+
+    <!-- External Entities -->
+    <mxCell id="e1" value="Operator" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;strokeWidth=2;fontStyle=1;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="20" y="220" width="100" height="50" as="geometry" />
+    </mxCell>
+
+    <mxCell id="e2" value="Dashboard" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;strokeWidth=2;fontStyle=1;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="20" y="420" width="100" height="50" as="geometry" />
+    </mxCell>
+
+    <!-- Row 1: processes 1-3 -->
+    <mxCell id="p1" value="1.0 Validate" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;fillColor=#d5e8d4;strokeColor=#82b366;strokeWidth=2;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="180" y="130" width="130" height="60" as="geometry" />
+    </mxCell>
+
+    <mxCell id="p2" value="2.0 Behavior Analysis" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;fillColor=#d5e8d4;strokeColor=#82b366;strokeWidth=2;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="360" y="130" width="130" height="60" as="geometry" />
+    </mxCell>
+
+    <mxCell id="p3" value="3.0 Feature Engineering" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;fillColor=#d5e8d4;strokeColor=#82b366;strokeWidth=2;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="540" y="130" width="130" height="60" as="geometry" />
+    </mxCell>
+
+    <!-- Row 2: processes 4-6, right to left to keep flow compact -->
+    <mxCell id="p4" value="4.0 ML Prediction" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;fillColor=#d5e8d4;strokeColor=#82b366;strokeWidth=2;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="540" y="280" width="130" height="60" as="geometry" />
+    </mxCell>
+
+    <mxCell id="p5" value="5.0 Risk Scoring" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;fillColor=#d5e8d4;strokeColor=#82b366;strokeWidth=2;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="360" y="280" width="130" height="60" as="geometry" />
+    </mxCell>
+
+    <mxCell id="p6" value="6.0 Persist &amp; Respond" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;fillColor=#d5e8d4;strokeColor=#82b366;strokeWidth=2;fontSize=11;" vertex="1" parent="1">
+      <mxGeometry x="180" y="280" width="130" height="60" as="geometry" />
+    </mxCell>
+
+    <!-- Data stores -->
+    <mxCell id="d1" value="D1  Behavior Profiles" style="shape=partialRectangle;left=0;right=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;strokeWidth=2;fontSize=10;" vertex="1" parent="1">
+      <mxGeometry x="360" y="40" width="130" height="40" as="geometry" />
+    </mxCell>
+
+    <mxCell id="d2" value="D2  Model Artifacts" style="shape=partialRectangle;left=0;right=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;strokeWidth=2;fontSize=10;" vertex="1" parent="1">
+      <mxGeometry x="710" y="130" width="120" height="40" as="geometry" />
+    </mxCell>
+
+    <mxCell id="d3" value="D3  Runtime Store" style="shape=partialRectangle;left=0;right=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;strokeWidth=2;fontSize=10;" vertex="1" parent="1">
+      <mxGeometry x="180" y="380" width="120" height="40" as="geometry" />
+    </mxCell>
+
+    <!-- Flows -->
+    <mxCell id="f1" value="txn" style="endArrow=classic;html=1;rounded=1;fontSize=9;strokeWidth=1.5;" edge="1" parent="1" source="e1" target="p1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="f2" value="" style="endArrow=classic;html=1;rounded=1;fontSize=9;strokeWidth=1.5;" edge="1" parent="1" source="p1" target="p2">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="f3" value="" style="endArrow=classic;html=1;rounded=1;fontSize=9;strokeWidth=1.5;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" edge="1" parent="1" source="d1" target="p2">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="f4" value="" style="endArrow=classic;html=1;rounded=1;fontSize=9;strokeWidth=1.5;" edge="1" parent="1" source="p2" target="p3">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="f5" value="" style="endArrow=classic;html=1;rounded=1;fontSize=9;strokeWidth=1.5;" edge="1" parent="1" source="p3" target="p4">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="f6" value="" style="endArrow=classic;html=1;rounded=1;fontSize=9;strokeWidth=1.5;" edge="1" parent="1" source="d2" target="p4">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="f7" value="" style="endArrow=classic;html=1;rounded=1;fontSize=9;strokeWidth=1.5;" edge="1" parent="1" source="p4" target="p5">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="f8" value="behavior pts" style="endArrow=classic;html=1;rounded=1;fontSize=9;strokeWidth=1.5;exitX=0.5;exitY=1;entryX=1;entryY=0.3;" edge="1" parent="1" source="p2" target="p5">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="f9" value="update" style="endArrow=classic;html=1;rounded=1;fontSize=9;strokeWidth=1.5;exitX=0.3;exitY=0;entryX=0.5;entryY=1;" edge="1" parent="1" source="p2" target="d1">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="f10" value="" style="endArrow=classic;html=1;rounded=1;fontSize=9;strokeWidth=1.5;" edge="1" parent="1" source="p5" target="p6">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="f11" value="" style="endArrow=classic;html=1;rounded=1;fontSize=9;strokeWidth=1.5;" edge="1" parent="1" source="p6" target="d3">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+    <mxCell id="f12" value="response" style="endArrow=classic;html=1;rounded=1;fontSize=9;strokeWidth=1.5;" edge="1" parent="1" source="p6" target="e2">
+      <mxGeometry relative="1" as="geometry" />
+    </mxCell>
+
+  </root>
+</mxGraphModel>

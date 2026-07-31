@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net">
+  <diagram name="Page-1" id="m8S9kEEn0axRHXJ0fE82">
+    <mxGraphModel dx="5733" dy="2927" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="08SW0Qgt4X6wWVOmIj35-1" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="Start" vertex="1">
+          <mxGeometry height="60" width="120" x="270" y="10" as="geometry" />
+        </mxCell>
+        <mxCell id="08SW0Qgt4X6wWVOmIj35-2" parent="1" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;" value="Receive Transaction&#xa;POST /predict (single) or POST /api/upload-csv (batch)" vertex="1">
+          <mxGeometry height="60" width="240" x="210" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="08SW0Qgt4X6wWVOmIj35-3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Parse &amp; Sanitize Transaction&#xa;scoring_service.parse_transaction() — validate required fields, amount, date, time" vertex="1">
+          <mxGeometry height="60" width="260" x="200" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="08SW0Qgt4X6wWVOmIj35-4" parent="1" style="rhombus;whiteSpace=wrap;html=1;" value="Valid?" vertex="1">
+          <mxGeometry height="80" width="180" x="240" y="310" as="geometry" />
+        </mxCell>
+        <mxCell id="08SW0Qgt4X6wWVOmIj35-5" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="HTTP 400&#xa;Error Response" vertex="1">
+          <mxGeometry height="60" width="140" x="530" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="08SW0Qgt4X6wWVOmIj35-6" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Load Customer Behavior Profile&#xa;behavior_service.get_behavior_profile() — fetch from BEHAVIOR_PROFILES store" vertex="1">
+          <mxGeometry height="60" width="280" x="190" y="430" as="geometry" />
+        </mxCell>
+        <mxCell id="08SW0Qgt4X6wWVOmIj35-7" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Analyze Behavior Signals — analyze_behavior()&#xa;new_customer +4 | new_device +10 | new_country +12&#xa;new_category +6 | rapid_txn(≥3/1h) +8 | 3x avg +14&#xa;amount≥1000 +10 | night(0-5h) +6" vertex="1">
+          <mxGeometry height="100" width="320" x="170" y="530" as="geometry" />
+        </mxCell>
+        <mxCell id="08SW0Qgt4X6wWVOmIj35-8" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Engineer 15 Model Features&#xa;feature_engineering.engineer_single_transaction()&#xa;Time(4) + Amount(2) + Categorical(3) + Behavioral(6) = 15" vertex="1">
+          <mxGeometry height="70" width="280" x="190" y="670" as="geometry" />
+        </mxCell>
+        <mxCell id="08SW0Qgt4X6wWVOmIj35-9" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Scale Features&#xa;scaler.transform() using fitted scaler.pkl — zero mean, unit variance" vertex="1">
+          <mxGeometry height="60" width="280" x="190" y="780" as="geometry" />
+        </mxCell>
+        <mxCell id="08SW0Qgt4X6wWVOmIj35-10" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Random Forest Inference&#xa;model.predict_proba() using fraud_model.pkl — 200 trees, class_weight=balanced" vertex="1">
+          <mxGeometry height="60" width="280" x="190" y="880" as="geometry" />
+        </mxCell>
+        <mxCell id="08SW0Qgt4X6wWVOmIj35-11" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Apply Decision Threshold&#xa;probability ≥ THRESHOLD → prediction=1 (Fraud), else prediction=0&#xa;THRESHOLD = model_metadata.json recommended_threshold (F2-optimized)" vertex="1">
+          <mxGeometry height="70" width="320" x="170" y="980" as="geometry" />
+        </mxCell>
+        <mxCell id="08SW0Qgt4X6wWVOmIj35-12" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Calculate Base Risk Score (0-100)&#xa;score = probability×0.72 + flag(+10 if pred=1) + min(behavior_points,28)&#xa;Low &lt;35 | Medium 35-64 | High 65-84 | Critical ≥85" vertex="1">
+          <mxGeometry height="80" width="320" x="170" y="1090" as="geometry" />
+        </mxCell>
+        <mxCell id="08SW0Qgt4X6wWVOmIj35-13" parent="1" style="rhombus;whiteSpace=wrap;html=1;" value="amount ≥&#xa;NPR_BLOCK_AMOUNT&#xa;(300,000)?" vertex="1">
+          <mxGeometry height="90" width="180" x="180" y="1200" as="geometry" />
+        </mxCell>
+        <mxCell id="08SW0Qgt4X6wWVOmIj35-14" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="label=Blocked&#xa;risk_score=100, level=Critical&#xa;status=Blocked - Limit Exceeded" vertex="1">
+          <mxGeometry height="70" width="220" x="560" y="1260" as="geometry" />
+        </mxCell>
+        <mxCell id="08SW0Qgt4X6wWVOmIj35-15" parent="1" style="rhombus;whiteSpace=wrap;html=1;" value="amount ≥&#xa;NPR_REVIEW_AMOUNT&#xa;(100,000)?" vertex="1">
+          <mxGeometry height="90" width="180" x="180" y="1340" as="geometry" />
+        </mxCell>
+        <mxCell id="08SW0Qgt4X6wWVOmIj35-16" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="label=Fraud (if pred=1) else Review Required&#xa;risk_score=max(base,65), level=High&#xa;status=Pending Review" vertex="1">
+          <mxGeometry height="80" width="220" x="540" y="1380" as="geometry" />
+        </mxCell>
+        <mxCell id="08SW0Qgt4X6wWVOmIj35-17" parent="1" style="rhombus;whiteSpace=wrap;html=1;" value="prediction&#xa;== 1?" vertex="1">
+          <mxGeometry height="90" width="180" x="20" y="1430" as="geometry" />
+        </mxCell>
+        <mxCell id="08SW0Qgt4X6wWVOmIj35-18" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="label=Fraud&#xa;risk_score=max(base,65), level=Critical&#xa;status=Pending Review" vertex="1">
+          <mxGeometry height="80" width="220" x="-7.105427357601002e-15" y="1620" as="geometry" />
+        </mxCell>
+        <mxCell id="08SW0Qgt4X6wWVOmIj35-19" parent="1" style="rhombus;whiteSpace=wrap;html=1;" value="behavior_points&#xa;≥ 20?" vertex="1">
+          <mxGeometry height="90" width="180" x="570" y="1510" as="geometry" />
+        </mxCell>
+        <mxCell id="08SW0Qgt4X6wWVOmIj35-20" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="label=Review Required&#xa;risk_score=max(base,65), level=High&#xa;status=Pending Review" vertex="1">
+          <mxGeometry height="80" width="220" x="370" y="1630" as="geometry" />
+        </mxCell>
+        <mxCell id="08SW0Qgt4X6wWVOmIj35-21" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="label=Normal&#xa;status=Auto Cleared" vertex="1">
+          <mxGeometry height="60" width="180" x="570" y="1790" as="geometry" />
+        </mxCell>
+        <mxCell id="08SW0Qgt4X6wWVOmIj35-22" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Merge: Final Label, Risk Score, Risk Level" vertex="1">
+          <mxGeometry height="60" width="260" x="165" y="1830" as="geometry" />
+        </mxCell>
+        <mxCell id="08SW0Qgt4X6wWVOmIj35-23" parent="1" style="rhombus;whiteSpace=wrap;html=1;" value="Alert needed?&#xa;(prediction=1 OR&#xa;risk_score ≥ 65)" vertex="1">
+          <mxGeometry height="90" width="180" x="150" y="1910" as="geometry" />
+        </mxCell>
+        <mxCell id="08SW0Qgt4X6wWVOmIj35-24" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Create Alert&#xa;alert_service.create_alert_if_needed() — severity=risk_level, message, risk_score" vertex="1">
+          <mxGeometry height="70" width="240" x="570" y="1960" as="geometry" />
+        </mxCell>
+        <mxCell id="08SW0Qgt4X6wWVOmIj35-25" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="Update Behavior Profile&#xa;update_behavior_profile() — only if label != Blocked&#xa;updates amount_avg, devices, countries, categories, timestamps" vertex="1">
+          <mxGeometry height="70" width="280" x="200" y="2070" as="geometry" />
+        </mxCell>
+        <mxCell id="08SW0Qgt4X6wWVOmIj35-26" parent="1" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;" value="Persist Record&#xa;TRANSACTIONS.insert() + save_state()" vertex="1">
+          <mxGeometry height="90" width="180" x="250" y="2170" as="geometry" />
+        </mxCell>
+        <mxCell id="08SW0Qgt4X6wWVOmIj35-27" parent="1" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;" value="instance/data_store.json&#xa;(label, probability, risk_score,&#xa;behavior, preprocessing)" vertex="1">
+          <mxGeometry height="80" width="220" x="490" y="2175" as="geometry" />
+        </mxCell>
+        <mxCell id="08SW0Qgt4X6wWVOmIj35-28" parent="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" value="Return Response&#xa;label + probability + risk_score + behavior signals" vertex="1">
+          <mxGeometry height="70" width="180" x="250" y="2310" as="geometry" />
+        </mxCell>
+        <mxCell id="08SW0Qgt4X6wWVOmIj35-29" edge="1" parent="1" source="08SW0Qgt4X6wWVOmIj35-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="08SW0Qgt4X6wWVOmIj35-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="08SW0Qgt4X6wWVOmIj35-30" edge="1" parent="1" source="08SW0Qgt4X6wWVOmIj35-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="08SW0Qgt4X6wWVOmIj35-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="08SW0Qgt4X6wWVOmIj35-31" edge="1" parent="1" source="08SW0Qgt4X6wWVOmIj35-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="08SW0Qgt4X6wWVOmIj35-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="08SW0Qgt4X6wWVOmIj35-32" edge="1" parent="1" source="08SW0Qgt4X6wWVOmIj35-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="08SW0Qgt4X6wWVOmIj35-5" value="No">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="08SW0Qgt4X6wWVOmIj35-33" edge="1" parent="1" source="08SW0Qgt4X6wWVOmIj35-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="08SW0Qgt4X6wWVOmIj35-6" value="Yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="08SW0Qgt4X6wWVOmIj35-34" edge="1" parent="1" source="08SW0Qgt4X6wWVOmIj35-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="08SW0Qgt4X6wWVOmIj35-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="08SW0Qgt4X6wWVOmIj35-35" edge="1" parent="1" source="08SW0Qgt4X6wWVOmIj35-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="08SW0Qgt4X6wWVOmIj35-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="08SW0Qgt4X6wWVOmIj35-36" edge="1" parent="1" source="08SW0Qgt4X6wWVOmIj35-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="08SW0Qgt4X6wWVOmIj35-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="08SW0Qgt4X6wWVOmIj35-37" edge="1" parent="1" source="08SW0Qgt4X6wWVOmIj35-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="08SW0Qgt4X6wWVOmIj35-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="08SW0Qgt4X6wWVOmIj35-38" edge="1" parent="1" source="08SW0Qgt4X6wWVOmIj35-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="08SW0Qgt4X6wWVOmIj35-11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="08SW0Qgt4X6wWVOmIj35-39" edge="1" parent="1" source="08SW0Qgt4X6wWVOmIj35-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="08SW0Qgt4X6wWVOmIj35-12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="08SW0Qgt4X6wWVOmIj35-40" edge="1" parent="1" source="08SW0Qgt4X6wWVOmIj35-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="08SW0Qgt4X6wWVOmIj35-13">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="08SW0Qgt4X6wWVOmIj35-41" edge="1" parent="1" source="08SW0Qgt4X6wWVOmIj35-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="08SW0Qgt4X6wWVOmIj35-14" value="Yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="08SW0Qgt4X6wWVOmIj35-42" edge="1" parent="1" source="08SW0Qgt4X6wWVOmIj35-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="08SW0Qgt4X6wWVOmIj35-15" value="No">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="08SW0Qgt4X6wWVOmIj35-43" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="355" y="1310" />
+            </Array>
+            <mxPoint x="585" y="1309.9999999999998" as="sourcePoint" />
+            <mxPoint x="354.9999999999999" y="1830" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="08SW0Qgt4X6wWVOmIj35-44" edge="1" parent="1" source="08SW0Qgt4X6wWVOmIj35-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="08SW0Qgt4X6wWVOmIj35-16" value="Yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="08SW0Qgt4X6wWVOmIj35-45" edge="1" parent="1" source="08SW0Qgt4X6wWVOmIj35-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="08SW0Qgt4X6wWVOmIj35-17" value="No">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="08SW0Qgt4X6wWVOmIj35-46" edge="1" parent="1" source="08SW0Qgt4X6wWVOmIj35-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="08SW0Qgt4X6wWVOmIj35-22">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="08SW0Qgt4X6wWVOmIj35-47" edge="1" parent="1" source="08SW0Qgt4X6wWVOmIj35-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="08SW0Qgt4X6wWVOmIj35-18" value="Yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="08SW0Qgt4X6wWVOmIj35-48" edge="1" parent="1" source="08SW0Qgt4X6wWVOmIj35-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="08SW0Qgt4X6wWVOmIj35-19" value="No">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="08SW0Qgt4X6wWVOmIj35-49" edge="1" parent="1" source="08SW0Qgt4X6wWVOmIj35-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="08SW0Qgt4X6wWVOmIj35-22">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="08SW0Qgt4X6wWVOmIj35-50" edge="1" parent="1" source="08SW0Qgt4X6wWVOmIj35-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="08SW0Qgt4X6wWVOmIj35-20" value="Yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="08SW0Qgt4X6wWVOmIj35-51" edge="1" parent="1" source="08SW0Qgt4X6wWVOmIj35-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="08SW0Qgt4X6wWVOmIj35-21" value="No">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="08SW0Qgt4X6wWVOmIj35-52" edge="1" parent="1" source="08SW0Qgt4X6wWVOmIj35-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="08SW0Qgt4X6wWVOmIj35-22">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="08SW0Qgt4X6wWVOmIj35-53" edge="1" parent="1" source="08SW0Qgt4X6wWVOmIj35-21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="08SW0Qgt4X6wWVOmIj35-22">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="08SW0Qgt4X6wWVOmIj35-54" edge="1" parent="1" source="08SW0Qgt4X6wWVOmIj35-22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="08SW0Qgt4X6wWVOmIj35-23">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="08SW0Qgt4X6wWVOmIj35-55" edge="1" parent="1" source="08SW0Qgt4X6wWVOmIj35-23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="08SW0Qgt4X6wWVOmIj35-24" value="Yes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="08SW0Qgt4X6wWVOmIj35-56" edge="1" parent="1" source="08SW0Qgt4X6wWVOmIj35-23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="08SW0Qgt4X6wWVOmIj35-25" value="No">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="08SW0Qgt4X6wWVOmIj35-57" edge="1" parent="1" source="08SW0Qgt4X6wWVOmIj35-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="08SW0Qgt4X6wWVOmIj35-25">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="08SW0Qgt4X6wWVOmIj35-58" edge="1" parent="1" source="08SW0Qgt4X6wWVOmIj35-25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="08SW0Qgt4X6wWVOmIj35-26">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="08SW0Qgt4X6wWVOmIj35-59" edge="1" parent="1" source="08SW0Qgt4X6wWVOmIj35-26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="08SW0Qgt4X6wWVOmIj35-27">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="08SW0Qgt4X6wWVOmIj35-60" edge="1" parent="1" source="08SW0Qgt4X6wWVOmIj35-26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="08SW0Qgt4X6wWVOmIj35-28">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

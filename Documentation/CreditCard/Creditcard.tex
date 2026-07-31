@@ -146,9 +146,6 @@ We further declare that:
 
 We understand that any violation of academic integrity may result in disciplinary action.
 
-%---\vspace{1.2cm}
-%---\noindent\textbf{Authors}
-
 \vspace{1cm}
 \begin{flushleft}
 Santosh Kumar Shah (751604)\\
@@ -568,7 +565,7 @@ The application prediction pipeline is implemented by \path{monitor_transaction(
 
 \begin{figure}[H]
 \centering %0.72 width %0.88
-\includegraphics[width=0.88\textwidth,height=0.94\textheight,keepaspectratio]{assets/screenshots/PredictionWorkflowFlowchart.pdf}
+\includegraphics[width=0.88\textwidth,height=0.94\textheight,keepaspectratio]{assets/screenshots/prediction_workflow_clean.drawio.png}
 \caption{Prediction Workflow Flowchart}
 \label{fig:prediction-workflow}
 \end{figure}
@@ -596,13 +593,14 @@ The system follows a client-server architecture. The browser dashboard communica
 
 \begin{figure}[H]
 \centering %0.72
-\includegraphics[width=0.88\textwidth,height=0.97\textheight,keepaspectratio]{assets/screenshots/SystemArchitecture.pdf}
+\includegraphics[width=0.88\textwidth,height=0.97\textheight,keepaspectratio]{assets/screenshots/system_architecture_clean.drawio.png}
 \caption{System Architecture}
 \label{fig:system-architecture}
 \end{figure}
 
 \section{Use Case Design}
 The main actor of the system is the operator or administrator who reviews transactions and manages fraud alerts. The use case diagram in Figure~\ref{fig:use-case-diagram} summarizes the primary dashboard functions available to this actor.
+
 
 \begin{figure}[H]
 \centering
@@ -667,52 +665,12 @@ The main actor of the system is the operator or administrator who reviews transa
 \section{Data Flow Design}
 The data flow diagram shows how transaction data moves through the dashboard, backend, machine learning pipeline, alert workflow, and runtime storage. It complements the prediction workflow flowchart by showing the main data stores and outputs used by the complete monitoring system.
 
-
-
-%---------diagram start.
-\begin{figure}[htbp]
+\begin{figure}[H]
 \centering
-\resizebox{\textwidth}{!}{%
-\begin{tikzpicture}[
-    node distance=0.78cm,
-    pipeline/.style={rectangle, rounded corners, draw=teal!65!black, fill=teal!7, align=center, minimum width=6.4cm, minimum height=0.9cm, font=\small},
-    mlbox/.style={rectangle, rounded corners, draw=blue!65!black, fill=blue!7, align=center, minimum width=6.4cm, minimum height=0.9cm, font=\small},
-    store/.style={rectangle, rounded corners, draw=orange!80!black, fill=orange!10, align=center, minimum width=3.5cm, minimum height=0.9cm, font=\small},
-    endpoint/.style={rectangle, rounded corners, draw=black!55, fill=gray!12, align=center, minimum width=4.2cm, minimum height=0.75cm, font=\small},
-    arrow/.style={-{Latex[length=2.1mm]}, thick}
-]
-\node[endpoint] (browser) {Operator / browser};
-\node[pipeline, below=of browser] (validate) {\textbf{Validate and parse}\\\path{parse_transaction()} fields, date format, amount};
-\node[pipeline, below=of validate] (behavior) {\textbf{Behavior analysis}\\\path{analyze_behavior()} signals, behavior points};
-\node[pipeline, below=of behavior] (features) {\textbf{Feature engineering}\\\path{engineer_single_transaction()} 15 features};
-\node[mlbox, below=of features] (predict) {\textbf{Scale and ML prediction}\\StandardScaler, \path{predict_proba()}, threshold};
-\node[pipeline, below=of predict] (risk) {\textbf{Risk scoring and alerts}\\\path{calculate_risk()} and \path{create_alert_if_needed()}};
-\node[pipeline, below=of risk] (persist) {\textbf{Update profile and persist}\\\path{update_behavior_profile()} and \path{save_state()}};
-\node[endpoint, below=of persist] (response) {Dashboard / CSV response};
-
-\node[store, left=1.15cm of behavior] (profiles) {\textbf{Behavior profiles}\\\path{BEHAVIOR_PROFILES} dict};
-\node[mlbox, right=1.15cm of predict, minimum width=3.5cm] (artifacts) {\textbf{Model artifacts}\\\path{fraud_model.pkl}\\\path{scaler.pkl}};
-\node[store, right=1.15cm of persist] (runtime) {\textbf{Runtime store}\\\path{instance/data_store.json}};
-
-\draw[arrow] (browser) -- (validate);
-\draw[arrow] (validate) -- (behavior);
-\draw[arrow] (behavior) -- (features);
-\draw[arrow] (features) -- (predict);
-\draw[arrow] (predict) -- (risk);
-\draw[arrow] (risk) -- (persist);
-\draw[arrow] (persist) -- (response);
-\draw[arrow] (profiles) -- node[above, font=\scriptsize] {read} (behavior);
-\draw[arrow] (behavior) -- node[below, font=\scriptsize] {update} (profiles);
-\draw[arrow] (artifacts) -- node[above, font=\scriptsize] {load} (predict);
-\draw[arrow] (persist) -- node[below, font=\scriptsize] {write} (runtime);
-\end{tikzpicture}
-}
+\includegraphics[width=0.78\textwidth]{assets/screenshots/fraud_dfd_clean.drawio.png}
 \caption{Data Flow Diagram}
 \label{fig:data-flow-diagram}
 \end{figure}
-%---------diagram end.
-
-
 
 \section{API Design}
 \begin{longtable}{|p{0.12\textwidth}|p{0.28\textwidth}|p{0.45\textwidth}|}
