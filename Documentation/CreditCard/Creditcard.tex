@@ -399,7 +399,24 @@ The current implementation is intended for academic demonstration and does not s
 \chapter{Methodology}
 
 \section{Software Development Life Cycle}
-The project follows an iterative development approach. Core functionality such as model training, prediction, and feature engineering was implemented first. Application features such as authentication, dashboard metrics, CSV upload, alert handling, verification, and reporting were then added and tested. This approach allowed each module to be verified before being connected to the complete fraud monitoring workflow.
+This project follows the Agile development approach, where the system development is divided into smaller iterative phases. The Agile methodology enables early feedback, continuous improvement, and flexibility to adapt to changing requirements. The development phases include:
+
+\begin{itemize}
+    \item \textbf{Planning and Requirements Gathering:} Understanding project scope, objectives, and defining user stories for fraud monitoring features such as authentication, prediction, and verification.
+    \item \textbf{Design:} Creating system architecture, data flow diagrams, and designing the dashboard interface optimized for transaction monitoring and fraud analysis.
+    \item \textbf{Development:} Implementing core features in iterative sprints, including model training, feature engineering, backend APIs, dashboard UI, and CSV batch processing.
+    \item \textbf{Testing:} Validating functionality and performance through smoke tests and verifying model predictions using precision, recall, and PR-AUC metrics.
+    \item \textbf{Deployment:} Releasing the system as a runnable Flask application for local demonstration and fraud monitoring evaluation.
+    \item \textbf{Review:} Gathering feedback from testing results and refining the system, with a focus on improving fraud detection accuracy and operational workflow.
+\end{itemize}
+
+% ----- ADD IMAGE HERE -----
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.7]{assets/figures/sdlc.png}
+    \caption{Agile Software Development Life Cycle Stages}
+    \label{fig:agile-sdlc}
+\end{figure}
 
 \section{Technology and Tools Used}
 \begin{table}[H]
