@@ -544,7 +544,6 @@ The application prediction pipeline is implemented by \path{monitor_transaction(
     \item Calculate risk score and risk level.
     \item Create an alert when the transaction is model-flagged or high risk.
     \item Update the customer behavior profile.
-    \item Save transaction, alert, and profile state to \path{instance/data_store.json}.
 \end{enumerate}
 
 \begin{figure}[H]
@@ -878,13 +877,10 @@ The system is suitable for academic demonstration because it is runnable, testab
 
 \section{Future Enhancements}
 \begin{itemize}
-    \item Replace JSON-file persistence with PostgreSQL or MySQL for reliable storage.
-    \item Add hashed passwords, role-based access control, and stronger session security.
     \item Add audit logs for all alert and verification actions.
     \item Add model versioning and store which model scored each transaction.
     \item Monitor model drift and retrain with real-world transaction data.
     \item Add explainability features such as feature importance or per-transaction explanations.
-    \item Add API rate limiting and HTTPS deployment configuration.
     \item Expand testing with unit tests for feature engineering and risk scoring.
 \end{itemize}
 
