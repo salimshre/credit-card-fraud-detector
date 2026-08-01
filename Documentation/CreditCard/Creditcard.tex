@@ -297,14 +297,14 @@ The implemented dashboard also demonstrates how a machine learning model can be 
 For academic purposes, the project shows the complete path from data preparation and feature engineering to model training, deployment, testing, and documentation. It can also serve as a base for future work using real banking data, stronger security controls, database-backed persistence, and model drift monitoring.
 
 \section{Scope}
-The scope of this project includes the training and serving of a Random Forest model, a web dashboard, authenticated APIs, persistence through a JSON store, and test coverage through the included smoke-test script. The implementation is suitable for academic demonstration and for explaining how a fraud monitoring workflow can be built around a machine learning model.
+The scope of this project includes the training and serving of a Random Forest model, a web dashboard, authenticated APIs, persistence through an SQLite database, and test coverage through the included smoke-test script. The implementation is suitable for academic demonstration and for explaining how a fraud monitoring workflow can be built around a machine learning model.
 
 \section{Limitations}
 \begin{itemize}
-    \item The repository uses \path{instance/data_store.json} for runtime persistence instead of a production database.
-    \item Authentication uses simple username/password checking and should be strengthened before production use.
+    \item The repository uses SQLite (\path{instance/fraud_shield.db}) for runtime persistence; \path{data_store.json} is retained only as a legacy one-time migration source and is not the active store.
+    \item Authentication uses bcrypt-hashed credentials stored in SQLite with rate-limited login attempts; role-based access control and multi-factor authentication are not yet implemented.
     \item The dataset in the repository is synthetic and may not capture all real banking fraud patterns.
-    \item Model drift, audit logging, encryption, rate limiting, and role-based access control are outside the current implementation.
+    \item Model drift, audit logging, encryption in transit, and role-based access control are outside the current implementation.
     \item The model threshold is configurable through \path{FRAUD_THRESHOLD}; when it is not set, the application loads the recommended threshold from \path{model_metadata.json}.
 \end{itemize}
 
@@ -391,7 +391,7 @@ The project is schedule feasible because the work is divided into manageable pha
 \section{Ethical and Security Considerations}
 Fraud detection systems influence financial decisions, so their output should support human review rather than act as the only decision authority. In this project, high-risk transactions are placed in a verification workflow where an operator can approve, block, review, or mark the transaction as a false positive. This reduces the risk of treating every model prediction as final.
 
-The current implementation is intended for academic demonstration and does not store real card numbers or sensitive customer records. A production deployment would require stronger controls, including hashed passwords, role-based access control, encrypted transport, audit logging, database access controls, and privacy review before using real banking data.
+The current implementation is intended for academic demonstration and does not store real card numbers or sensitive customer records. A production deployment would require stronger controls, including role-based access control, encrypted transport, audit logging, database access controls, and privacy review before using real banking data.
 
 % ------------ CHAPTER 4 ------------------------
 \chapter{Methodology}
@@ -425,11 +425,13 @@ This project follows the Agile development approach, where the system developmen
 \textbf{Technology / Tool} & \textbf{Purpose} \\ \hline
 Python & Main programming language for backend logic, data processing, and machine learning. \\ \hline
 Flask & Web application framework used for dashboard routes, APIs, authentication, and request handling. \\ \hline
+Flask-Bcrypt & Secure hashing and verification of operator login passwords. \\ \hline
+Flask-Limiter & Rate limiting on the login endpoint to reduce brute-force attempts. \\ \hline
 Scikit-learn & Machine learning library used for Random Forest training, scaling, metrics, and validation. \\ \hline
 Pandas and NumPy & Data loading, preprocessing, feature computation, and numerical operations. \\ \hline
 Joblib & Saving and loading trained model and scaler artifacts. \\ \hline
+SQLite & Relational database for transactions, alerts, behavior profiles, and users. \\ \hline
 HTML, CSS, and JavaScript & Frontend dashboard interface and user interaction. \\ \hline
-JSON & Lightweight runtime persistence for transactions, alerts, and behavior profiles. \\ \hline
 LaTeX & Project report preparation and academic documentation. \\ \hline
 Visual Studio Code & Development environment for editing, testing, and organizing source files. \\ \hline
 \end{tabular}
@@ -572,7 +574,7 @@ Risk levels are assigned as follows:
 \chapter{System Design}
 
 \section{Architecture}
-The system follows a client-server architecture. The browser dashboard communicates with the Flask backend. The backend validates transactions, runs preprocessing, uses the machine learning artifacts, updates in-memory and JSON-based state, and returns JSON responses to the frontend.
+The system follows a client-server architecture. The browser dashboard communicates with the Flask backend. The backend validates transactions, runs preprocessing, uses the machine learning artifacts, updates in-memory and SQLite-backed state, and returns JSON responses to the frontend.
 
 \clearpage
 \begin{figure}[H]
@@ -643,7 +645,8 @@ The main actor of the system is the operator or administrator who reviews transa
 \path{smoke_test.py} & End-to-end checks for the Flask application. \\ \hline
 \path{sample_upload.csv} & Example CSV file for batch detection. \\ \hline
 \path{sample_transactions.json} & Example normal and fraud transaction payloads. \\ \hline
-\path{instance/data_store.json} & Runtime persistence for transactions, alerts, and behavior profiles. \\ \hline
+\path{instance/fraud_shield.db} & SQLite database for transactions, alerts, behavior profiles, and users (primary runtime persistence). \\ \hline
+\path{instance/data_store.json} & Legacy JSON state file, imported once into SQLite if the database is empty on startup. \\ \hline
 \end{tabular}
 \end{table}
 
@@ -669,7 +672,7 @@ The data flow diagram shows how transaction data moves through the dashboard, ba
 GET & \path{/} & Render login page or dashboard. \\ \hline
 POST & \path{/login} & Authenticate operator. \\ \hline
 POST & \path{/logout} & Clear session. \\ \hline
-GET & \path{/health} & Return application status, threshold, model files, and feature list. \\ \hline
+GET & \path{/health} & Return application status, threshold, model files, model feature count, and a list of application capabilities. \\ \hline
 POST & \path{/predict} & Process one transaction and return fraud/risk result. \\ \hline
 GET & \path{/api/dashboard} & Return dashboard metrics, recent transactions, alerts, and profiles. \\ \hline
 GET & \path{/api/transactions} & Return monitored transactions. \\ \hline
@@ -682,7 +685,7 @@ GET & \path{/api/report.csv} & Download monitored transaction report. \\ \hline
 \end{longtable}
 
 \section{Persistence Design}
-The application stores runtime state in memory and writes it to \path{instance/data_store.json}. If an older root-level \path{data_store.json} file exists, the application can read it as a legacy state file, but new writes use the \path{instance} directory. The state includes monitored transactions, alerts, and behavior profiles. Profiles contain transaction counts, amount statistics, recent timestamps, known devices, known countries, and known merchant categories. This design is simple and adequate for a demonstration project, but a production system should use a database.
+The application stores runtime state in memory (\path{TRANSACTIONS}, \path{ALERTS}, \path{BEHAVIOR_PROFILES}) and persists it to an SQLite database at \path{instance/fraud_shield.db}, defined in \path{storage.py}. The database contains four tables: \path{transactions}, \path{alerts}, \path{behavior_profiles}, and \path{users}. The \path{users} table stores bcrypt-hashed passwords used during login. If a legacy root-level \path{data_store.json} file exists and the database is empty, the application performs a one-time migration of its contents into SQLite; subsequent reads and writes use the database exclusively. Behavior profiles contain transaction counts, amount statistics, recent timestamps, known devices, known countries, and known merchant categories.
 
 \section{User Interface Design}
 The dashboard in \path{templates/index.html} contains the following major areas:
@@ -739,10 +742,10 @@ The following screenshots show the main operator-facing screens of the implement
 \chapter{Implementation}
 
 \section{Development Environment}
-The project is implemented in Python. The required dependencies are listed in \path{requirements.txt}: Flask, Pandas, NumPy, Scikit-learn, and Joblib. The implementation is organized into separate files for the Flask application, feature engineering, model training, synthetic data generation, smoke testing, templates, and saved model artifacts.
+The project is implemented in Python. The required dependencies are listed in \path{requirements.txt}: Flask, Flask-Bcrypt, Flask-Limiter, Pandas, NumPy, Scikit-learn, and Joblib. The implementation is organized into separate files for the Flask application, feature engineering, model training, synthetic data generation, smoke testing, templates, and saved model artifacts.
 
 \section{Authentication}
-The application uses session-based authentication. The username, password, and secret key can be configured through environment variables. Protected endpoints use the \path{require_auth} decorator, which returns HTTP 401 for unauthenticated requests.
+The application uses session-based authentication. Operator credentials are stored in a SQLite \path{users} table with bcrypt-hashed passwords, seeded on first startup from the \path{DEFAULT_ADMIN_PASSWORD} environment variable (falling back to a default value with a logged warning if unset). The default username, and the Flask \path{SECRET_KEY}, can be configured through environment variables; the application refuses to start if \path{SECRET_KEY} is missing or left at its insecure default. Login attempts are rate-limited to 5 per minute, and failed logins return a generic error message to avoid revealing whether a given username exists. Protected endpoints use the \path{require_auth} decorator, which returns HTTP 401 for unauthenticated requests.
 
 \section{Transaction Validation}
 The function \path{parse_transaction()} validates required fields and ensures that \path{amount} is a non-negative finite number. It also fills optional metadata with safe defaults when values are missing. This prevents the model pipeline from receiving incomplete or malformed transaction objects.
@@ -845,7 +848,7 @@ Weighted average & 0.988 & 0.986 & 0.986 & 8997 \\ \hline
 The repository metadata reports 5-fold time-series cross-validation on training data with a mean fraud recall of \(0.5467 \pm 0.1177\) and a mean PR-AUC of \(0.6374 \pm 0.0417\). These results show that the model performs well for normal-class separation, but fraud-class recall remains an important improvement area because the dataset is highly imbalanced.
 
 \section{Sample Input Results}
-The repository includes two sample JSON payloads. The normal sample uses a grocery transaction of 45.20 in the United States. The fraud sample uses a cash transaction of 500.00 from Russia at night on an unknown device. The smoke test expects the first sample to be classified as Normal and the second as Fraud.
+The repository includes two sample JSON payloads in \path{sample_transactions.json}. The normal sample is a grocery transaction of NPR 4,500.00 at SuperMart. The fraud sample is a cash transaction of NPR 50,000.00 from an unknown ATM in Russia at 02:14 AM on an unrecognized device. The smoke test expects the first sample to be classified as Normal and the second as Fraud.
 
 \section{Issues and Resolutions}
 \begin{table}[H]
@@ -859,7 +862,7 @@ Training and inference feature mismatch risk & \textbullet\ Centralized feature 
 Unreliable first-transaction behavior features & \textbullet\ Used neutral behavior values for new customer profiles so the current transaction does not distort its own score. \\ \hline
 CSV input errors & \textbullet\ Added required-column validation, row limits, date/time normalization, and per-row error reporting. \\ \hline
 False positive handling & \textbullet\ Added analyst verification statuses such as Approved, Blocked, Reviewed, and False Positive. \\ \hline
-Runtime persistence limitation & \textbullet\ Used JSON persistence for demonstration and listed relational database migration as future work. \\ \hline
+Runtime persistence limitation & \textbullet\ Migrated from JSON-only storage to an SQLite database, with a one-time legacy JSON import for backward compatibility. \\ \hline
 Operational visibility & \textbullet\ Added dashboard metrics, alerts, transaction history, and downloadable reports. \\ \hline
 \end{tabular}
 \end{table}
@@ -882,6 +885,7 @@ The system is suitable for academic demonstration because it is runnable, testab
     \item Monitor model drift and retrain with real-world transaction data.
     \item Add explainability features such as feature importance or per-transaction explanations.
     \item Expand testing with unit tests for feature engineering and risk scoring.
+    \item Add role-based access control for multiple operator permission levels.
 \end{itemize}
 
 % ------------ APPENDIX -------------------------
@@ -916,7 +920,7 @@ Password: admin123
 For a real deployment, these credentials should be replaced using environment variables:
 \begin{verbatim}
 $env:APP_USERNAME = "analyst"
-$env:APP_PASSWORD = "strong-password"
+$env:DEFAULT_ADMIN_PASSWORD = "strong-password"
 $env:SECRET_KEY = "replace-with-a-random-secret"
 \end{verbatim}
 
