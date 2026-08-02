@@ -1,5 +1,5 @@
 {
-  "trained_at": "2026-07-30T04:18:08+00:00",
+  "trained_at": "2026-08-01T04:50:44+00:00",
   "dataset": "creditcard_raw.csv",
   "rows": 59978,
   "fraud_rows": 922,
@@ -126,7 +126,7 @@
         "f1": 0.5910931174089069,
         "f2": 0.5896607431340872,
         "pr_auc": 0.6142763722930566,
-        "roc_auc": 0.9506371083334617,
+        "roc_auc": 0.9506371083334618,
         "fold": 3,
         "validation_rows": 8496,
         "validation_fraud_rows": 124
