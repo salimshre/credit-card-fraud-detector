@@ -187,7 +187,7 @@
                             <input type="time" step="1" id="transaction_time" value="09:23:44" required>
                         </div>
                         <div class="field">
-                            <label for="amount">Amount</label>
+                            <label for="amount">Amount (NPR)</label>
                             <input type="number" step="0.01" id="amount" value="45.20" required>
                         </div>
                         <div class="field">
@@ -328,6 +328,7 @@
     </main>
 
     <script>
+        // --- UPDATED TO NPR SCALE ---
         const samples = {
             normal: {
                 customer_id: "CUST-001",
@@ -339,7 +340,7 @@
                 channel: "pos",
                 transaction_date: "2024-01-15",
                 transaction_time: "09:23:44",
-                amount: 45.20
+                amount: 4500.00
             },
             fraud: {
                 customer_id: "CUST-009",
@@ -351,7 +352,7 @@
                 channel: "atm",
                 transaction_date: "2024-01-15",
                 transaction_time: "02:14:09",
-                amount: 500.00
+                amount: 50000.00
             }
         };
 

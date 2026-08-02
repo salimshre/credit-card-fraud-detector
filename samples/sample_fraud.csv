@@ -1,0 +1,11 @@
+transaction_date,transaction_time,amount,merchant_category,country,channel,customer_id,card_last4,merchant,device_id
+2026-07-25,02:14:00,350000,cash,RU,atm,CUST-2001,9911,Unknown ATM,atm-unk-77
+2026-07-25,02:19:00,298000,cash,RU,atm,CUST-2001,9911,Unknown ATM,atm-unk-77
+2026-07-25,02:26:00,150000,online,CN,web,CUST-2001,9911,CryptoExchangeX,web-unk-device
+2026-07-25,03:02:00,275000,travel,BR,web,CUST-2002,3345,QuickFlights,web-unk-device-2
+2026-07-25,03:05:00,180000,travel,BR,web,CUST-2002,3345,QuickFlights,web-unk-device-2
+2026-07-26,01:47:00,320000,other,other,atm,CUST-2003,1180,Foreign ATM,atm-unk-91
+2026-07-26,01:50:00,410000,cash,IN,atm,CUST-2003,1180,Foreign ATM,atm-unk-91
+2026-07-26,04:33:00,225000,online,CN,mobile,CUST-2004,7766,UnknownStore88,mobile-unk-14
+2026-07-26,04:36:00,260000,online,CN,mobile,CUST-2004,7766,UnknownStore88,mobile-unk-14
+2026-07-26,04:39:00,310000,online,CN,mobile,CUST-2004,7766,UnknownStore88,mobile-unk-14

@@ -43,7 +43,8 @@ def _other_country(home_country: str) -> str:
 
 
 def _card_profile(card_last4: int) -> dict:
-    avg_amount = float(np.random.lognormal(3.5, 0.75))
+    # Generate average amount in NPR (e.g., between 500 and 50,000 NPR)
+    avg_amount = float(np.random.lognormal(8, 1.2))
     return {
         "customer_id": f"CUST-{card_last4}",
         "card_last4": card_last4,
@@ -109,23 +110,27 @@ def _fraud_category(profile: dict) -> str:
 
 
 def _normal_amount(profile: dict) -> float:
+    # Normal spending: stays close to the average (low sigma)
     amount = np.random.lognormal(
-        mean=np.log(max(profile["avg_amount"], 1.0)),
-        sigma=0.42,
+        mean=np.log(max(profile["avg_amount"], 100.0)),
+        sigma=0.5, 
     )
     return round(max(1.0, float(amount)), 2)
 
 
 def _fraud_amount(profile: dict) -> float:
     mode = random.choices(["high", "medium", "low"], weights=[0.55, 0.30, 0.15])[0]
-    avg_amount = max(profile["avg_amount"], 1.0)
+    avg_amount = max(profile["avg_amount"], 100.0)
 
     if mode == "high":
-        amount = np.random.lognormal(mean=np.log(avg_amount * 3.8), sigma=0.85)
+        # High fraud amounts: 5x to 10x average
+        amount = np.random.lognormal(mean=np.log(avg_amount * 6.0), sigma=0.6)
     elif mode == "medium":
-        amount = np.random.lognormal(mean=np.log(avg_amount * 1.7), sigma=0.55)
+        # Medium fraud amounts: 2x to 3x average
+        amount = np.random.lognormal(mean=np.log(avg_amount * 2.5), sigma=0.4)
     else:
-        amount = np.random.lognormal(mean=np.log(avg_amount), sigma=0.45)
+        # Low fraud amounts: just a bit above average
+        amount = np.random.lognormal(mean=np.log(avg_amount * 1.3), sigma=0.4)
 
     return round(max(5.0, float(amount)), 2)
 
@@ -196,3 +201,4 @@ def summarize_label_leakage(df: pd.DataFrame) -> dict[str, pd.DataFrame]:
             .sort_values("mean", ascending=False)
         )
     return summaries
+    

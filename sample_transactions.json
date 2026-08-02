@@ -9,7 +9,7 @@
     "channel": "pos",
     "transaction_date": "2024-01-15",
     "transaction_time": "09:23:44",
-    "amount": 45.20
+    "amount": 4500.00
   },
   "fraud": {
     "customer_id": "CUST-009",
@@ -21,6 +21,6 @@
     "channel": "atm",
     "transaction_date": "2024-01-15",
     "transaction_time": "02:14:09",
-    "amount": 500.00
+    "amount": 50000.00
   }
 }

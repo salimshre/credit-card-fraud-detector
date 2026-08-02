@@ -37,6 +37,10 @@ OPTIONAL_FIELDS = ["customer_id", "card_last4", "merchant", "device_id"]
 MAX_RECORDS = 250
 MAX_CSV_ROWS = 500
 
+# ---- NEW NPR BUSINESS LIMITS ----
+NPR_REVIEW_AMOUNT = 100_000      # Above this -> Review Required
+NPR_BLOCK_AMOUNT = 300_000       # Above this -> Blocked
+
 
 def resolve_store_path() -> Path:
     configured = os.getenv("FRAUD_STORE_PATH")

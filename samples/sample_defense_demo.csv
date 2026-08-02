@@ -1,0 +1,11 @@
+transaction_date,transaction_time,amount,merchant_category,country,channel,customer_id,card_last4,merchant,device_id
+2026-07-18,09:12:00,500,grocery,US,pos,CUST-3001,2210,FreshMart,pos-terminal-11
+2026-07-19,13:05:00,700,restaurant,US,pos,CUST-3001,2210,Cafe Sunrise,pos-terminal-04
+2026-07-20,18:45:00,950,retail,US,web,CUST-3001,2210,UrbanStyle,web-checkout-1
+2026-07-20,20:00:00,1100,entertainment,US,mobile,CUST-3002,4478,CineMax,mobile-app-3
+2026-07-21,08:30:00,620,gas_station,US,pos,CUST-3001,2210,Shell Station,pos-terminal-22
+2026-07-27,02:11:00,280000,cash,RU,atm,CUST-3001,2210,Unknown ATM,atm-unk-77
+2026-07-27,02:16:00,310000,online,CN,web,CUST-3001,2210,CryptoExchangeX,web-unk-device
+2026-07-27,02:21:00,190000,other,other,atm,CUST-3001,2210,Foreign ATM,atm-unk-91
+2026-07-27,11:00:00,430,grocery,US,pos,CUST-3003,5590,FreshMart,pos-terminal-11
+2026-07-27,15:20:00,1250,healthcare,US,pos,CUST-3003,5590,CityClinic,pos-terminal-09
